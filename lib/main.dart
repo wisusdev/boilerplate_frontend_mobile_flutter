@@ -15,9 +15,13 @@ class MyApp extends StatelessWidget {
   	@override
   	Widget build(BuildContext context) {
 		return MaterialApp(
-	  		title: 'Flutter Demo',
+	  		// Titulo de la app
+            title: 'Flutter Demo',
+
+            // Desactivar el banner de debug
             debugShowCheckedModeBanner: false,
 
+            // Soporte para idiomas
             locale: const Locale('es', 'ES'),
 
 	  		supportedLocales: const [
@@ -44,11 +48,12 @@ class MyApp extends StatelessWidget {
 				return supportedLocales.first;
 			},
 
-	  		theme: ThemeData(
-				colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-				useMaterial3: true,
-	  		),
+            // Soporte para temas
+	  		theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
+            themeMode: ThemeMode.system,
 
+            // Rutas
 	  		home: const ProfileView(),
 		);
   	}
