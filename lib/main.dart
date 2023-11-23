@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:todolist_flutter/app/helpers/location_delegate.dart';
-import 'package:todolist_flutter/views/profile.dart';
+import 'package:todolist_flutter/config/app.dart';
+import 'package:todolist_flutter/views/home.dart';
+import 'package:todolist_flutter/views/profile/profile_main.dart';
+import 'package:todolist_flutter/config/themes.dart';
+import 'package:todolist_flutter/views/settings/setting_main.dart';
 
 void main() async {
 	await dotenv.load(fileName: '.env');
@@ -22,7 +26,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
 
             // Soporte para idiomas
-            locale: const Locale('es', 'ES'),
+            locale: Locale(appLang, appLangCountry),
 
 	  		supportedLocales: const [
 				Locale('en', 'US'),
@@ -49,12 +53,18 @@ class MyApp extends StatelessWidget {
 			},
 
             // Soporte para temas
-	  		theme: ThemeData.light(),
-            darkTheme: ThemeData.dark(),
+            theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+            darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
             themeMode: ThemeMode.system,
 
             // Rutas
-	  		home: const ProfileView(),
+	  		home: const HomeView(),
+            routes: {
+                'home': (context) => const HomeView(),
+                'profile': (context) => const ProfileMain(),
+                'setting': (context) => const SettingMain(),
+            },
+
 		);
   	}
 }
