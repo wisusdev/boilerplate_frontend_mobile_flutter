@@ -22,5 +22,8 @@
   "alert_delete_entry": "are you sure you want to delete this entry?",
   "reset_password": "reset password",
   "field_required": "this field is required",
-  "field_email": "this field must be an email"
+  "field_email": "this field must be an email",
+
+  "language": "language",
+  "theme": "theme"
 }

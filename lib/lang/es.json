@@ -22,5 +22,8 @@
   "alert_delete_entry": "¿Está seguro de que desea borrar esta entrada?",
   "reset_password": "Restablecer contraseña",
   "field_required": "Este campo es obligatorio",
-  "field_email": "Este campo debe ser un correo electrónico"
+  "field_email": "Este campo debe ser un correo electrónico",
+
+  "language": "idioma",
+  "theme": "tema"
 }
