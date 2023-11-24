@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/helpers/text.dart';
-import 'package:todolist_flutter/config/app.dart';
 
 class SettingMain extends StatefulWidget {
     const SettingMain({Key? key}) : super(key: key);
@@ -26,8 +25,31 @@ class _SettingMainState extends State<SettingMain> {
                 backgroundColor: Theme.of(context).colorScheme.primary,
             ),
             
-            body: Center(
-                child: Text(appName),
+            body: SafeArea(
+                child: Container(
+                    padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                    child: ListView(
+                        children: [
+                            ListTile(
+                                leading: const Icon(Icons.translate),
+                                title: Text(capitalizeText(Location.of(context)!.trans('language'))),
+                                trailing: const Icon(Icons.arrow_forward_ios_rounded),
+                                onTap: () {
+                                    Navigator.of(context).pushNamed('language');
+                                },
+                            ),
+
+                            ListTile(
+                                leading: const Icon(Icons.palette),
+                                title: Text(capitalizeText(Location.of(context)!.trans('theme'))),
+                                trailing: const Icon(Icons.arrow_forward_ios_rounded),
+                                onTap: () {
+                                    Navigator.of(context).pushNamed('theme');
+                                },
+                            ),
+                        ],
+                    ),
+                )
             )
         );
     }
