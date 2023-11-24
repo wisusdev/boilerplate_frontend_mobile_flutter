@@ -25,5 +25,9 @@
   "field_email": "this field must be an email",
 
   "language": "language",
-  "theme": "theme"
+  "theme": "theme",
+
+  "light_theme": "light theme",
+  "dark_theme": "dark theme",
+  "system_theme": "system theme"
 }

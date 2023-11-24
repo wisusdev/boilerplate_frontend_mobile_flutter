@@ -25,5 +25,9 @@
   "field_email": "Este campo debe ser un correo electrónico",
 
   "language": "idioma",
-  "theme": "tema"
+  "theme": "tema",
+
+  "light_theme": "tema claro",
+  "dark_theme": "tema oscuro",
+  "system_theme": "tema del sistema"
 }
