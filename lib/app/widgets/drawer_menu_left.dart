@@ -4,7 +4,9 @@ import 'package:todolist_flutter/app/helpers/text.dart';
 import 'package:todolist_flutter/app/menu.dart';
 
 class DrawerMenuLeft extends StatefulWidget {
-	const DrawerMenuLeft({super.key});
+    final GlobalKey<ScaffoldState> scaffoldKey;
+
+	const DrawerMenuLeft({super.key, required this.scaffoldKey});
 
   	@override
   	State<DrawerMenuLeft> createState() => _DrawerMenuLeftState();
@@ -29,7 +31,8 @@ class _DrawerMenuLeftState extends State<DrawerMenuLeft> {
 
 				final menuItem = appMenuItems[index];
 				Navigator.of(context).pushNamed(menuItem.link);
-                Scaffold.of(context).openDrawer();
+                Scaffold.of(context).closeDrawer();
+                //widget.scaffoldKey.currentState?.closeDrawer();
 			},
 
 			children: [
