@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:todolist_flutter/app/preferences/language_preferences.dart';
 import 'package:todolist_flutter/app/preferences/theme_preferences.dart';
 import 'package:todolist_flutter/app/providers/language_provider.dart';
-import 'package:todolist_flutter/config/app.dart';
 import 'package:todolist_flutter/config/languages.dart';
 import 'package:todolist_flutter/views/home.dart';
 import 'package:todolist_flutter/config/themes.dart';
