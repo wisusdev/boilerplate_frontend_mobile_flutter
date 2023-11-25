@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/helpers/text.dart';
-import 'package:todolist_flutter/app/menu.dart';
+import 'package:todolist_flutter/app/utils/menu.dart';
 
 class DrawerMenuLeft extends StatefulWidget {
     final GlobalKey<ScaffoldState> scaffoldKey;
