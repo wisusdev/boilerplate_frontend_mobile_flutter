@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todolist_flutter/app/helpers/location.dart';
+import 'package:todolist_flutter/app/helpers/text.dart';
+import 'package:todolist_flutter/app/preferences/language_preferences.dart';
+import 'package:todolist_flutter/app/providers/language_provider.dart';
+import 'package:todolist_flutter/app/utils/languages.dart';
 
 class LanguajeMain extends StatefulWidget {
   	const LanguajeMain({super.key});
@@ -10,8 +16,54 @@ class LanguajeMain extends StatefulWidget {
 class _LanguajeMainState extends State<LanguajeMain> {
   	@override
   	Widget build(BuildContext context) {
-		return Container(
-            child: const Text('Languaje'),
+        
+        final languageMode = Provider.of<LanguageProvider>(context).language;
+
+		return Scaffold(
+            appBar: AppBar(
+                title: Text(
+                    capitalizeText(Location.of(context)!.trans('theme')),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary
+                    )
+                ),
+                iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
+                backgroundColor: Theme.of(context).colorScheme.primary,
+            ),
+
+            body: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                        Text('Provider: ${ Provider.of<LanguageProvider>(context).language }'),
+                        Text('ThemePreferences: ${ LanguagePreferences.getLanguageMode() }'),
+                        const Divider(),
+
+                        for(var language in languages)
+                            Card(
+                                shape: RoundedRectangleBorder(
+                                    side: const BorderSide(width: 2),
+                                    borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: RadioListTile(
+                                    title: Text(language.languageName),
+                                    value: Locale(language.languageCode),
+                                    selected: languageMode == Locale(language.languageCode),
+                                    groupValue: languageMode,
+                                    onChanged: (value){
+                                        Provider.of<LanguageProvider>(context, listen: false).setLanguage(value!);
+                                        LanguagePreferences.setLanguageMode(value);
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        side: const BorderSide(width: 2),
+                                        borderRadius: BorderRadius.circular(20)
+                                    ),
+                                )
+                            ),                        
+                    ],
+                ),
+            )
         );
   	}
 }
