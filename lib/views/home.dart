@@ -23,9 +23,7 @@ class _HomeViewState extends State<HomeView> {
             appBar: AppBar(
                 title: Text(
                     capitalizeText(Location.of(context)!.trans('home')),
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary
-                    )
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)
                 ),
                 iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
                 backgroundColor: Theme.of(context).colorScheme.primary,
