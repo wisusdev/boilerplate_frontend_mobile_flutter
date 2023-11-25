@@ -37,44 +37,68 @@ class _ThemeMainState extends State<ThemeMain> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                         
-                        Text('themeMode: ${ Provider.of<ThemeProvider>(context).themeMode }'),
-                        Text('themeMode: ${ ThemePreferences.getThemeMode() }'),
+                        Text('Provider: ${ Provider.of<ThemeProvider>(context).themeMode }'),
+                        Text('ThemePreferences: ${ ThemePreferences.getThemeMode() }'),
                         const Divider(),
 
-                        RadioListTile(
-                            title: Text(capitalizeText(Location.of(context)!.trans('light_theme'))), 
-                            value: ThemeMode.light,
-                            selected: themeMode == ThemeMode.light,
-                            groupValue: themeMode,
-                            onChanged: (value){
-                                print(value);
-                                Provider.of<ThemeProvider>(context, listen: false).setThemeMode(value!);
-                                ThemePreferences.setThemeMode(value);
-                            },
+                        Card(
+                            shape: RoundedRectangleBorder(
+                                side: const BorderSide(width: 2),
+                                borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: RadioListTile(
+                                title: Text(capitalizeText(Location.of(context)!.trans('light_theme'))), 
+                                value: ThemeMode.light,
+                                selected: themeMode == ThemeMode.light,
+                                groupValue: themeMode,
+                                onChanged: (value){
+                                    Provider.of<ThemeProvider>(context, listen: false).setThemeMode(value!);
+                                    ThemePreferences.setThemeMode(value);
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)
+                                ),
+                            ),
                         ),
 
-                        RadioListTile(
-                            title: Text(capitalizeText(Location.of(context)!.trans('dark_theme'))),
-                            value: ThemeMode.dark,
-                            selected: themeMode == ThemeMode.dark,
-                            groupValue: themeMode,
-                            onChanged: (value){
-                                print(value);
-                                Provider.of<ThemeProvider>(context, listen: false).setThemeMode(value!);
-                                ThemePreferences.setThemeMode(value);
-                            },
+                        Card(
+                            shape: RoundedRectangleBorder(
+                                side: const BorderSide(width: 2),
+                                borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: RadioListTile(
+                                title: Text(capitalizeText(Location.of(context)!.trans('dark_theme'))),
+                                value: ThemeMode.dark,
+                                selected: themeMode == ThemeMode.dark,
+                                groupValue: themeMode,
+                                onChanged: (value){
+                                    Provider.of<ThemeProvider>(context, listen: false).setThemeMode(value!);
+                                    ThemePreferences.setThemeMode(value);
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)
+                                ),
+                            ),
                         ),
 
-                        RadioListTile(
-                            title: Text(capitalizeText(Location.of(context)!.trans('system_theme'))),
-                            value: ThemeMode.system, 
-                            selected: themeMode == ThemeMode.system,
-                            groupValue: themeMode,
-                            onChanged: (value){
-                                print(value);
-                                Provider.of<ThemeProvider>(context, listen: false).setThemeMode(value!);
-                                ThemePreferences.setThemeMode(value);
-                            },
+                        Card(
+                            shape: RoundedRectangleBorder(
+                                side: const BorderSide(width: 2),
+                                borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: RadioListTile(
+                                title: Text(capitalizeText(Location.of(context)!.trans('system_theme'))),
+                                value: ThemeMode.system, 
+                                selected: themeMode == ThemeMode.system,
+                                groupValue: themeMode,
+                                onChanged: (value){
+                                    Provider.of<ThemeProvider>(context, listen: false).setThemeMode(value!);
+                                    ThemePreferences.setThemeMode(value);
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)
+                                ),
+                            ),
                         ),
                     ],
                 ),
