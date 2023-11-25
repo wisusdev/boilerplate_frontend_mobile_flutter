@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todolist_flutter/app/models/MenuModel.dart';
 
-class MenuItem {
-  	final String title;
-  	final String subTitle;
-  	final String link;
-  	final IconData icon;
-
-  	const MenuItem({
-		required this.title,
-		required this.subTitle,
-		required this.link,
-		required this.icon
-  	});
-}
 
 const appMenuItems = <MenuItem>[
     MenuItem(
