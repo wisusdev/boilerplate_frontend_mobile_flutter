@@ -7,6 +7,7 @@ import 'package:todolist_flutter/app/preferences/language_preferences.dart';
 import 'package:todolist_flutter/app/preferences/theme_preferences.dart';
 import 'package:todolist_flutter/app/providers/language_provider.dart';
 import 'package:todolist_flutter/config/languages.dart';
+import 'package:todolist_flutter/views/auth/forgot_password.dart';
 import 'package:todolist_flutter/views/auth/login.dart';
 import 'package:todolist_flutter/views/auth/register.dart';
 import 'package:todolist_flutter/views/home.dart';
@@ -78,6 +79,7 @@ class MyApp extends StatelessWidget {
                             // Auth
                             'login': (context) => const AuthLogin(),
                             'register': (context) => const AuthRegister(),
+                            'forgot_password': (context) => const AuthForgotPassword(),
                 
                             // settings
                             'language': (context) => const LanguajeMain(),
@@ -87,6 +89,5 @@ class MyApp extends StatelessWidget {
                 },
             )
         );
-		
   	}
 }
