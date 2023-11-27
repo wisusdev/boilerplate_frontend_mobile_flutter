@@ -4,6 +4,7 @@
   "welcome_to": "Bienvenido a",
   "project_desc": "Una solución boilerplate de Centurio",
   "sign_in": "Iniciar sesión",
+  "sign_up": "Regístrate",
   "logout": "Cerrar sesión",
   "home": "inicio",
   "profile": "perfil",
@@ -12,10 +13,15 @@
   "user": "Usuario",
   "email": "Correo electrónico",
   "forgot_your_pwd": "¿Ha olvidado su contraseña?",
+  "you_dont_have_an_account": "¿No tienes una cuenta?",
+  "already_have_an_account": "¿Ya tienes una cuenta?",
   "back_to_login": "Volver al inicio de sesión",
   "validate_account": "Validar la cuenta",
   "validate": "Validar",
+  "name": "Nombre",
   "password": "Contraseña",
+  "reset_pwd": "Restablecer la contraseña",
+  "confirm_password": "Confirmar contraseña",
   "loading": "Cargando",
   "close": "Cerrar",
   "delete": "Borrar",
@@ -29,5 +35,8 @@
 
   "light_theme": "tema claro",
   "dark_theme": "tema oscuro",
-  "system_theme": "tema del sistema"
+  "system_theme": "tema del sistema",
+
+  "forget_password_instructions": "Ingrese su dirección de correo electrónico y le enviaremos un enlace para restablecer su contraseña."
+
 }
