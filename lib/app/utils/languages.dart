@@ -1,4 +1,4 @@
-import 'package:todolist_flutter/app/models/LanguagesModel.dart';
+import 'package:todolist_flutter/app/models/languages_model.dart';
 
 List<LanguageModel> languages = <LanguageModel>[
 
