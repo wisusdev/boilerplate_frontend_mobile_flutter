@@ -7,6 +7,8 @@ import 'package:todolist_flutter/app/preferences/language_preferences.dart';
 import 'package:todolist_flutter/app/preferences/theme_preferences.dart';
 import 'package:todolist_flutter/app/providers/language_provider.dart';
 import 'package:todolist_flutter/config/languages.dart';
+import 'package:todolist_flutter/views/auth/login.dart';
+import 'package:todolist_flutter/views/auth/register.dart';
 import 'package:todolist_flutter/views/home.dart';
 import 'package:todolist_flutter/config/themes.dart';
 import 'package:todolist_flutter/views/settings/theme_main.dart';
@@ -67,11 +69,15 @@ class MyApp extends StatelessWidget {
                         themeMode: Provider.of<ThemeProvider>(context).themeMode,
 
                         // Rutas
-                        home: const HomeView(),
+                        home: const AuthLogin(),
                         routes: {
                             'home': (context) => const HomeView(),
                             'profile': (context) => const ProfileMain(),
                             'setting': (context) => const SettingMain(),
+
+                            // Auth
+                            'login': (context) => const AuthLogin(),
+                            'register': (context) => const AuthRegister(),
                 
                             // settings
                             'language': (context) => const LanguajeMain(),
