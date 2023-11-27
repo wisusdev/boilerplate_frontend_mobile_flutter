@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todolist_flutter/app/models/MenuModel.dart';
+import 'package:todolist_flutter/app/models/menu_model.dart';
 
 
 const appMenuItems = <MenuItem>[
@@ -11,7 +11,7 @@ const appMenuItems = <MenuItem>[
 	),
 
     MenuItem(
-		title: 'login', 
+		title: 'sign_in', 
 		subTitle: 'Login view', 
 		link: 'login', 
 		icon: Icons.login
@@ -25,7 +25,7 @@ const appMenuItems = <MenuItem>[
 	),
 
     MenuItem(
-        title: 'register', 
+        title: 'sign_up', 
         subTitle: 'Register view', 
         link: 'register', 
         icon: Icons.app_registration
