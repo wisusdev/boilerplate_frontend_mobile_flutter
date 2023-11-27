@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todolist_flutter/app/helpers/location.dart';
 
 class AuthLogin extends StatefulWidget {
 	const AuthLogin({super.key});
@@ -10,19 +11,22 @@ class AuthLogin extends StatefulWidget {
 class _AuthLoginState extends State<AuthLogin> {
   	final _formKey = GlobalKey<FormState>();
   
-  	String _email = '';
-  	String _password = '';
+    final TextEditingController _emailController = TextEditingController();
+	final TextEditingController _passwordController = TextEditingController();
 
   	@override
   	Widget build(BuildContext context) {
 
-        final registerLink = MediaQuery.of(context).size.width;
+        final sizeWith = MediaQuery.of(context).size.width;
 
 		return Scaffold(
+            appBar: AppBar(
+				title: const Text('Inicio de sesión'),
+			),
 	  		body: Stack(
                 children: [
                     SingleChildScrollView(
-                        padding: EdgeInsets.only(top: registerLink * 0.25, bottom: 0, left: 20, right: 20),
+                        padding: EdgeInsets.only(top: sizeWith * 0.05, bottom: 0, left: 20, right: 20),
                         child: Form(
                             key: _formKey,
                             child: Column(
@@ -40,31 +44,37 @@ class _AuthLoginState extends State<AuthLogin> {
                                         ],
                                     ),
                             
-                                    const SizedBox(height: 20),
+                                    //const SizedBox(height: 20),
                                                     
-                                    const Text('Login', style: TextStyle(fontFamily: 'bool', fontSize: 22, fontWeight: FontWeight.bold)),
+                                    //const Text('Login', style: TextStyle(fontFamily: 'bool', fontSize: 22, fontWeight: FontWeight.bold)),
                                 
                                     const SizedBox(height: 20),
                             
                                     TextFormField(
-                                        decoration: const InputDecoration(labelText: 'Correo Electrónico', prefixIcon: Icon(Icons.email_outlined)),
+                                        controller: _emailController,
+                                        decoration: InputDecoration(
+                                            labelText: Location.of(context)!.trans('email'), 
+                                            prefixIcon: const Icon(Icons.email_outlined),
+                                            border: const OutlineInputBorder(),
+                                        ),
                                         validator: (value) {
                                             if (value!.isEmpty) {
                                                 return 'Por favor ingresa tu correo electrónico';
                                             }
                                             // Aquí puedes agregar más validaciones para el correo electrónico
                                             return null;
-                                        },
-                                        onSaved: (value) {
-                                            _email = value!;
-                                        },
-
+                                        }
                                     ),
                             
                                     const SizedBox(height: 20),
                                 
                                     TextFormField(
-                                        decoration: const InputDecoration(labelText: 'Contraseña',  prefixIcon: Icon(Icons.lock_outline)),
+                                        controller: _passwordController,
+                                        decoration: InputDecoration(
+                                            labelText: Location.of(context)!.trans('password'),  
+                                            prefixIcon: const Icon(Icons.lock_outline),
+                                            border: const OutlineInputBorder(),
+                                        ),
                                         obscureText: true,
                                         validator: (value) {
                                             if (value!.isEmpty) {
@@ -72,10 +82,7 @@ class _AuthLoginState extends State<AuthLogin> {
                                             }
                                             // Aquí puedes agregar más validaciones para la contraseña
                                             return null;
-                                        },
-                                        onSaved: (value) {
-                                            _password = value!;
-                                        },
+                                        }
                                     ),
                             
                                     const SizedBox(height: 30),
@@ -85,9 +92,9 @@ class _AuthLoginState extends State<AuthLogin> {
                                         children: [
                                             InkWell(
                                                 onTap: () {
-                                                    print('Olvidaste tu contraseña');
+                                                    Navigator.pushNamed(context, 'forgot_password');
                                                 },
-                                                child: const Text('¿Olvidaste tu contraseña?'),
+                                                child: Text(Location.of(context)!.trans('forgot_your_pwd')),
                                             )
                                         ],
                                     ),
@@ -106,11 +113,17 @@ class _AuthLoginState extends State<AuthLogin> {
                                         onPressed: (){
                                             if (_formKey.currentState!.validate()) {
                                                 _formKey.currentState!.save();
-                                                // Aquí puedes realizar la lógica de inicio de sesión
+                                                
+                                                print('Correo electrónico: ${_emailController.text}');
+                                                print('Contraseña: ${_passwordController.text}');
+
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                    const SnackBar(content: Text('Procesando datos...'))
+                                                );
                                             }
                                             print('Iniciar Sesión');
                                         }, 
-                                        child: Text('Iniciar Sesión', style: TextStyle(fontSize: 16))
+                                        child: Text(Location.of(context)!.trans('sign_in'), style: const TextStyle(fontSize: 16))
                                     ),    
 
                                     const SizedBox(height: 10),
@@ -121,16 +134,16 @@ class _AuthLoginState extends State<AuthLogin> {
                     
                     Positioned(
                         child: Container(
-                            padding: EdgeInsets.only(top: registerLink * 1.96),
+                            padding: EdgeInsets.only(top: sizeWith * 1.70),
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                    const Text('¿No tienes una cuenta? '),
+                                    Text(Location.of(context)!.trans('you_dont_have_an_account')),
                                     InkWell(
                                         onTap: () {
-                                            print('Regístrate');
+                                            Navigator.pushNamed(context, 'register');
                                         },
-                                        child: const Text('Regístrate', style: TextStyle(fontWeight: FontWeight.bold)),
+                                        child: Text(' ${Location.of(context)!.trans('sign_up')}', style: const TextStyle(fontWeight: FontWeight.bold)),
                                     ),
                                 ],
                             ),
