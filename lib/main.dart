@@ -10,6 +10,7 @@ import 'package:todolist_flutter/config/languages.dart';
 import 'package:todolist_flutter/views/auth/forgot_password.dart';
 import 'package:todolist_flutter/views/auth/login.dart';
 import 'package:todolist_flutter/views/auth/register.dart';
+import 'package:todolist_flutter/views/commerce/payment_form.dart';
 import 'package:todolist_flutter/views/home.dart';
 import 'package:todolist_flutter/config/themes.dart';
 import 'package:todolist_flutter/views/settings/theme_main.dart';
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
                         themeMode: Provider.of<ThemeProvider>(context).themeMode,
 
                         // Rutas
-                        home: const AuthLogin(),
+                        home: const PaymentForm(),
                         routes: {
                             'home': (context) => const HomeView(),
                             'profile': (context) => const ProfileMain(),
