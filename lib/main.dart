@@ -7,19 +7,20 @@ import 'package:todolist_flutter/app/preferences/language_preferences.dart';
 import 'package:todolist_flutter/app/preferences/theme_preferences.dart';
 import 'package:todolist_flutter/app/providers/language_provider.dart';
 import 'package:todolist_flutter/config/languages.dart';
-import 'package:todolist_flutter/views/auth/forgot_password.dart';
-import 'package:todolist_flutter/views/auth/login.dart';
-import 'package:todolist_flutter/views/auth/register.dart';
-import 'package:todolist_flutter/views/commerce/payment_form.dart';
-import 'package:todolist_flutter/views/home.dart';
-import 'package:todolist_flutter/config/themes.dart';
-import 'package:todolist_flutter/views/settings/theme_main.dart';
 import 'package:todolist_flutter/app/helpers/local_storage.dart';
-import 'package:todolist_flutter/views/profile/profile_main.dart';
-import 'package:todolist_flutter/views/settings/setting_main.dart';
 import 'package:todolist_flutter/app/providers/theme_provider.dart';
-import 'package:todolist_flutter/views/settings/language_main.dart';
 import 'package:todolist_flutter/app/helpers/location_delegate.dart';
+import 'package:todolist_flutter/resources/themes/dark_theme.dart';
+import 'package:todolist_flutter/resources/themes/light_theme.dart';
+import 'package:todolist_flutter/resources/views/auth/forgot_password.dart';
+import 'package:todolist_flutter/resources/views/auth/login.dart';
+import 'package:todolist_flutter/resources/views/auth/register.dart';
+import 'package:todolist_flutter/resources/views/commerce/payment_form.dart';
+import 'package:todolist_flutter/resources/views/home.dart';
+import 'package:todolist_flutter/resources/views/profile/profile_main.dart';
+import 'package:todolist_flutter/resources/views/settings/language_main.dart';
+import 'package:todolist_flutter/resources/views/settings/setting_main.dart';
+import 'package:todolist_flutter/resources/views/settings/theme_main.dart';
 
 
 void main() async {

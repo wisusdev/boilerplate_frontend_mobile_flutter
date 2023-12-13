@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/helpers/text.dart';
-import 'package:todolist_flutter/app/widgets/drawer_menu_left.dart';
+import 'package:todolist_flutter/resources/widgets/drawer_menu_left.dart';
 import 'package:todolist_flutter/app/preferences/theme_preferences.dart';
 
 class HomeView extends StatefulWidget {
