@@ -51,7 +51,7 @@ class _PaymentFormState extends State<PaymentForm> {
 
                         const SizedBox(height: 20),
 
-                        Row(
+                        const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                                 Text('Grand Total'),
@@ -59,7 +59,7 @@ class _PaymentFormState extends State<PaymentForm> {
                             ],
                         ),
 
-                        Row(
+                        const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                                 Text('Taxes & Fees'),
@@ -67,7 +67,7 @@ class _PaymentFormState extends State<PaymentForm> {
                             ],
                         ),
 
-                        Row(
+                        const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                                 Text('Delivery Charges'),
@@ -75,7 +75,7 @@ class _PaymentFormState extends State<PaymentForm> {
                             ],
                         ),
                         
-                        Row(
+                        const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                                 Text('Discount'),
@@ -83,7 +83,7 @@ class _PaymentFormState extends State<PaymentForm> {
                             ],
                         ),
 
-                        Row(
+                        const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                                 Text('Wallet Discount'),
@@ -92,7 +92,7 @@ class _PaymentFormState extends State<PaymentForm> {
                         ),
                         const SizedBox(height: 10),
 
-                        Row(
+                        const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                                 Text('Total', style: TextStyle(fontWeight: FontWeight.bold)),
