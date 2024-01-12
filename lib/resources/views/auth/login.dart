@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:todolist_flutter/app/helpers/local_storage.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
+import 'package:todolist_flutter/app/services/auth_service.dart';
 
 class AuthLogin extends StatefulWidget {
 	const AuthLogin({super.key});
@@ -10,7 +14,9 @@ class AuthLogin extends StatefulWidget {
 
 class _AuthLoginState extends State<AuthLogin> {
   	final _formKey = GlobalKey<FormState>();
-  
+    
+    bool _isLoading = false;
+
     final TextEditingController _emailController = TextEditingController();
 	final TextEditingController _passwordController = TextEditingController();
 
@@ -114,14 +120,12 @@ class _AuthLoginState extends State<AuthLogin> {
                                             if (_formKey.currentState!.validate()) {
                                                 _formKey.currentState!.save();
                                                 
-                                                print('Correo electrónico: ${_emailController.text}');
-                                                print('Contraseña: ${_passwordController.text}');
+                                                login();
 
                                                 ScaffoldMessenger.of(context).showSnackBar(
                                                     const SnackBar(content: Text('Procesando datos...'))
                                                 );
                                             }
-                                            print('Iniciar Sesión');
                                         }, 
                                         child: Text(Location.of(context)!.trans('sign_in'), style: const TextStyle(fontSize: 16))
                                     ),    
@@ -153,4 +157,33 @@ class _AuthLoginState extends State<AuthLogin> {
             ),
 		);
   	}
+
+    void login() async {
+        setState(() {
+            _isLoading = true;
+        });
+
+        Map<String, String> data = {
+            'email': _emailController.text,
+            'password': _passwordController.text,
+        };
+
+        var response = await AuthService().login(data);
+        var body = json.decode(response.body);
+
+        if (body['status']) {
+            LocalStorage.prefs.setString('token', json.encode(body['access_token']));
+            
+            if (!mounted) return;
+            Navigator.pushNamed(context, 'home');
+        } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(body['message']))
+            );
+        }
+
+        setState(() {
+            _isLoading = false;
+        });
+    }
 }
