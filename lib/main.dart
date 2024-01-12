@@ -15,7 +15,6 @@ import 'package:todolist_flutter/resources/themes/light_theme.dart';
 import 'package:todolist_flutter/resources/views/auth/forgot_password.dart';
 import 'package:todolist_flutter/resources/views/auth/login.dart';
 import 'package:todolist_flutter/resources/views/auth/register.dart';
-import 'package:todolist_flutter/resources/views/commerce/payment_form.dart';
 import 'package:todolist_flutter/resources/views/home.dart';
 import 'package:todolist_flutter/resources/views/profile/profile_main.dart';
 import 'package:todolist_flutter/resources/views/settings/language_main.dart';
@@ -72,7 +71,7 @@ class MyApp extends StatelessWidget {
                         themeMode: Provider.of<ThemeProvider>(context).themeMode,
 
                         // Rutas
-                        home: const HomeView(),
+                        home: const AuthLogin(),
                         routes: {
                             'home': (context) => const HomeView(),
                             'profile': (context) => const ProfileMain(),
