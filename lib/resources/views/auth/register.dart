@@ -116,7 +116,9 @@ class _AuthRegisterState extends State<AuthRegister> {
 											return null;
 										},
 									),
-									const SizedBox(height: 30),
+									
+                                    const SizedBox(height: 30),
+
 									ElevatedButton(
 										style: ElevatedButton.styleFrom(
                                             backgroundColor: Theme.of(context).colorScheme.onPrimary,
