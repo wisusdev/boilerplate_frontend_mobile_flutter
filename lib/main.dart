@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
                         themeMode: Provider.of<ThemeProvider>(context).themeMode,
 
                         // Rutas
-                        home: const PaymentForm(),
+                        home: const HomeView(),
                         routes: {
                             'home': (context) => const HomeView(),
                             'profile': (context) => const ProfileMain(),
