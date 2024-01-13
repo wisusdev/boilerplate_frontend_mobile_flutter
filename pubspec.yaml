@@ -68,6 +68,22 @@ flutter:
     - lib/lang/
     - lib/assets/images/
     - lib/assets/fonts/
+  
+  fonts:
+    - family: Montserrat
+      fonts: 
+        - asset: lib/assets/fonts/Montserrat/Montserrat-Regular.ttf
+        - asset: lib/assets/fonts/Montserrat/Montserrat-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/Montserrat/Montserrat-Italic.ttf
+          style: italic
+    - family: Ubuntu
+      fonts: 
+        - asset: lib/assets/fonts/Ubuntu/Ubuntu-Regular.ttf
+        - asset: lib/assets/fonts/Ubuntu/Ubuntu-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/Ubuntu/Ubuntu-Italic.ttf
+          style: italic
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
