@@ -6,13 +6,14 @@ import 'package:provider/provider.dart';
 import 'package:todolist_flutter/app/preferences/language_preferences.dart';
 import 'package:todolist_flutter/app/preferences/theme_preferences.dart';
 import 'package:todolist_flutter/app/providers/language_provider.dart';
+import 'package:todolist_flutter/app/services/auth_service.dart';
 import 'package:todolist_flutter/config/languages.dart';
 import 'package:todolist_flutter/app/helpers/local_storage.dart';
 import 'package:todolist_flutter/app/providers/theme_provider.dart';
 import 'package:todolist_flutter/app/helpers/location_delegate.dart';
 import 'package:todolist_flutter/resources/themes/dark_theme.dart';
 import 'package:todolist_flutter/resources/themes/light_theme.dart';
-import 'package:todolist_flutter/resources/views/auth/login.dart';
+import 'package:todolist_flutter/resources/views/auth/check_auth.dart';
 import 'package:todolist_flutter/routes/router.dart';
 
 
@@ -26,6 +27,7 @@ void main() async {
                 ChangeNotifierProvider(create: (context) => ThemeProvider(
                     themeMode: ThemePreferences.getThemeMode()
                 )),
+                ChangeNotifierProvider(create: (context) => AuthService()),
             ], 
             child: const MyApp()
         ),
@@ -65,7 +67,7 @@ class MyApp extends StatelessWidget {
                         themeMode: Provider.of<ThemeProvider>(context).themeMode,
 
                         // Rutas
-                        home: const AuthLogin(),
+                        home: const CheckAuth(),
                         routes: routes,
                     );
                 },
