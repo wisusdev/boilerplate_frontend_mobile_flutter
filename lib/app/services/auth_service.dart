@@ -11,7 +11,6 @@ class AuthService {
 	late String _apiUriForgotPassword;
 	late String _apiUriLogout;
 	late String _apiUriRefreshToken;
-    final isLoggeIn = false;
 
     AuthService() {
         _apiUri = dotenv.get('API_URL') + dotenv.get('API_VERSION');
