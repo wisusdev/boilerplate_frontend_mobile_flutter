@@ -67,7 +67,11 @@ class _AuthLoginState extends State<AuthLogin> {
                                             if (value!.isEmpty) {
                                                 return 'Por favor ingresa tu correo electrónico';
                                             }
-                                            // Aquí puedes agregar más validaciones para el correo electrónico
+
+                                            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                                                return 'Por favor ingresa un correo electrónico válido';
+                                            }
+
                                             return null;
                                         }
                                     ),
@@ -86,7 +90,11 @@ class _AuthLoginState extends State<AuthLogin> {
                                             if (value!.isEmpty) {
                                                 return 'Por favor ingresa tu contraseña';
                                             }
-                                            // Aquí puedes agregar más validaciones para la contraseña
+
+                                            if (value.length <= 8) {
+                                                return 'La contraseña debe tener al menos 8 caracteres';
+                                            }
+
                                             return null;
                                         }
                                     ),
@@ -172,8 +180,6 @@ class _AuthLoginState extends State<AuthLogin> {
         var body = json.decode(response.body);
 
         if (body['status']) {
-            LocalStorage.prefs.setString('token', json.encode(body['access_token']));
-            
             if (!mounted) return;
             Navigator.pushNamed(context, 'home');
         } else {
