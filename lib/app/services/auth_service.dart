@@ -16,6 +16,10 @@ class AuthService extends ChangeNotifier{
 	late String _apiUriLogout;
 	late String _apiUriRefreshToken;
 
+    Map<String, String> headers = {
+        'Content-Type': 'application/json'
+    };
+
     AuthService() {
         _apiUri = dotenv.get('API_URL') + dotenv.get('API_VERSION');
         _apiUriLogin = '$_apiUri/auth/login';
@@ -25,13 +29,9 @@ class AuthService extends ChangeNotifier{
 		_apiUriRefreshToken = '$_apiUri/auth/refresh-token';
     }
 
-    httpHeaders() => {
-        'Content-Type': 'application/json'
-    };
-
     login(Map<String, String> data) async {
         var uri = Uri.parse(_apiUriLogin);
-        final response = await http.post(uri, body: jsonEncode(data), headers: httpHeaders());
+        final response = await http.post(uri, body: jsonEncode(data), headers: headers);
         final Map<String, dynamic> responseBody = json.decode(response.body);
 
         if(responseBody.containsKey('token')) {
@@ -44,21 +44,52 @@ class AuthService extends ChangeNotifier{
 
     register(data) async {
         var uri = Uri.parse(_apiUriRegister);
-        return await http.post(uri, body: data, headers: httpHeaders());
+        return await http.post(uri, body: data, headers: headers);
     }
 
     forgotPassword(data) async {
         var uri = Uri.parse(_apiUriForgotPassword);
-        return await http.post(uri, body: data, headers: httpHeaders());
+        return await http.post(uri, body: data, headers: headers);
     }
 
-    logout() async {
+    Future<String?> logout() async {
         var uri = Uri.parse(_apiUriLogout);
-        httpHeaders()['Authorization'] = 'Bearer ${dotenv.get('API_TOKEN')}';
-        return await http.post(uri, headers: httpHeaders());
+        var token = await storage.read(key: 'token');
+        headers['Authorization'] = 'Bearer $token';        
+        var response = await http.post(uri, headers: headers);
+        
+        if(response.statusCode == 200) {
+            await storage.deleteAll();
+        }
+
+        return response.body;
     }
 
     Future<String?> getToken() async {
         return await storage.read(key: 'token');
+    }
+
+    Future<String?> getExpiresAt() async {
+        return await storage.read(key: 'expires_at');
+    }
+
+    Future<bool> isLoggedIn() async {
+        var token = await getToken();
+        var expiresAt = await getExpiresAt();
+
+        if(token != null && expiresAt != null) {
+            var now = DateTime.now();
+            var expiresAtDate = DateTime.parse(expiresAt);
+
+            if(now.isBefore(expiresAtDate)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    Future<bool> isLoggedOut() async {
+        return !(await isLoggedIn());
     }
 }
