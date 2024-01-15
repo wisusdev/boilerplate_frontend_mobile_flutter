@@ -61,7 +61,7 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
 
                                     const SizedBox(height: 20),
 
-                                    Text(Location.of(context)!.trans('forget_password_instructions'), style: const TextStyle( fontSize: 16)),
+                                    Text(Location.of(context)!.trans('forgotPasswordInstructions'), style: const TextStyle( fontSize: 16)),
 
                                     const SizedBox(height: 20),
 
