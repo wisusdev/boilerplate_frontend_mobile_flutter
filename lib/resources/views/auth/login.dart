@@ -26,7 +26,7 @@ class _AuthLoginState extends State<AuthLogin> {
 
 		return Scaffold(
             appBar: AppBar(
-				title: const Text('Inicio de sesión'),
+				title: Text(Location.of(context)!.trans('logIn')),
 			),
 	  		body: Center(
 				child: Container(
@@ -110,7 +110,7 @@ class _AuthLoginState extends State<AuthLogin> {
 														onTap: () {
 															Navigator.pushNamed(context, 'forgot_password');
 														},
-														child: Text(Location.of(context)!.trans('forgot_your_pwd')),
+														child: Text(Location.of(context)!.trans('forgotYourPwd')),
 													)
 												],
 											),
@@ -137,7 +137,7 @@ class _AuthLoginState extends State<AuthLogin> {
 														);
 													}
 												}, 
-												child: Text(Location.of(context)!.trans('sign_in'), style: const TextStyle(fontSize: 16))
+												child: Text(Location.of(context)!.trans('signIn'), style: const TextStyle(fontSize: 16))
 											),    
 
 											const SizedBox(height: 10),
@@ -152,12 +152,12 @@ class _AuthLoginState extends State<AuthLogin> {
 									child: Row(
 										mainAxisAlignment: MainAxisAlignment.center,
 										children: [
-											Text(Location.of(context)!.trans('you_dont_have_an_account')),
+											Text(Location.of(context)!.trans('youDontHaveAnAccount')),
 											InkWell(
 												onTap: () {
 													Navigator.pushNamed(context, 'register');
 												},
-												child: Text(' ${Location.of(context)!.trans('sign_up')}', style: const TextStyle(fontWeight: FontWeight.bold)),
+												child: Text(' ${Location.of(context)!.trans('signUp')}', style: const TextStyle(fontWeight: FontWeight.bold)),
 											),
 										],
 									),
