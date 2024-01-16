@@ -31,7 +31,7 @@ class AuthService extends ChangeNotifier{
 
     login(Map<String, String> data) async {
         var uri = Uri.parse(_apiUriLogin);
-        final response = await http.post(uri, body: jsonEncode(data), headers: headers);
+        final response = await http.post(uri, body: json.encode(data), headers: headers);
         final Map<String, dynamic> responseBody = json.decode(response.body);
 
         if(responseBody.containsKey('token')) {
@@ -49,7 +49,12 @@ class AuthService extends ChangeNotifier{
 
     forgotPassword(data) async {
         var uri = Uri.parse(_apiUriForgotPassword);
-        return await http.post(uri, body: data, headers: headers);
+        var response = await http.post(uri, body: json.encode(data), headers: headers);
+        if(response.statusCode == 200) {
+            return json.decode(response.body);
+        } else {
+            throw Exception('Unexpected response ${response.body}');
+        }
     }
 
     Future<String?> logout() async {
