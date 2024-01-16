@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/services/auth_service.dart';
+import 'package:todolist_flutter/resources/widgets/snack_bar.dart';
 
 class AuthLogin extends StatefulWidget {
 	const AuthLogin({super.key});
@@ -130,7 +131,7 @@ class _AuthLoginState extends State<AuthLogin> {
 													if (_formKey.currentState!.validate()) {
 														_formKey.currentState!.save();
 														
-														login();
+														login(context);
 
 														ScaffoldMessenger.of(context).showSnackBar(
 															const SnackBar(content: Text('Procesando datos...'))
@@ -170,7 +171,7 @@ class _AuthLoginState extends State<AuthLogin> {
 		);
   	}
 
-    void login() async {
+    void login(context) async {
         setState(() {
             _isLoading = true;
         });
@@ -187,9 +188,8 @@ class _AuthLoginState extends State<AuthLogin> {
             if (!mounted) return;
             Navigator.pushNamed(context, 'home');
         } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(body['message']))
-            );
+            getScafoldMessage(context, body['message']);
+
         }
 
         setState(() {
