@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
+import 'package:todolist_flutter/app/services/auth_service.dart';
+import 'package:todolist_flutter/resources/widgets/snack_bar.dart';
 
 class AuthForgotPassword extends StatefulWidget {
   	const AuthForgotPassword({super.key});
@@ -11,24 +13,10 @@ class AuthForgotPassword extends StatefulWidget {
 class _AuthForgotPasswordState extends State<AuthForgotPassword> {
 	final _formKey = GlobalKey<FormState>();
 
-  	final TextEditingController _emailController = TextEditingController();
+	bool _isLoading = false;
   	
-	bool _isEmailValid = false;
-
-  	@override
-  	void dispose() {
-    	_emailController.dispose();
-    	super.dispose();
-  	}
-
-  	void _validateEmail(String email) {
-		// Validar el correo electrónico aquí
-		// Puedes usar una expresión regular o cualquier otra lógica de validación
-		setState(() {
-		_isEmailValid = email.isNotEmpty;
-		});
-  	}
-
+    final TextEditingController _emailController = TextEditingController();
+  	
   	@override
   	Widget build(BuildContext context) {
 		final sizeWith = MediaQuery.of(context).size.width;
@@ -65,17 +53,28 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
 
                                     const SizedBox(height: 20),
 
-                                    TextField(
+                                    TextFormField(
                                         controller: _emailController,
                                         decoration: InputDecoration(
                                             labelText: Location.of(context)!.trans('email'),
                                             prefixIcon: const Icon(Icons.email_outlined),
                                             border: const OutlineInputBorder(),
                                         ),
-                                        onChanged: _validateEmail,
+                                        validator: (value) {
+                                            if (value!.isEmpty) {
+												return 'Por favor ingresa tu correo electrónico';
+											}
+
+											if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+											    return 'Por favor ingresa un correo electrónico válido';
+											}
+
+											return null;
+                                        },
                                     ),
 
                                     const SizedBox(height: 30),
+
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                             backgroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -85,8 +84,14 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
                                                 borderRadius: BorderRadius.circular(20),
                                             ),
                                         ),
-                                        onPressed: _isEmailValid ? () {} : null,
-                                        child: Text(Location.of(context)!.trans('reset_pwd')),
+                                        onPressed: (){
+                                            if (_formKey.currentState!.validate()) {
+                                                _formKey.currentState!.save();
+
+                                                forgotPassword(context);
+                                            }
+                                        },
+                                        child: Text(Location.of(context)!.trans('resetPwd')),
                                     ),
                                 ],
                             ),
@@ -96,4 +101,27 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
             ),
     	);
   	}
+
+    void forgotPassword(context) async {
+
+        setState(() {
+            _isLoading = true;
+        });
+
+        Map<String, dynamic> data = {
+            'email': _emailController.text,
+        };
+
+        var response = await AuthService().forgotPassword(data);
+        if(response['user_found']){
+            getScafoldMessage(context, response['message']);
+            Navigator.pushNamed(context, 'login');
+        } else {
+            getScafoldMessage(context, response['message']);
+        }
+
+        setState(() {
+            _isLoading = false;
+        });
+    }
 }
