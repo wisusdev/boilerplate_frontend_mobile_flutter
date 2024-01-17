@@ -44,7 +44,8 @@ class AuthService extends ChangeNotifier{
 
     register(data) async {
         var uri = Uri.parse(_apiUriRegister);
-        return await http.post(uri, body: data, headers: headers);
+        var response = await http.post(uri, body: json.encode(data), headers: headers);
+        return json.decode(response.body);
     }
 
     forgotPassword(data) async {
