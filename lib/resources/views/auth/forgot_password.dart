@@ -13,7 +13,6 @@ class AuthForgotPassword extends StatefulWidget {
 class _AuthForgotPasswordState extends State<AuthForgotPassword> {
 	final _formKey = GlobalKey<FormState>();
 
-	bool _isLoading = false;
   	
     final TextEditingController _emailController = TextEditingController();
   	
@@ -105,7 +104,6 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
     void forgotPassword(context) async {
 
         setState(() {
-            _isLoading = true;
         });
 
         Map<String, dynamic> data = {
@@ -121,7 +119,6 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
         }
 
         setState(() {
-            _isLoading = false;
         });
     }
 }
