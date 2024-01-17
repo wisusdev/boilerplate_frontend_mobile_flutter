@@ -15,8 +15,6 @@ class AuthLogin extends StatefulWidget {
 class _AuthLoginState extends State<AuthLogin> {
   	final _formKey = GlobalKey<FormState>();
     
-    bool _isLoading = false;
-
     final TextEditingController _emailController = TextEditingController();
 	final TextEditingController _passwordController = TextEditingController();
 
@@ -133,9 +131,7 @@ class _AuthLoginState extends State<AuthLogin> {
 														
 														login(context);
 
-														ScaffoldMessenger.of(context).showSnackBar(
-															const SnackBar(content: Text('Procesando datos...'))
-														);
+                                                        getScafoldMessage(context, 'Procesando datos...');
 													}
 												}, 
 												child: Text(Location.of(context)!.trans('signIn'), style: const TextStyle(fontSize: 16))
@@ -172,10 +168,6 @@ class _AuthLoginState extends State<AuthLogin> {
   	}
 
     void login(context) async {
-        setState(() {
-            _isLoading = true;
-        });
-
         Map<String, String> data = {
             'email': _emailController.text,
             'password': _passwordController.text,
@@ -191,9 +183,5 @@ class _AuthLoginState extends State<AuthLogin> {
             getScafoldMessage(context, body['message']);
 
         }
-
-        setState(() {
-            _isLoading = false;
-        });
     }
 }
