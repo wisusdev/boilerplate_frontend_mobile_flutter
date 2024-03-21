@@ -217,7 +217,7 @@ class _AuthRegisterState extends State<AuthRegister> {
                                         children: [
                                             Text(Location.of(context)!.trans('alreadyHaveAnAccount')),
                                             TextButton(
-                                                child: Text(Location.of(context)!.trans('sign_in')),
+                                                child: Text(Location.of(context)!.trans('signIn')),
                                                 onPressed: () {
                                                     Navigator.pushNamed(context, 'login');
                                                 },
