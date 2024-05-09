@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/services/auth_service.dart';
 import 'package:todolist_flutter/resources/widgets/snack_bar.dart';
+import 'package:todolist_flutter/config/app.dart';
 
 class AuthLogin extends StatefulWidget {
 	const AuthLogin({super.key});
@@ -25,7 +26,7 @@ class _AuthLoginState extends State<AuthLogin> {
 
 		return Scaffold(
             appBar: AppBar(
-				title: Text(Location.of(context)!.trans('logIn')),
+				title: Text(Location.of(context)!.trans('welcomeBack')),
 			),
 	  		body: Center(
 				child: Container(
@@ -44,33 +45,30 @@ class _AuthLoginState extends State<AuthLogin> {
 												mainAxisAlignment: MainAxisAlignment.center,
 												children: [
 													Image(
-														image: AssetImage('lib/assets/images/wisus-logo.png'), 
+														image: AssetImage(logoApp), 
 														width: 80,
 														height: 80,
 													),
 												],
 											),
 									
-											const SizedBox(height: 20),
+											const SizedBox(height: 40),
 															
-											//const Text('Login', style: TextStyle(fontFamily: 'bool', fontSize: 22, fontWeight: FontWeight.bold)),
-										
-											const SizedBox(height: 20),
-									
 											TextFormField(
 												controller: _emailController,
+                                                keyboardType: TextInputType.emailAddress,
 												decoration: InputDecoration(
-													labelText: Location.of(context)!.trans('email'), 
+													labelText: Location.of(context)!.trans('email'),
 													prefixIcon: const Icon(Icons.email_outlined),
 													border: const OutlineInputBorder(),
 												),
 												validator: (value) {
 													if (value!.isEmpty) {
-														return 'Por favor ingresa tu correo electrónico';
+														return Location.of(context)!.trans('validation.emailRequired');
 													}
 
-													if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-														return 'Por favor ingresa un correo electrónico válido';
+													if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+														return Location.of(context)!.trans('validation.emailEmail');
 													}
 
 													return null;
@@ -81,6 +79,7 @@ class _AuthLoginState extends State<AuthLogin> {
 										
 											TextFormField(
 												controller: _passwordController,
+                                                keyboardType: TextInputType.visiblePassword,
 												decoration: InputDecoration(
 													labelText: Location.of(context)!.trans('password'),  
 													prefixIcon: const Icon(Icons.lock_outline),
@@ -109,7 +108,7 @@ class _AuthLoginState extends State<AuthLogin> {
 														onTap: () {
 															Navigator.pushNamed(context, 'forgot_password');
 														},
-														child: Text(Location.of(context)!.trans('forgotYourPwd')),
+														child: Text(Location.of(context)!.trans('forgotPassword')),
 													)
 												],
 											),
@@ -134,7 +133,7 @@ class _AuthLoginState extends State<AuthLogin> {
                                                         getScafoldMessage(context, 'Procesando datos...');
 													}
 												}, 
-												child: Text(Location.of(context)!.trans('signIn'), style: const TextStyle(fontSize: 16))
+												child: Text(Location.of(context)!.trans('login'), style: const TextStyle(fontSize: 16))
 											),    
 
 											const SizedBox(height: 10),
@@ -149,12 +148,12 @@ class _AuthLoginState extends State<AuthLogin> {
 									child: Row(
 										mainAxisAlignment: MainAxisAlignment.center,
 										children: [
-											Text(Location.of(context)!.trans('youDontHaveAnAccount')),
+											Text(Location.of(context)!.trans('dontHaveAccount')),
 											InkWell(
 												onTap: () {
 													Navigator.pushNamed(context, 'register');
 												},
-												child: Text(' ${Location.of(context)!.trans('signUp')}', style: const TextStyle(fontWeight: FontWeight.bold)),
+												child: Text(' ${Location.of(context)!.trans('registerHere')}', style: const TextStyle(fontWeight: FontWeight.bold)),
 											),
 										],
 									),
