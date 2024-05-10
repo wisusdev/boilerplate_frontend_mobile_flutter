@@ -1,7 +1,7 @@
-String capitalizeText(String texto) {
-    if (texto.isEmpty) {
-        return texto;
+String capitalizeText(String text) {
+    if (text.isEmpty) {
+        return text;
     }
   
-    return texto[0].toUpperCase() + texto.substring(1);
+    return text[0].toUpperCase() + text.substring(1);
 }
