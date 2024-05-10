@@ -170,7 +170,7 @@ class _AuthLoginState extends State<AuthLogin> {
         };
 
         bool loginResponse = await AuthService().login(data: data);
-        print(loginResponse);
+
         if(loginResponse){
             Navigator.pushNamed(context, 'home');
         } else {
