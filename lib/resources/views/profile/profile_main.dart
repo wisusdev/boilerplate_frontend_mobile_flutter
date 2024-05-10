@@ -3,7 +3,7 @@ import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/helpers/text.dart';
 import 'package:todolist_flutter/app/models/user_model.dart';
 import 'package:todolist_flutter/app/services/auth_service.dart';
-import 'package:todolist_flutter/app/services/user_service.dart';
+import 'package:todolist_flutter/app/services/profile_service.dart';
 
 class ProfileMain extends StatefulWidget {
     const ProfileMain({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class ProfileMain extends StatefulWidget {
 
 class _ProfileMainState extends State<ProfileMain> {
 
-    final UserService _userService = UserService();
+    final ProfileService _userService = ProfileService();
     final AuthService _authService = AuthService();
 
     late Future<UserModel> userInfo;
