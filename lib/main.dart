@@ -3,8 +3,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:provider/provider.dart';
+import 'package:todolist_flutter/app/guards/auth_guard.dart';
 import 'package:todolist_flutter/app/preferences/language_preferences.dart';
 import 'package:todolist_flutter/app/preferences/theme_preferences.dart';
+import 'package:todolist_flutter/app/providers/auth_provider.dart';
 import 'package:todolist_flutter/app/providers/language_provider.dart';
 import 'package:todolist_flutter/app/services/auth_service.dart';
 import 'package:todolist_flutter/config/app.dart';
@@ -14,7 +16,7 @@ import 'package:todolist_flutter/app/providers/theme_provider.dart';
 import 'package:todolist_flutter/app/helpers/location_delegate.dart';
 import 'package:todolist_flutter/resources/themes/dark_theme.dart';
 import 'package:todolist_flutter/resources/themes/light_theme.dart';
-import 'package:todolist_flutter/resources/views/auth/check_auth.dart';
+import 'package:todolist_flutter/resources/views/home.dart';
 import 'package:todolist_flutter/routes/router.dart';
 
 
@@ -25,10 +27,9 @@ void main() async {
   	runApp(
         MultiProvider(
             providers: [
-                ChangeNotifierProvider(create: (context) => ThemeProvider(
-                    themeMode: ThemePreferences.getThemeMode()
-                )),
+                ChangeNotifierProvider(create: (context) => ThemeProvider(themeMode: ThemePreferences.getThemeMode())),
                 ChangeNotifierProvider(create: (context) => AuthService()),
+                ChangeNotifierProvider(create: (context) => AuthProvider()),
             ], 
             child: const MyApp()
         ),
@@ -68,7 +69,7 @@ class MyApp extends StatelessWidget {
                         themeMode: Provider.of<ThemeProvider>(context).themeMode,
 
                         // Rutas
-                        home: const CheckAuth(),
+                        home: const AuthGuard(child: HomeView()),
                         routes: routes,
                     );
                 },
