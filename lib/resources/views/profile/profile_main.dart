@@ -1,9 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/helpers/text.dart';
-import 'package:todolist_flutter/app/models/user_model.dart';
+import 'package:todolist_flutter/app/interfaces/local/local_user_info.dart';
 import 'package:todolist_flutter/app/services/auth_service.dart';
-import 'package:todolist_flutter/app/services/profile_service.dart';
 
 class ProfileMain extends StatefulWidget {
     const ProfileMain({Key? key}) : super(key: key);
@@ -14,20 +16,7 @@ class ProfileMain extends StatefulWidget {
 
 class _ProfileMainState extends State<ProfileMain> {
 
-    final ProfileService _userService = ProfileService();
     final AuthService _authService = AuthService();
-
-    late Future<UserModel> userInfo;
-
-    @override
-    void initState() {
-        super.initState();
-        userInfo = _fetchUserInfo();
-    }
-
-    Future<UserModel> _fetchUserInfo() async {
-        return await _userService.userInfo();
-    }
 
     @override
     Widget build(BuildContext context) {
@@ -70,48 +59,38 @@ class _ProfileMainState extends State<ProfileMain> {
                     ),
                 ],
             ),
-            body: futureUserModel(),
+            body: FutureBuilder(
+                future: futureUserModel(),
+                builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                    } else {
+                        return profile(snapshot.data as LocalUserInfo);
+                    }
+                },
+            
+            ),
         );
     }
 
-    futureUserModel() {
-        return FutureBuilder<UserModel>(
-            future: userInfo,
-            builder: (context, snapshot) {
-                if(snapshot.connectionState == ConnectionState.waiting){
-                    return const Center(child: CircularProgressIndicator());
-                } else if(snapshot.hasError){
-                    return const Center(child: Text('Error'));
-                } else {
-                    UserModel userInfo = snapshot.data!;
-                    return profile(userInfo);
-                }
-            },
-        );
+    Future<LocalUserInfo> futureUserModel() async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        String user = prefs.getString('user') ?? '';
+        return LocalUserInfo.fromJson(jsonDecode(user));
     }
 
-    profile(userInfo){
+    profile(LocalUserInfo userInfo){
         return Center(
             child: Column(
                 children: [
                     ListTile(
-                        title: const Text('First Name', style: TextStyle(fontWeight: FontWeight.bold)),
-                        subtitle: Text(userInfo.data.email),
-                    ),
-
-                    ListTile(
-                        title: const Text('Last Name', style: TextStyle(fontWeight: FontWeight.bold)),
-                        subtitle: Text(userInfo.data.email),
+                        title: const Text('Name', style: TextStyle(fontWeight: FontWeight.bold)),
+                        subtitle: Text('${userInfo.firstName} ${userInfo.lastName}'),
                     ),
 
                     ListTile(
                         title: const Text('Username', style: TextStyle(fontWeight: FontWeight.bold)),
-                        subtitle: Text(userInfo.data.email),
-                    ),
-
-                    ListTile(
-                        title: const Text('Email', style: TextStyle(fontWeight: FontWeight.bold)),
-                        subtitle: Text(userInfo.data.email),
+                        subtitle: Text(userInfo.username),
                     ),
                 ],
             ),
