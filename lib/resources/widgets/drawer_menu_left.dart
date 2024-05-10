@@ -38,7 +38,7 @@ class _DrawerMenuLeftState extends State<DrawerMenuLeft> {
 			children: [
 				Padding(
 					padding: EdgeInsets.fromLTRB(28, hasNotch ? 0 : 20, 16, 10),
-					child: const Text('Main'),
+					child: Text(capitalizeText(Location.of(context)!.trans('home'))),
 				),
 
 				...appMenuItems.map((item) => NavigationDrawerDestination(
