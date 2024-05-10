@@ -7,6 +7,7 @@ import 'package:todolist_flutter/app/preferences/language_preferences.dart';
 import 'package:todolist_flutter/app/preferences/theme_preferences.dart';
 import 'package:todolist_flutter/app/providers/language_provider.dart';
 import 'package:todolist_flutter/app/services/auth_service.dart';
+import 'package:todolist_flutter/config/app.dart';
 import 'package:todolist_flutter/config/languages.dart';
 import 'package:todolist_flutter/app/helpers/local_storage.dart';
 import 'package:todolist_flutter/app/providers/theme_provider.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
                 builder: (context, languageProvider, child) {
                     return MaterialApp(
                         // Titulo de la app
-                        title: 'Flutter Demo',
+						title: appName,
 
                         // Desactivar el banner de debug
                         debugShowCheckedModeBanner: false,
