@@ -22,12 +22,5 @@ const appMenuItems = <MenuItem>[
 		subTitle: 'Settings app', 
 		link: 'setting', 
 		icon: Icons.settings
-	),
-
-    MenuItem(
-        title: 'logout', 
-        subTitle: 'Logout app', 
-        link: 'logout', 
-        icon: Icons.logout
-    ),
+	)
 ];
