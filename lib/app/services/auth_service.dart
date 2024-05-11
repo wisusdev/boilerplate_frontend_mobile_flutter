@@ -43,6 +43,24 @@ class AuthService extends ChangeNotifier {
     	return success;
   	}
 
+    logout() async {
+        var uri = Uri.parse(_apiUriLogout);
+        bool success = false;
+
+        await client.post(uri).then((response) async {
+            if (response.statusCode == 200) {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.remove('user');
+                prefs.remove('permissions');
+                prefs.remove('user_key');
+                prefs.remove('access_token');
+                success = true;
+            }
+        });
+
+        return success;
+    }
+
   register(data) async {
     var uri = Uri.parse(_apiUriRegister);
     var response = await client.post(uri, body: json.encode(data));
@@ -59,16 +77,7 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<String?> logout() async {
-    var uri = Uri.parse(_apiUriLogout);
-    var response = await client.post(uri);
-
-    if (response.statusCode == 200) {
-      await storage.deleteAll();
-    }
-
-    return response.body;
-  }
+  
 
   Future<String?> getToken() async {
     return await storage.read(key: 'token');
