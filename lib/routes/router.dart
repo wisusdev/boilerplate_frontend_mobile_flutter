@@ -4,7 +4,7 @@ import 'package:todolist_flutter/resources/views/auth/forgot_password.dart';
 import 'package:todolist_flutter/resources/views/auth/login.dart';
 import 'package:todolist_flutter/resources/views/auth/register.dart';
 import 'package:todolist_flutter/resources/views/home.dart';
-import 'package:todolist_flutter/resources/views/profile/profile_main.dart';
+import 'package:todolist_flutter/resources/views/account/profile_main.dart';
 import 'package:todolist_flutter/resources/views/settings/language_main.dart';
 import 'package:todolist_flutter/resources/views/settings/setting_main.dart';
 import 'package:todolist_flutter/resources/views/settings/theme_main.dart';
