@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/services/auth_service.dart';
+import 'package:todolist_flutter/config/app.dart';
 import 'package:todolist_flutter/resources/widgets/snack_bar.dart';
 
 class AuthRegister extends StatefulWidget {
@@ -44,24 +45,16 @@ class _AuthRegisterState extends State<AuthRegister> {
                                             const Row(
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
-                                                    Image(
-                                                        image: AssetImage('lib/assets/images/wisus-logo.png'), 
-                                                        width: 80,
-                                                        height: 80,
-                                                    ),
+                                                    Image(image: AssetImage(logoApp), width: 80, height: 80,),
                                                 ],
                                             ),
 
-                                            const SizedBox(height: 20),
-
-                                            //const Text('Registro', style: TextStyle(fontFamily: 'bool', fontSize: 22, fontWeight: FontWeight.bold)),
-
-                                            const SizedBox(height: 20),
+                                            const SizedBox(height: 40),
 
                                             TextFormField(
                                                 controller: _usernameController,
                                                 decoration: InputDecoration(
-                                                    labelText: Location.of(context)!.trans('username'), 
+                                                    labelText: Location.of(context)!.trans('userName'), 
                                                     prefixIcon: const Icon(Icons.person_outline),
                                                     border: const OutlineInputBorder(),
                                                 ),
@@ -69,7 +62,6 @@ class _AuthRegisterState extends State<AuthRegister> {
                                                     if (value!.isEmpty) {
                                                         return 'Por favor ingresa tu nombre';
                                                     }
-                                                    // Aquí puedes agregar más validaciones para el nombre
                                                     return null;
                                                 },
                                             ),
@@ -202,7 +194,7 @@ class _AuthRegisterState extends State<AuthRegister> {
                                                         getScafoldMessage(context, 'Procesando registro...');
                                                     }
                                                 }, 
-                                                child: Text(Location.of(context)!.trans('signUp'))
+                                                child: Text(Location.of(context)!.trans('register'))
                                             ),
                                         ],
                                     ),
@@ -215,9 +207,9 @@ class _AuthRegisterState extends State<AuthRegister> {
                                     child: Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                            Text(Location.of(context)!.trans('alreadyHaveAnAccount')),
+                                            Text(Location.of(context)!.trans('alreadyAccount')),
                                             TextButton(
-                                                child: Text(Location.of(context)!.trans('signIn')),
+                                                child: Text(Location.of(context)!.trans('loginHere')),
                                                 onPressed: () {
                                                     Navigator.pushNamed(context, 'login');
                                                 },
@@ -235,6 +227,7 @@ class _AuthRegisterState extends State<AuthRegister> {
 
     void register(context) async {
         Map<String, String> data = {
+            'type': 'users',
             'username': _usernameController.text,
             'first_name': _firstnameController.text,
             'last_name': _lastnameController.text,
@@ -243,14 +236,12 @@ class _AuthRegisterState extends State<AuthRegister> {
             'password_confirmation': _confirmPasswordController.text,
         };
 
-        var response = await AuthService().register(data);
+        var registerResponse = await AuthService().register(data);
 
-        if (response['status']) {
-            if (!mounted) return;
-            getScafoldMessage(context, 'Registro exitoso', backgroundColor: Colors.green);
+        if (registerResponse) {
             Navigator.pushNamed(context, 'login');
         } else {
-            getScafoldMessage(context, response);
+            getScafoldMessage(context, registerResponse);
         }
     }
 }
