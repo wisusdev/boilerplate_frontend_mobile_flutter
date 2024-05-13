@@ -43,6 +43,18 @@ class AuthService extends ChangeNotifier {
     	return success;
   	}
 
+    register({required Map<String, String> data}) async {
+        var uri = Uri.parse(_apiUriRegister);
+        bool success = false;
+        await client.post(uri, body: json.encode(data)).then((value) => {
+            if (value.statusCode == 200) {
+                success = true
+            }
+        });
+
+        return success;
+    }
+
     logout() async {
         var uri = Uri.parse(_apiUriLogout);
         bool success = false;
@@ -73,38 +85,4 @@ class AuthService extends ChangeNotifier {
 
         return success;
     }
-
-  register(data) async {
-    var uri = Uri.parse(_apiUriRegister);
-    var response = await client.post(uri, body: json.encode(data));
-    return json.decode(response.body);
-  }
-
-  Future<String?> getToken() async {
-    return await storage.read(key: 'token');
-  }
-
-  Future<String?> getExpiresAt() async {
-    return await storage.read(key: 'expires_at');
-  }
-
-  Future<bool> isLoggedIn() async {
-    var token = await getToken();
-    var expiresAt = await getExpiresAt();
-
-    if (token != null && expiresAt != null) {
-      var now = DateTime.now();
-      var expiresAtDate = DateTime.parse(expiresAt);
-
-      if (now.isBefore(expiresAtDate)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  Future<bool> isLoggedOut() async {
-    return !(await isLoggedIn());
-  }
 }
