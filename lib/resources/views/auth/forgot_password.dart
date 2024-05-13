@@ -48,6 +48,7 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
                                         const SizedBox(height: 20),
 
                                         TextFormField(
+                                            controller: _emailController,
                                             keyboardType: TextInputType.emailAddress,
                                             decoration: InputDecoration(
                                                 labelText: Location.of(context)!.trans('email'),
@@ -120,16 +121,18 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
   	}
 
     void forgotPassword(context) async {
-        Map<String, dynamic> data = {
+
+        Map<String, String> data = {
+            'type': 'users',
             'email': _emailController.text,
         };
 
-        var response = await AuthService().forgotPassword(data);
-        if(response['user_found']){
-            getScafoldMessage(context, response['message']);
+        var responseForgotPassword = await AuthService().forgotPassword(data: data);
+        
+        if(responseForgotPassword){
             Navigator.pushNamed(context, 'login');
         } else {
-            getScafoldMessage(context, response['message']);
+            getScafoldMessage(context, 'No se pudo enviar el correo de recuperación de contraseña');
         }
     }
 }
