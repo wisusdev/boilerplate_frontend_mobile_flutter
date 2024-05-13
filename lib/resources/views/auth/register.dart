@@ -212,7 +212,11 @@ class _AuthRegisterState extends State<AuthRegister> {
         var registerResponse = await AuthService().register(data: data);
 
         if (registerResponse) {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AuthLogin()));
+            Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(builder: (context) => const AuthLogin()), 
+                (route) => false
+            );
         } else {
             getScafoldMessage(context, 'Error al registrar');
         }
