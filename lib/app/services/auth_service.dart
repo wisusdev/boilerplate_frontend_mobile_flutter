@@ -47,7 +47,7 @@ class AuthService extends ChangeNotifier {
         var uri = Uri.parse(_apiUriRegister);
         bool success = false;
         await client.post(uri, body: json.encode(data)).then((value) => {
-            if (value.statusCode == 200) {
+            if (value.statusCode == 201) {
                 success = true
             }
         });
