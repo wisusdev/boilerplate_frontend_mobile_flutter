@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/services/auth_service.dart';
+import 'package:todolist_flutter/resources/views/home.dart';
 import 'package:todolist_flutter/resources/widgets/snack_bar.dart';
 import 'package:todolist_flutter/config/app.dart';
 
@@ -163,7 +164,11 @@ class _AuthLoginState extends State<AuthLogin> {
         bool loginResponse = await AuthService().login(data: data);
 
         if(loginResponse){
-            Navigator.pushNamed(context, 'home');
+            Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(builder: (context) => const HomeView()), 
+                (route) => false
+            );
         } else {
             getScafoldMessage(context, 'Error al iniciar sesión');
         }
