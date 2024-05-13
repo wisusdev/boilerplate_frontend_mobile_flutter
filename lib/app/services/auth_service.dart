@@ -61,23 +61,24 @@ class AuthService extends ChangeNotifier {
         return success;
     }
 
+    forgotPassword({required Map<String, String> data}) async {
+        var uri = Uri.parse(_apiUriForgotPassword);
+        bool success = false;
+        
+        await client.post(uri, body: json.encode(data)).then((value) => {
+            if (value.statusCode == 200) {
+                success = true
+            }
+        });
+
+        return success;
+    }
+
   register(data) async {
     var uri = Uri.parse(_apiUriRegister);
     var response = await client.post(uri, body: json.encode(data));
     return json.decode(response.body);
   }
-
-  forgotPassword(data) async {
-    var uri = Uri.parse(_apiUriForgotPassword);
-    var response = await client.post(uri, body: json.encode(data));
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Unexpected response ${response.body}');
-    }
-  }
-
-  
 
   Future<String?> getToken() async {
     return await storage.read(key: 'token');
