@@ -209,7 +209,7 @@ class _AuthRegisterState extends State<AuthRegister> {
         if (registerResponse) {
             Navigator.pushNamed(context, 'login');
         } else {
-            getScafoldMessage(context, registerResponse);
+            getScafoldMessage(context, 'Error al registrar');
         }
     }
 }
