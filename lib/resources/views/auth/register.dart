@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/services/auth_service.dart';
 import 'package:todolist_flutter/config/app.dart';
+import 'package:todolist_flutter/resources/views/auth/login.dart';
 import 'package:todolist_flutter/resources/widgets/snack_bar.dart';
 
 class AuthRegister extends StatefulWidget {
@@ -177,7 +178,11 @@ class _AuthRegisterState extends State<AuthRegister> {
                                             children: [
                                                 InkWell(
                                                     onTap: () {
-                                                        Navigator.pushNamed(context, 'login');
+                                                        Navigator.pushAndRemoveUntil(
+                                                            context, 
+                                                            MaterialPageRoute(builder: (context) => const AuthLogin()), 
+                                                            (route) => false
+                                                        );
                                                     },
                                                     child: Text(Location.of(context)!.trans('login'), style: const TextStyle(fontFamily: 'Sofia'))
                                                 )
@@ -204,10 +209,10 @@ class _AuthRegisterState extends State<AuthRegister> {
             'password_confirmation': _confirmPasswordController.text,
         };
 
-        var registerResponse = await AuthService().register(data);
+        var registerResponse = await AuthService().register(data: data);
 
         if (registerResponse) {
-            Navigator.pushNamed(context, 'login');
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AuthLogin()));
         } else {
             getScafoldMessage(context, 'Error al registrar');
         }
