@@ -25,7 +25,7 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
             child: Scaffold(
                 body: SingleChildScrollView(
                     reverse: true,
-                    padding: EdgeInsets.only(left: 10, right: 10, top: size.height * 0.08, bottom: size.height * 0.06),
+                    padding: EdgeInsets.only(left: 20, right: 20, top: size.height * 0.08, bottom: size.height * 0.06),
                     child: Form(
                         key: _formKey,
                         child: Column(
