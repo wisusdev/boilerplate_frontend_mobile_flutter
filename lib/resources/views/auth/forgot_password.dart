@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/services/auth_service.dart';
 import 'package:todolist_flutter/config/app.dart';
+import 'package:todolist_flutter/resources/views/auth/login.dart';
 import 'package:todolist_flutter/resources/widgets/snack_bar.dart';
 
 class AuthForgotPassword extends StatefulWidget {
@@ -104,7 +105,11 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
                                             children: [
                                                 InkWell(
                                                     onTap: () {
-                                                        Navigator.pushNamed(context, 'login');
+                                                        Navigator.pushAndRemoveUntil(
+                                                            context, 
+                                                            MaterialPageRoute(builder: (context) => const AuthLogin()), 
+                                                            (route) => false
+                                                        );
                                                     },
                                                     child: Text(Location.of(context)!.trans('login'), style: const TextStyle(fontFamily: 'Sofia'))
                                                 )
@@ -130,7 +135,7 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
         var responseForgotPassword = await AuthService().forgotPassword(data: data);
         
         if(responseForgotPassword){
-            Navigator.pushNamed(context, 'login');
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AuthLogin()));
         } else {
             getScafoldMessage(context, 'No se pudo enviar el correo de recuperación de contraseña');
         }
