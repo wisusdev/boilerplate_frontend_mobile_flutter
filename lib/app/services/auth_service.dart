@@ -26,26 +26,30 @@ class AuthService extends ChangeNotifier {
 
     login({required Map<String, String> data}) async {
     	var uri = Uri.parse(_apiUriLogin);
-        bool success = false;
+
+        Map<String, dynamic> responseData = {};
 
         await client.post(uri, body: json.encode(data)).then((response) async {
             final Map<String, dynamic> responseBody = json.decode(response.body);
-            if (response.statusCode == 200) {
+            
+            if (response.statusCode == 200 && responseBody.containsKey('data')) {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.setString('user', json.encode(responseBody['data']['attributes']['user']));
                 prefs.setString('permissions', json.encode(responseBody['data']['relationships']['permissions']));
                 prefs.setString('user_key', responseBody['data']['id']);
                 prefs.setString('access_token', responseBody['data']['relationships']['access']['token']);
-                success = true;
             }
+            
+            responseData = responseBody;
         });
 
-    	return success;
+    	return responseData;
   	}
 
     register({required Map<String, String> data}) async {
         var uri = Uri.parse(_apiUriRegister);
         bool success = false;
+
         await client.post(uri, body: json.encode(data)).then((value) => {
             if (value.statusCode == 201) {
                 success = true
