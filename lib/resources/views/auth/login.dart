@@ -18,6 +18,11 @@ class _AuthLoginState extends State<AuthLogin> {
     final TextEditingController _emailController = TextEditingController();
 	final TextEditingController _passwordController = TextEditingController();
 
+    Map<String, dynamic> errorMessage = {
+        'email': null,
+        'password': null,
+    };
+
   	@override
   	Widget build(BuildContext context) {
         final size = MediaQuery.of(context).size;
@@ -63,6 +68,10 @@ class _AuthLoginState extends State<AuthLogin> {
                                                 if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
                                                     return Location.of(context)!.trans('validation.emailEmail');
                                                 }
+
+                                                if(errorMessage['email'] != null){
+                                                    return errorMessage['email'];
+                                                }
                                                 
                                                 return null;
                                             },
@@ -82,6 +91,10 @@ class _AuthLoginState extends State<AuthLogin> {
 
                                                 if (value.length < 8) {
                                                     return 'La contraseña debe tener al menos 8 caracteres';
+                                                }
+
+                                                if(errorMessage['password'] != null){
+                                                    return errorMessage['password'];
                                                 }
 
                                                 return null;
@@ -119,6 +132,8 @@ class _AuthLoginState extends State<AuthLogin> {
                                                 ))
                                             ),
                                             onPressed: () {
+                                                resetErrorMessages();
+
                                                 if (_formKey.currentState!.validate()) {
                                                     _formKey.currentState!.save();
 
@@ -155,23 +170,48 @@ class _AuthLoginState extends State<AuthLogin> {
     }
 
     void login(context) async {
+
         Map<String, String> data = {
             'type': 'users',
             'email': _emailController.text,
             'password': _passwordController.text,
         };
 
-        bool loginResponse = await AuthService().login(data: data);
+        Map<String, dynamic> loginResponse = await AuthService().login(data: data);
 
-        if(loginResponse){
+        if(loginResponse.containsKey('data')){
             Navigator.pushAndRemoveUntil(
                 context, 
                 MaterialPageRoute(builder: (context) => const HomeView()), 
                 (route) => false
             );
-        } else {
-            getScafoldMessage(context, 'Error al iniciar sesión');
+        } 
+        
+        if(loginResponse.containsKey('errors')){
+            var errors = loginResponse['errors'];
+
+            if(errors is List){
+                for (var error in errors) {
+                    String tile = error['title'];
+                    List<String> titleList = tile.split('.');
+
+                    errorMessage[titleList.last] = Location.of(context)!.trans(error['detail']);
+                }
+            }
+            
+            toastDanger(context, Location.of(context)!.trans('errorAsOccurred'));
+
+            _formKey.currentState!.validate();
         }
+    }
+
+    resetErrorMessages(){
+        setState(() {
+            errorMessage = {
+                'email': null,
+                'password': null,
+            };
+        });
     }
 }
 
