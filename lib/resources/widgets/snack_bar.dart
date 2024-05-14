@@ -17,3 +17,27 @@ getScafoldMessage(BuildContext context, String message, {Duration duration = con
 		),
 	);
 }
+
+toastDanger(BuildContext context, String message) {
+    getScafoldMessage(context, message, backgroundColor: Colors.red);
+}
+
+toastSuccess(BuildContext context, String message) {
+    getScafoldMessage(context, message, backgroundColor: Colors.green);
+}
+
+toastWarning(BuildContext context, String message) {
+    getScafoldMessage(context, message, backgroundColor: Colors.orange);
+}
+
+toastInfo(BuildContext context, String message) {
+    getScafoldMessage(context, message, backgroundColor: Colors.blue);
+}
+
+toastPrimary(BuildContext context, String message) {
+    getScafoldMessage(context, message, backgroundColor: Colors.blue);
+}
+
+toastSecondary(BuildContext context, String message) {
+    getScafoldMessage(context, message, backgroundColor: Colors.blue);
+}
