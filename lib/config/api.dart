@@ -1,6 +1,4 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+const String apiUrl = 'http://10.0.2.2:8000/api';
+const String apiVersion = 'v1';
 
-final String apiUrl = dotenv.get('API_URL');
-final String apiVersion = dotenv.get('API_VERSION');
-
-final String apiUrlV1 = '$apiUrl/$apiVersion';
+const String apiUrlV1 = '$apiUrl/$apiVersion';
