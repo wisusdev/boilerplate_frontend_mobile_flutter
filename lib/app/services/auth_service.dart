@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist_flutter/config/api.dart';
 import 'package:todolist_flutter/app/interceptors/api_interceptor.dart';
@@ -27,36 +28,28 @@ class AuthService extends ChangeNotifier {
     login({required Map<String, String> data}) async {
     	var uri = Uri.parse(_apiUriLogin);
 
-        Map<String, dynamic> responseData = {};
+        Response loginResponse = await client.post(uri, body: json.encode(data));
 
-        await client.post(uri, body: json.encode(data)).then((response) async {
-            final Map<String, dynamic> responseBody = json.decode(response.body);
-            
-            if (response.statusCode == 200 && responseBody.containsKey('data')) {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setString('user', json.encode(responseBody['data']['attributes']['user']));
-                prefs.setString('permissions', json.encode(responseBody['data']['relationships']['permissions']));
-                prefs.setString('user_key', responseBody['data']['id']);
-                prefs.setString('access_token', responseBody['data']['relationships']['access']['token']);
-            }
-            
-            responseData = responseBody;
-        });
-
-    	return responseData;
+        final Map<String, dynamic> responseBody = json.decode(loginResponse.body);
+        
+        if (loginResponse.statusCode == 200 && responseBody.containsKey('data')) {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setString('user', json.encode(responseBody['data']['attributes']['user']));
+            prefs.setString('permissions', json.encode(responseBody['data']['relationships']['permissions']));
+            prefs.setString('user_key', responseBody['data']['id']);
+            prefs.setString('access_token', responseBody['data']['relationships']['access']['token']);
+        }
+        
+        return responseBody;
   	}
 
     register({required Map<String, String> data}) async {
         var uri = Uri.parse(_apiUriRegister);
-        bool success = false;
 
-        await client.post(uri, body: json.encode(data)).then((value) => {
-            if (value.statusCode == 201) {
-                success = true
-            }
-        });
-
-        return success;
+        Response registerResponse = await client.post(uri, body: json.encode(data));
+        final Map<String, dynamic> responseBody = json.decode(registerResponse.body);
+        
+        return responseBody;
     }
 
     logout() async {
@@ -79,14 +72,10 @@ class AuthService extends ChangeNotifier {
 
     forgotPassword({required Map<String, String> data}) async {
         var uri = Uri.parse(_apiUriForgotPassword);
-        bool success = false;
         
-        await client.post(uri, body: json.encode(data)).then((value) => {
-            if (value.statusCode == 200) {
-                success = true
-            }
-        });
+        Response forgotPasswordResponse = await client.post(uri, body: json.encode(data));
+        final Map<String, dynamic> responseBody = json.decode(forgotPasswordResponse.body);
 
-        return success;
+        return responseBody;
     }
 }
