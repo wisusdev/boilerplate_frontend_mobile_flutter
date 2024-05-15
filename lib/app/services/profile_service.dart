@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:todolist_flutter/app/interfaces/response/user_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:todolist_flutter/config/api.dart';
 
 class ProfileService {
     final storage = const FlutterSecureStorage();
@@ -14,7 +14,7 @@ class ProfileService {
     Map<String, String> headers = {'Content-Type': 'application/json'};
 
     ProfileService() {
-        _apiUri = dotenv.get('API_URL') + dotenv.get('API_VERSION');
+        _apiUri = apiUrlV1;
         _apiUserInfo = '$_apiUri/user';
     }
 
