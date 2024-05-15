@@ -1,15 +1,12 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 // Titulo de la app
-final appName = dotenv.get('APP_NAME');
+const appName = 'Todolist';
 
 // Version de la app
-final appVersion = dotenv.get('APP_VERSION');
+const appVersion = '1.0.0';
 
 // Soporte para idiomas
-final appLang = dotenv.get('APP_LANG');
-final appLangName = dotenv.get('APP_LANG_NAME');
-final appLangCountry = dotenv.get('APP_LANG_COUNTRY');
+const appLang = 'es';
+const appLangName = 'ES';
 
 const logoApp = 'lib/assets/images/wisus-logo.png';
 const profileImageDefault = 'lib/assets/images/profile.png';
