@@ -22,6 +22,15 @@ class _AuthRegisterState extends State<AuthRegister> {
 	final TextEditingController _passwordController = TextEditingController();
 	final TextEditingController _confirmPasswordController = TextEditingController();
 
+    Map<String, dynamic> errorMessage = {
+        'username': null,
+        'first_name': null,
+        'last_name': null,
+        'email': null,
+        'password': null,
+        'password_confirmation': null,
+    };
+
   	@override
   	Widget build(BuildContext context) {
 		final size = MediaQuery.of(context).size;
@@ -60,8 +69,13 @@ class _AuthRegisterState extends State<AuthRegister> {
                                             decoration: inputDecoration(labelText: Location.of(context)!.trans('userName')),
                                             validator: (value) {
                                                 if (value!.isEmpty) {
-                                                    return 'Por favor ingresa tu nombre';
+                                                    return Location.of(context)!.trans('validation.thisFieldIsRequired');
                                                 }
+
+                                                if(errorMessage['username'] != null){
+                                                    return errorMessage['username'];
+                                                }
+
                                                 return null;
                                             },
                                         ),
@@ -76,8 +90,13 @@ class _AuthRegisterState extends State<AuthRegister> {
                                                         decoration: inputDecoration(labelText: Location.of(context)!.trans('firstName')),
                                                         validator: (value) {
                                                             if (value!.isEmpty) {
-                                                                return 'Por favor ingresa tu nombre';
+                                                                return Location.of(context)!.trans('validation.thisFieldIsRequired');
                                                             }
+
+                                                            if(errorMessage['first_name'] != null){
+                                                                return errorMessage['first_name'];
+                                                            }
+
                                                             // Aquí puedes agregar más validaciones para el nombre
                                                             return null;
                                                         },
@@ -90,8 +109,13 @@ class _AuthRegisterState extends State<AuthRegister> {
                                                         decoration: inputDecoration(labelText: Location.of(context)!.trans('lastName')),
                                                         validator: (value) {
                                                             if (value!.isEmpty) {
-                                                                return 'Por favor ingresa tu nombre';
+                                                                return Location.of(context)!.trans('validation.thisFieldIsRequired');
                                                             }
+
+                                                            if(errorMessage['last_name'] != null){
+                                                                return errorMessage['last_name'];
+                                                            }
+
                                                             // Aquí puedes agregar más validaciones para el nombre
                                                             return null;
                                                         },
@@ -108,8 +132,13 @@ class _AuthRegisterState extends State<AuthRegister> {
                                             decoration: inputDecoration(labelText: Location.of(context)!.trans('email')),
                                             validator: (value) {
                                                 if (value!.isEmpty) {
-                                                    return 'Por favor ingresa tu correo electrónico';
+                                                    return Location.of(context)!.trans('validation.thisFieldIsRequired');
                                                 }
+
+                                                if(errorMessage['email'] != null){
+                                                    return errorMessage['email'];
+                                                }
+
                                                 // Aquí puedes agregar más validaciones para el correo electrónico
                                                 return null;
                                             },
@@ -123,8 +152,13 @@ class _AuthRegisterState extends State<AuthRegister> {
                                             obscureText: true,
                                             validator: (value) {
                                                 if (value!.isEmpty) {
-                                                    return 'Por favor ingresa tu contraseña';
+                                                    return Location.of(context)!.trans('validation.thisFieldIsRequired');
                                                 }
+
+                                                if(errorMessage['password'] != null){
+                                                    return errorMessage['password'];
+                                                }
+
                                                 // Aquí puedes agregar más validaciones para la contraseña
                                                 return null;
                                             },
@@ -137,8 +171,17 @@ class _AuthRegisterState extends State<AuthRegister> {
                                             obscureText: true,
                                             validator: (value) {
                                                 if (value!.isEmpty) {
-                                                    return 'Por favor ingresa tu contraseña';
+                                                    return Location.of(context)!.trans('validation.thisFieldIsRequired');
                                                 }
+
+                                                if(_passwordController.text != _confirmPasswordController.text){
+                                                    return Location.of(context)!.trans('validation.passwordConfirmed');
+                                                }
+
+                                                if(errorMessage['password_confirmation'] != null){
+                                                    return errorMessage['password_confirmation'];
+                                                }
+
                                                 // Aquí puedes agregar más validaciones para la contraseña
                                                 return null;
                                             },
@@ -161,6 +204,7 @@ class _AuthRegisterState extends State<AuthRegister> {
                                                 ))
                                             ),
                                             onPressed: () {
+                                                resetErrorMessages();
                                                 if (_formKey.currentState!.validate()) {
                                                     _formKey.currentState!.save();
 
@@ -209,17 +253,44 @@ class _AuthRegisterState extends State<AuthRegister> {
             'password_confirmation': _confirmPasswordController.text,
         };
 
-        var registerResponse = await AuthService().register(data: data);
+        Map<String, dynamic> registerResponse = await AuthService().register(data: data);
 
-        if (registerResponse) {
+        if (registerResponse.containsKey('data')) {
+            toastSuccess(context, Location.of(context)!.trans('recordCreated'));
             Navigator.pushAndRemoveUntil(
                 context, 
                 MaterialPageRoute(builder: (context) => const AuthLogin()), 
                 (route) => false
             );
-        } else {
-            getScafoldMessage(context, 'Error al registrar');
         }
+
+        if(registerResponse.containsKey('errors')){
+            var errors = registerResponse['errors'];
+            if(errors is List){
+                for(var error in errors){
+                    String title = error['title'];
+                    List<String> titleList = title.split('.');
+                    errorMessage[titleList.last] = Location.of(context)!.trans(error['detail']);
+                }
+            }
+
+            toastDanger(context, Location.of(context)!.trans('errorAsOccurred'));
+
+            _formKey.currentState!.validate();
+        }
+    }
+
+    resetErrorMessages() {
+        setState(() {
+            errorMessage = {
+                'username': null,
+                'first_name': null,
+                'last_name': null,
+                'email': null,
+                'password': null,
+                'password_confirmation': null,
+            };
+        });
     }
 }
 
