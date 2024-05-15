@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todolist_flutter/app/helpers/location.dart';
 
 getScafoldMessage(BuildContext context, String message, {Duration duration = const Duration(seconds: 5), Color backgroundColor = Colors.blue}) {
 	ScaffoldMessenger.of(context).showSnackBar(
@@ -8,7 +9,7 @@ getScafoldMessage(BuildContext context, String message, {Duration duration = con
 			backgroundColor: backgroundColor, // Personaliza el color de fondo
 			behavior: SnackBarBehavior.floating, // Puedes cambiar el comportamiento según tus necesidades
 			action: SnackBarAction(
-				label: 'Cerrar',
+				label: Location.of(context)!.trans('close'),
 				onPressed: () {
 					// Acción a realizar cuando se presiona el botón de acción
 					//ScaffoldMessenger.of(context).hideCurrentSnackBar();
