@@ -31,34 +31,6 @@ class _ProfileMainState extends State<ProfileMain> {
                     )
                 ),
                 backgroundColor: Theme.of(context).colorScheme.primary,
-                actions: [
-                    PopupMenuButton(
-                        icon: Icon(Icons.menu, color: Theme.of(context).colorScheme.onPrimary),
-                        itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                            const PopupMenuItem<String>(
-                                value: 'logout',
-                                child: Text('Logout'),
-                            ),
-
-                            const PopupMenuItem(
-                                value: 'editAccount',
-                                child: Text('Edit Account'),
-                            )
-                        ],
-                        onSelected: (String value) {
-                            switch(value){
-                                case 'logout':
-                                    _authService.logout();
-                                    
-                                    Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
-                                    break;
-                                case 'editAccount':
-                                    Navigator.of(context).pushNamed('home');
-                                    break;
-                            }
-                        },
-                    ),
-                ],
             ),
             body: FutureBuilder(
                 future: futureUserModel(),
@@ -187,6 +159,15 @@ class _ProfileMainState extends State<ProfileMain> {
                                     ),
                                     child: Column(
                                         children: [
+                                            buildRow(
+                                                icon: Icons.person, 
+                                                text: 'Perfil', 
+                                                route: () {
+                                                    Navigator.pushNamed(context, 'profile_edit');
+                                                }, 
+                                                value: '/profile_edit', 
+                                                context: context
+                                            ),
                                             buildRow(
                                                 icon: Icons.logout, 
                                                 text: 'Log Out', 
