@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/app/guards/auth_guard.dart';
+import 'package:todolist_flutter/resources/views/account/profile_edit.dart';
 import 'package:todolist_flutter/resources/views/auth/forgot_password.dart';
 import 'package:todolist_flutter/resources/views/auth/login.dart';
 import 'package:todolist_flutter/resources/views/auth/register.dart';
@@ -11,7 +12,9 @@ import 'package:todolist_flutter/resources/views/settings/theme_main.dart';
 
 Map<String, Widget Function(dynamic context)> routes = {
     'home': (context) => const AuthGuard(child: HomeView()),
+    // Account
     'profile': (context) => const AuthGuard(child: ProfileMain()),
+    'profile_edit': (context) => const AuthGuard(child: ProfileEdit()),
     'setting': (context) => const AuthGuard(child: SettingMain()),
     
     // Auth
