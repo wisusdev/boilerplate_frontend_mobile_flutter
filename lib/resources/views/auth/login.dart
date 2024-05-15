@@ -192,8 +192,8 @@ class _AuthLoginState extends State<AuthLogin> {
 
             if(errors is List){
                 for (var error in errors) {
-                    String tile = error['title'];
-                    List<String> titleList = tile.split('.');
+                    String title = error['title'];
+                    List<String> titleList = title.split('.');
 
                     errorMessage[titleList.last] = Location.of(context)!.trans(error['detail']);
                 }
