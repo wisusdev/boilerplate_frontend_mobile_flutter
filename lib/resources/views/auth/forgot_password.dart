@@ -16,6 +16,10 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
 	final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     final TextEditingController _emailController = TextEditingController();
+
+    Map<String, dynamic> errorMessage = {
+        'email': null,
+    };
   	
   	@override
   	Widget build(BuildContext context) {
@@ -60,14 +64,18 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
                                             ),
                                             validator: (value) {
                                                 if (value!.isEmpty) {
-                                                return 'Por favor ingresa tu correo electrónico';
-                                            }
+                                                    return Location.of(context)!.trans('validation.emailRequired');
+                                                }
 
-                                            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-                                                return 'Por favor ingresa un correo electrónico válido';
-                                            }
+                                                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                                                    return Location.of(context)!.trans('validation.emailEmail');
+                                                }
 
-                                            return null;
+                                                if(errorMessage['email'] != null){
+                                                    return errorMessage['email'];
+                                                }
+
+                                                return null;
                                             },
                                         ),
 
@@ -88,6 +96,8 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
                                                 ))
                                             ),
                                             onPressed: (){
+                                                resetErrorMessages();
+
                                                 if (_formKey.currentState!.validate()) {
                                                     _formKey.currentState!.save();
 
@@ -132,12 +142,34 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
             'email': _emailController.text,
         };
 
-        var responseForgotPassword = await AuthService().forgotPassword(data: data);
+        Map<String, dynamic> responseForgotPassword = await AuthService().forgotPassword(data: data);
         
-        if(responseForgotPassword){
+        if(responseForgotPassword.containsKey('data')){
+            toastSuccess(context, Location.of(context)!.trans('message.emailVerificationSent'));
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AuthLogin()));
-        } else {
-            getScafoldMessage(context, 'No se pudo enviar el correo de recuperación de contraseña');
         }
+
+        if(responseForgotPassword.containsKey('errors')){
+            var errors = responseForgotPassword['errors'];
+            if(errors is List){
+                for(var error in errors){
+                    String title = error['title'];
+                    List<String> titleList = title.split('.');
+                    errorMessage[titleList.last] = Location.of(context)!.trans(error['detail']);
+                }
+            }
+
+            toastDanger(context, Location.of(context)!.trans('errorAsOccurred'));
+
+            _formKey.currentState!.validate();
+        }
+    }
+
+    resetErrorMessages(){
+        setState(() {
+            errorMessage = {
+                'email': null,
+            };
+        });
     }
 }
