@@ -100,8 +100,10 @@
 	"device": "Dispositivo",
 	"browser": "Navegador",
 	"ipAddress": "Dirección IP",
-
+	"close": "Cerrar",
+	
 	"validation": {
+		"thisFieldIsRequired": "Este campo es requerido",
 		"dataRequired": "Los datos son requeridos",
 		"dataArray": "Los datos deben ser un array",
 		"dataAttributesRequired": "Los atributos de los datos son requeridos",

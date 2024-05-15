@@ -45,6 +45,7 @@
 	"devicesConnected": "Devices Connected",
 	"deviceConnectedIn": "Device connected in",
 	"logout": "Log out",
+	"close": "Close",
 
 	"nameError": "I'm sure you must have a name!",
 	"phoneNo": "Phone Number",
@@ -102,6 +103,7 @@
 	"ipAddress": "IP Address",
 
 	"validation": {
+		"thisFieldIsRequired": "This field is required",
 		"dataRequired": "Data is required",
 		"dataArray": "Data must be an array",
 		"dataAttributesRequired": "Data attributes are required",
