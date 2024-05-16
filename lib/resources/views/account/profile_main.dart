@@ -160,8 +160,8 @@ class _ProfileMainState extends State<ProfileMain> {
                                     child: Column(
                                         children: [
                                             buildRow(
-                                                icon: Icons.person, 
-                                                text: 'Perfil', 
+                                                icon: Icons.edit, 
+                                                text: Location.of(context)!.trans('edit'), 
                                                 route: () {
                                                     Navigator.pushNamed(context, 'profile_edit');
                                                 }, 
@@ -170,7 +170,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                             ),
                                             buildRow(
                                                 icon: Icons.logout, 
-                                                text: 'Log Out', 
+                                                text: Location.of(context)!.trans('logout'), 
                                                 route: () async {
                                                     if(await _authService.logout()){
                                                         Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
