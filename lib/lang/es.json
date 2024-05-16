@@ -45,6 +45,7 @@
 	"devicesConnected": "Dispositivos conectados",
 	"deviceConnectedIn": "Dispositivo conectado en",
 	"logout": "Cerrar sesión",
+	"close": "Cerrar",
 
 	"nameError": "¡Estoy seguro de que debes tener un nombre!",
 	"phoneNo": "Número de teléfono",
@@ -100,7 +101,12 @@
 	"device": "Dispositivo",
 	"browser": "Navegador",
 	"ipAddress": "Dirección IP",
-	"close": "Cerrar",
+
+	"language": "Idioma",
+	"english": "Inglés",
+	"spanish": "Español",
+	"en": "Inglés",
+	"es": "Español",
 	
 	"validation": {
 		"thisFieldIsRequired": "Este campo es requerido",

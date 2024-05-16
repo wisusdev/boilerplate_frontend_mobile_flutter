@@ -102,6 +102,12 @@
 	"browser": "Browser",
 	"ipAddress": "IP Address",
 
+	"language": "Language",
+	"english": "English",
+	"spanish": "Spanish",
+	"en": "English",
+	"es": "Spanish",
+
 	"validation": {
 		"thisFieldIsRequired": "This field is required",
 		"dataRequired": "Data is required",
