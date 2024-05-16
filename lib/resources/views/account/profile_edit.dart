@@ -31,23 +31,33 @@ class _ProfileEditState extends State<ProfileEdit> {
         'language': null,
     };
 
+    XFile? _imageFile;
+
     @override
     void initState() {
         super.initState();
 
         SharedPreferences.getInstance().then((prefs) {
-        var userJson = prefs.getString('user');
-        if (userJson != null) {
-            var user = json.decode(userJson);
-            setState(() {
-                _firstnameController.text = user['first_name'] ?? '';
-                _lastnameController.text = user['last_name'] ?? '';
-                _emailController.text = user['email'] ?? '';
-                _avatarController.text = user['avatar'] ?? '';
-                _languageController.text = user['language'] ?? '';
-            });
-        }
-    });
+            var userJson = prefs.getString('user');
+            if (userJson != null) {
+                var user = json.decode(userJson);
+                setState(() {
+                    _firstnameController.text = user['first_name'] ?? '';
+                    _lastnameController.text = user['last_name'] ?? '';
+                    _emailController.text = user['email'] ?? '';
+                    _avatarController.text = user['avatar'] ?? '';
+                    _languageController.text = user['language'] ?? '';
+                });
+            }
+        });
+    }
+
+    Future<void> _pickImage() async {
+        final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+        setState(() {
+            _imageFile = pickedFile;
+        });
     }
 
     @override
@@ -154,7 +164,11 @@ class _ProfileEditState extends State<ProfileEdit> {
                             ),
 
                             const SizedBox(height: 20),
-
+                            
+                            ElevatedButton(
+                                onPressed: _pickImage,
+                                child: Text('Seleccionar imagen'),
+                            ),
 
                         ],
                     )
