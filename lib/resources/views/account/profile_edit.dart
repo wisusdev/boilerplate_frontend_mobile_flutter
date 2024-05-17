@@ -66,7 +66,14 @@ class _ProfileEditState extends State<ProfileEdit> {
 
         return Scaffold(
             appBar: AppBar(
-                title: Text(capitalizeText('${Location.of(context)!.trans('edit')} ${Location.of(context)!.trans('profile')}')),
+                leading: BackButton(color: Theme.of(context).colorScheme.onPrimary),
+                title: Text(
+                    capitalizeText('${Location.of(context)!.trans('edit')} ${Location.of(context)!.trans('profile')}'),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary
+                    )
+                ),
+                backgroundColor: Theme.of(context).colorScheme.primary,
             ),
             body: Container(
                 padding: const EdgeInsets.all(20),
