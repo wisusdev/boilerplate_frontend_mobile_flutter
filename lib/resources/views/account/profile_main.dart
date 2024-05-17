@@ -75,7 +75,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                                     child: FadeInImage(
                                                         height: 100,
                                                         width: 100,
-                                                        image: NetworkImage(userInfo.avatar ?? profileImageDefault),
+                                                        image: userInfo.avatar != null ? NetworkImage(userInfo.avatar) as ImageProvider<Object> : const AssetImage(profileImageDefault),
                                                         placeholder: const AssetImage(profileImageDefault),
                                                         imageErrorBuilder: (context, error, stackTrace) => const Image(image: AssetImage(profileImageDefault), fit: BoxFit.fitWidth),
                                                         fit: BoxFit.fitWidth,
