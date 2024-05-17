@@ -167,7 +167,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                             
                             ElevatedButton(
                                 onPressed: _pickImage,
-                                child: Text('Seleccionar imagen'),
+                                child: Text(Location.of(context)!.trans('selectAPicture')),
                             ),
 
                         ],
