@@ -107,6 +107,8 @@
 	"spanish": "Español",
 	"en": "Inglés",
 	"es": "Español",
+
+	"selectAPicture": "Selecciona una imagen",
 	
 	"validation": {
 		"thisFieldIsRequired": "Este campo es requerido",

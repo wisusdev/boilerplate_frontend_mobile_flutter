@@ -108,6 +108,8 @@
 	"en": "English",
 	"es": "Spanish",
 
+	"selectAPicture": "Select a picture",
+
 	"validation": {
 		"thisFieldIsRequired": "This field is required",
 		"dataRequired": "Data is required",
