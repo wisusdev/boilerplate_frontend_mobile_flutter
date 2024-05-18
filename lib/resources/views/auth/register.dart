@@ -3,6 +3,7 @@ import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/services/auth_service.dart';
 import 'package:todolist_flutter/config/app.dart';
 import 'package:todolist_flutter/resources/views/auth/login.dart';
+import 'package:todolist_flutter/resources/widgets/input_decoration.dart';
 import 'package:todolist_flutter/resources/widgets/snack_bar.dart';
 
 class AuthRegister extends StatefulWidget {
@@ -292,14 +293,4 @@ class _AuthRegisterState extends State<AuthRegister> {
             };
         });
     }
-}
-
-InputDecoration inputDecoration({required String labelText}){
-    return InputDecoration(
-        labelText: labelText,
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(color: Colors.transparent)
-        ),
-    );
 }
