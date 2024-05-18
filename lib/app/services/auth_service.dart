@@ -1,14 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist_flutter/config/api.dart';
 import 'package:todolist_flutter/app/interceptors/api_interceptor.dart';
 
 class AuthService extends ChangeNotifier {
-	final storage = const FlutterSecureStorage();
 
   	final String _apiUri;
   	late String _apiUriLogin;
