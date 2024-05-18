@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/services/auth_service.dart';
 import 'package:todolist_flutter/resources/views/home.dart';
+import 'package:todolist_flutter/resources/widgets/input_decoration.dart';
 import 'package:todolist_flutter/resources/widgets/snack_bar.dart';
 import 'package:todolist_flutter/config/app.dart';
 
@@ -213,14 +214,4 @@ class _AuthLoginState extends State<AuthLogin> {
             };
         });
     }
-}
-
-InputDecoration inputDecoration({required String labelText}){
-    return InputDecoration(
-        labelText: labelText,
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(color: Colors.transparent)
-        ),
-    );
 }
