@@ -1,11 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiInterceptor extends http.BaseClient {
     final http.Client _inner = http.Client();
-    final storage = const FlutterSecureStorage();
 
     @override
     Future<http.StreamedResponse> send(http.BaseRequest request) async {
@@ -17,6 +15,11 @@ class ApiInterceptor extends http.BaseClient {
 
                 if(request.body != '' && request.body.isNotEmpty){
                     var body = json.decode(request.body);
+
+                    if(body['type'] == null){
+                        throw Exception('The type field is required');
+                    }
+                    
                     var type = body['type'];
                     body.remove('type');
 
@@ -26,7 +29,11 @@ class ApiInterceptor extends http.BaseClient {
                     };
 
                     if (request.method == 'PATCH' || request.method == 'PUT') {
-                        data['id'] = body['id'];
+                        if (body.containsKey('id')) {
+                             data['id'] = body['id'];
+                        } else {
+                            throw Exception('The id field is required');
+                        }
                     }
 
                     request.body = json.encode({'data': data});
