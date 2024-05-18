@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -184,13 +185,25 @@ class _ProfileEditState extends State<ProfileEdit> {
                                     child: Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                            const Icon(Icons.camera_alt), // Icono de cámara
-                                            const SizedBox(width: 10), // Espacio entre el icono y el texto
+                                            const Icon(Icons.camera_alt),
+                                            const SizedBox(width: 10),
                                             Text(Location.of(context)!.trans('selectAPicture')),
                                         ],
                                     ),
                                 ),
-                
+
+                                _imageFile != null ? const SizedBox(height: 20) : Container(),
+
+                                Center(
+                                    child: _imageFile != null ? Container(
+                                        height: 200,
+                                        width: 200,
+                                        padding: const EdgeInsets.all(4),
+                                        decoration: BoxDecoration(border: Border.all(color: Theme.of(context).colorScheme.primary, width: 3), borderRadius: BorderRadius.circular(10)),
+                                        child: Image.file(File(_imageFile!.path)),
+                                    ) : Container(),
+                                ),
+
                                 const SizedBox(height: 40),
                 
                                 ElevatedButton(
@@ -221,16 +234,23 @@ class _ProfileEditState extends State<ProfileEdit> {
         );
     }
 
-    void updateProfile(context) async {        
+    void updateProfile(context) async {
+
         Map<String, String> data = {
             'type': 'profile',
             'id': _userKey,
             'first_name': _firstnameController.text,
             'last_name': _lastnameController.text,
             'email': _emailController.text,
-            'avatar': _imageFile?.path ?? _avatarController.text,
             'language': _languageController.text,
         };
+
+        if(_imageFile != null){
+            final File file = File(_imageFile!.path);
+            final List<int> imageBytes = await file.readAsBytes();
+            final String base64Image = base64Encode(imageBytes);
+            data['avatar'] = base64Image;
+        }
 
         Map<String, dynamic> profileEditResponse = await AccountService().updateProfile(data: data);
 
