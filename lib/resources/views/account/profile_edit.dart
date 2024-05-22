@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist_flutter/app/helpers/location.dart';
 import 'package:todolist_flutter/app/helpers/text.dart';
 import 'package:todolist_flutter/app/services/account_service.dart';
-import 'package:todolist_flutter/resources/views/account/profile_main.dart';
 import 'package:todolist_flutter/resources/widgets/input_decoration.dart';
 import 'package:todolist_flutter/resources/widgets/snack_bar.dart';
 
@@ -75,7 +74,12 @@ class _ProfileEditState extends State<ProfileEdit> {
 
         return Scaffold(
             appBar: AppBar(
-                leading: BackButton(color: Theme.of(context).colorScheme.onPrimary),
+                leading: BackButton(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    onPressed: () {
+                        Navigator.pop(context, 'update');
+                    },
+                ),
                 title: Text(
                     capitalizeText('${Location.of(context)!.trans('edit')} ${Location.of(context)!.trans('profile')}'),
                     style: TextStyle(
@@ -256,11 +260,6 @@ class _ProfileEditState extends State<ProfileEdit> {
 
         if(profileEditResponse.containsKey('data')) {
             toastSuccess(context, Location.of(context)!.trans('recordUpdated'));
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const ProfileMain()),
-                (Route<dynamic> route) => false
-            );
         }
 
         if(profileEditResponse.containsKey('errors')){
