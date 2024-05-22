@@ -154,7 +154,9 @@ class _ProfileMainState extends State<ProfileMain> {
                                                 text: Location.of(context)!.trans('logout'), 
                                                 route: () async {
                                                     if(await _authService.logout()){
-                                                        Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
+                                                        if(mounted) {
+                                                            Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
+                                                        }
                                                     }
                                                 }, 
                                                 value: '/logout', 
