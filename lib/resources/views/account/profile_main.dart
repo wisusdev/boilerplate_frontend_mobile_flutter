@@ -7,6 +7,7 @@ import 'package:todolist_flutter/app/helpers/text.dart';
 import 'package:todolist_flutter/app/interfaces/local/local_user_info.dart';
 import 'package:todolist_flutter/app/services/auth_service.dart';
 import 'package:todolist_flutter/config/app.dart';
+import 'package:todolist_flutter/resources/views/account/profile_edit.dart';
 
 class ProfileMain extends StatefulWidget {
     const ProfileMain({Key? key}) : super(key: key);
@@ -97,35 +98,6 @@ class _ProfileMainState extends State<ProfileMain> {
                                                                     Text(userInfo.username, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 18.0)),
                                                                 ],
                                                             ),
-                                                            Row(
-                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                children: [
-                                                                    const SizedBox(width: 10),
-                                                                    InkWell(
-                                                                        onTap: () {
-                                                                            Navigator.pushNamed(context, 'home');
-                                                                        },
-                                                                        child: Container(
-                                                                            width: 100,
-                                                                            decoration: BoxDecoration(
-                                                                                borderRadius: const BorderRadius.all(Radius.circular(50.0)),
-                                                                                gradient: LinearGradient(
-                                                                                    begin: Alignment.topCenter,
-                                                                                    end: Alignment.bottomCenter,
-                                                                                    colors: [
-                                                                                        Theme.of(context).colorScheme.primary,
-                                                                                        Theme.of(context).colorScheme.secondary,
-                                                                                    ],
-                                                                                ),
-                                                                            ),
-                                                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                                                            child: Center(
-                                                                                child: Text('Editar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 16)),
-                                                                            ),
-                                                                        ),
-                                                                    )
-                                                                ],
-                                                            ),
                                                         ],
                                                     ),
                                                 ),
@@ -162,8 +134,17 @@ class _ProfileMainState extends State<ProfileMain> {
                                             buildRow(
                                                 icon: Icons.edit, 
                                                 text: Location.of(context)!.trans('edit'), 
-                                                route: () {
-                                                    Navigator.pushNamed(context, 'profile_edit');
+                                                route: () async {
+                                                    final result = await Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(builder: (context) => const ProfileEdit()),
+                                                    );
+
+                                                    if (result == 'update') {
+                                                        setState(() {
+                                                            futureUserModel();
+                                                        });
+                                                    }
                                                 }, 
                                                 value: '/profile_edit', 
                                                 context: context
