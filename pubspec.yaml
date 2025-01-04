@@ -1,4 +1,4 @@
-name: todolist_flutter
+name: boilerplate_frontend_mobile_flutter
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -35,12 +35,12 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  http: ^1.1.0
-  provider: ^6.1.1
-  shared_preferences: ^2.2.2
-  flutter_secure_storage: ^9.0.0
-  image_picker: ^1.1.1
+  cupertino_icons: ^1.0.8
+  http: ^1.2.2
+  provider: ^6.1.2
+  shared_preferences: ^2.3.5
+  flutter_secure_storage: ^9.2.3
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
