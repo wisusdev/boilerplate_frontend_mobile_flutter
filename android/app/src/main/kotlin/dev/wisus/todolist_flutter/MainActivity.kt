@@ -1,4 +1,4 @@
-package dev.wisus.todolist_flutter
+package dev.wisus.boilerplate_frontend_mobile_flutter
 
 import io.flutter.embedding.android.FlutterActivity
 
