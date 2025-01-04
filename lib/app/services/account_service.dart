@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist_flutter/app/interceptors/api_interceptor.dart';
