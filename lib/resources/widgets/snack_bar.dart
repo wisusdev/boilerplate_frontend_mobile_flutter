@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todolist_flutter/app/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
 
 getScafoldMessage(BuildContext context, String message, {Duration duration = const Duration(seconds: 5), Color backgroundColor = Colors.blue}) {
 	ScaffoldMessenger.of(context).showSnackBar(

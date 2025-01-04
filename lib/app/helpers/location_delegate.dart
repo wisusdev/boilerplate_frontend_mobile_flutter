@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:todolist_flutter/app/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
 
 class LocationDelegate extends LocalizationsDelegate<Location> {
 	const LocationDelegate();

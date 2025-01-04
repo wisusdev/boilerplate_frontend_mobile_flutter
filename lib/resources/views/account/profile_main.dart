@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todolist_flutter/app/helpers/location.dart';
-import 'package:todolist_flutter/app/helpers/text.dart';
-import 'package:todolist_flutter/app/interfaces/local/local_user_info.dart';
-import 'package:todolist_flutter/app/services/auth_service.dart';
-import 'package:todolist_flutter/config/app.dart';
-import 'package:todolist_flutter/resources/views/account/profile_edit.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/text.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/interfaces/local/local_user_info.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/services/auth_service.dart';
+import 'package:boilerplate_frontend_mobile_flutter/config/app.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/views/account/profile_edit.dart';
 
 class ProfileMain extends StatefulWidget {
     const ProfileMain({Key? key}) : super(key: key);

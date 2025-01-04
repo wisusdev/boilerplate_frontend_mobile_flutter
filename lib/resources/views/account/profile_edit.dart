@@ -4,11 +4,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todolist_flutter/app/helpers/location.dart';
-import 'package:todolist_flutter/app/helpers/text.dart';
-import 'package:todolist_flutter/app/services/account_service.dart';
-import 'package:todolist_flutter/resources/widgets/input_decoration.dart';
-import 'package:todolist_flutter/resources/widgets/snack_bar.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/text.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/services/account_service.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/input_decoration.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
 
 class ProfileEdit extends StatefulWidget {
     const ProfileEdit({super.key});

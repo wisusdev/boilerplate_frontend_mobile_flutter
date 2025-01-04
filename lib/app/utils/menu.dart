@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todolist_flutter/app/interfaces/local/menu_model.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/interfaces/local/menu_model.dart';
 
 
 const appMenuItems = <MenuItem>[

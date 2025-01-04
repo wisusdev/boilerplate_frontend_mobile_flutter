@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todolist_flutter/app/helpers/location.dart';
-import 'package:todolist_flutter/app/helpers/text.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/text.dart';
 
 class SettingMain extends StatefulWidget {
     const SettingMain({Key? key}) : super(key: key);

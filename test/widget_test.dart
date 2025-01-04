@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:todolist_flutter/main.dart';
+import 'package:boilerplate_frontend_mobile_flutter/main.dart';
 
 
 void main() {

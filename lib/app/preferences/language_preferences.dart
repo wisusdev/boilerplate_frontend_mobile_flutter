@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todolist_flutter/app/helpers/local_storage.dart';
-import 'package:todolist_flutter/config/app.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/local_storage.dart';
+import 'package:boilerplate_frontend_mobile_flutter/config/app.dart';
 
 class LanguagePreferences {
     static const _keyLanguageMode = 'language_mode';

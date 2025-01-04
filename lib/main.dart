@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:provider/provider.dart';
-import 'package:todolist_flutter/app/guards/auth_guard.dart';
-import 'package:todolist_flutter/app/preferences/language_preferences.dart';
-import 'package:todolist_flutter/app/preferences/theme_preferences.dart';
-import 'package:todolist_flutter/app/providers/auth_provider.dart';
-import 'package:todolist_flutter/app/providers/language_provider.dart';
-import 'package:todolist_flutter/app/services/auth_service.dart';
-import 'package:todolist_flutter/config/app.dart';
-import 'package:todolist_flutter/config/languages.dart';
-import 'package:todolist_flutter/app/helpers/local_storage.dart';
-import 'package:todolist_flutter/app/providers/theme_provider.dart';
-import 'package:todolist_flutter/app/helpers/location_delegate.dart';
-import 'package:todolist_flutter/resources/themes/dark_theme.dart';
-import 'package:todolist_flutter/resources/themes/light_theme.dart';
-import 'package:todolist_flutter/resources/views/home.dart';
-import 'package:todolist_flutter/routes/router.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/guards/auth_guard.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/preferences/language_preferences.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/preferences/theme_preferences.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/providers/auth_provider.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/providers/language_provider.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/services/auth_service.dart';
+import 'package:boilerplate_frontend_mobile_flutter/config/app.dart';
+import 'package:boilerplate_frontend_mobile_flutter/config/languages.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/local_storage.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/providers/theme_provider.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location_delegate.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/themes/dark_theme.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/themes/light_theme.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/views/home.dart';
+import 'package:boilerplate_frontend_mobile_flutter/routes/router.dart';
 
 
 void main() async {

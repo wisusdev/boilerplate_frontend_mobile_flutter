@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todolist_flutter/app/helpers/local_storage.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/local_storage.dart';
 
 class ThemePreferences {
     static const _keyThemeMode = 'theme_mode';
