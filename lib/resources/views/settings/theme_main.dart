@@ -47,7 +47,7 @@ class _ThemeMainState extends State<ThemeMain> {
                                 borderRadius: BorderRadius.circular(20),
                             ),
                             child: RadioListTile(
-                                title: Text(capitalizeText(Location.of(context)!.trans('light_theme'))), 
+                                title: Text(capitalizeText(Location.of(context)!.trans('light'))), 
                                 value: ThemeMode.light,
                                 selected: themeMode == ThemeMode.light,
                                 groupValue: themeMode,
@@ -67,7 +67,7 @@ class _ThemeMainState extends State<ThemeMain> {
                                 borderRadius: BorderRadius.circular(20),
                             ),
                             child: RadioListTile(
-                                title: Text(capitalizeText(Location.of(context)!.trans('dark_theme'))),
+                                title: Text(capitalizeText(Location.of(context)!.trans('dark'))),
                                 value: ThemeMode.dark,
                                 selected: themeMode == ThemeMode.dark,
                                 groupValue: themeMode,
@@ -87,7 +87,7 @@ class _ThemeMainState extends State<ThemeMain> {
                                 borderRadius: BorderRadius.circular(20),
                             ),
                             child: RadioListTile(
-                                title: Text(capitalizeText(Location.of(context)!.trans('system_theme'))),
+                                title: Text(capitalizeText(Location.of(context)!.trans('system'))),
                                 value: ThemeMode.system, 
                                 selected: themeMode == ThemeMode.system,
                                 groupValue: themeMode,
