@@ -108,6 +108,11 @@
 	"en": "English",
 	"es": "Spanish",
 
+	"theme": "Tema",
+	"light": "Claro",
+	"dark": "Oscuro",
+	"system": "Sistema",
+
 	"selectAPicture": "Select a picture",
 
 	"validation": {
