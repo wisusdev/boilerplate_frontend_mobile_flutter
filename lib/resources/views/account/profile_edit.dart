@@ -212,7 +212,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 
                                 ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(Theme.of(context).colorScheme.primary.value),
+                                        backgroundColor: Theme.of(context).colorScheme.primary,
                                         padding: const EdgeInsets.all(13),
                                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                                     ),
@@ -220,7 +220,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                         child: Text(Location.of(context)!.trans('save'), style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontFamily: "Sofia",
-                                            color: Color(Theme.of(context).colorScheme.onPrimary.value),
+                                            color: Theme.of(context).colorScheme.onPrimary,
                                             fontSize: 18.0
                                         ))
                                     ),

@@ -83,7 +83,7 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
 
                                         ElevatedButton(
                                             style: ElevatedButton.styleFrom(
-                                                backgroundColor: Color(Theme.of(context).colorScheme.primary.value),
+                                                backgroundColor: Theme.of(context).colorScheme.primary,
                                                 padding: const EdgeInsets.all(13),
                                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                                             ),
@@ -91,7 +91,7 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
                                                 child: Text(Location.of(context)!.trans('sendPasswordResetLink'), style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontFamily: "Sofia",
-                                                    color: Color(Theme.of(context).colorScheme.onPrimary.value),
+                                                    color: Theme.of(context).colorScheme.onPrimary,
                                                     fontSize: 18.0
                                                 ))
                                             ),

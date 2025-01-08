@@ -120,7 +120,7 @@ class _AuthLoginState extends State<AuthLogin> {
 
                                         ElevatedButton(
                                             style: ElevatedButton.styleFrom(
-                                                backgroundColor: Color(Theme.of(context).colorScheme.primary.value),
+                                                backgroundColor: Theme.of(context).colorScheme.primary,
                                                 padding: const EdgeInsets.all(13),
                                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                                             ),
@@ -128,7 +128,7 @@ class _AuthLoginState extends State<AuthLogin> {
                                                 child: Text(Location.of(context)!.trans('login'), style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontFamily: "Sofia",
-                                                    color: Color(Theme.of(context).colorScheme.onPrimary.value),
+                                                    color: Theme.of(context).colorScheme.onPrimary,
                                                     fontSize: 18.0
                                                 ))
                                             ),
