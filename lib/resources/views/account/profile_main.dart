@@ -57,17 +57,17 @@ class _ProfileMainState extends State<ProfileMain> {
         return SingleChildScrollView(
             child: Column(
                 children: [
-                    _buildProfileHeader(userInfo),
+                    _buildProfileHeader(context, userInfo),
                     const SizedBox(height: 20),
-                    _buildProfileOptions(context),
+                    _buildProfileOptions(context, userInfo),
                 ],
             ),
         );
     }
 
-    Widget _buildProfileHeader(LocalUserInfo userInfo) {
+    Widget _buildProfileHeader(BuildContext context, LocalUserInfo userInfo) {
         return Container(
-            color: Theme.of(context).colorScheme.primaryContainer,
+            color: Theme.of(context).colorScheme.onSecondary,
             child: Column(
                 children: [
                     Container(
@@ -75,8 +75,8 @@ class _ProfileMainState extends State<ProfileMain> {
                         padding: const EdgeInsets.all(16),
                         child: Row(
                             children: [
-                                _buildAvatar(userInfo),
-                                _buildUserInfo(userInfo),
+                                _buildAvatar(context, userInfo),
+                                _buildUserInfo(context, userInfo),
                             ],
                         ),
                     ),
@@ -85,7 +85,7 @@ class _ProfileMainState extends State<ProfileMain> {
         );
     }
 
-    Widget _buildAvatar(LocalUserInfo userInfo) {
+    Widget _buildAvatar(BuildContext context, LocalUserInfo userInfo) {
         return Container(
             height: 100,
             width: 100,
@@ -108,7 +108,7 @@ class _ProfileMainState extends State<ProfileMain> {
         );
     }
 
-    Widget _buildUserInfo(LocalUserInfo userInfo) {
+    Widget _buildUserInfo(BuildContext context, LocalUserInfo userInfo) {
         return Expanded(
             child: Padding(
                 padding: const EdgeInsets.only(left: 20),
@@ -130,61 +130,86 @@ class _ProfileMainState extends State<ProfileMain> {
         );
     }
 
-    Widget _buildProfileOptions(BuildContext context) {
+    Widget _buildProfileOptions(BuildContext context, LocalUserInfo userInfo) {
         return Container(
             padding: const EdgeInsets.all(16),
             child: Column(
                 children: [
-                    Container(
-                        margin: const EdgeInsets.only(bottom: 20),
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Theme.of(context).colorScheme.primaryContainer,
-                            boxShadow: [
-                                BoxShadow(
-                                    color: Theme.of(context).colorScheme.shadow,
-                                    offset: const Offset(0, 1),
-                                    blurRadius: 3,
-                                ),
-                            ],
-                        ),
-                        child: Column(
-                            children: [
-                                buildRow(
-                                    icon: Icons.edit, 
-                                    text: Location.of(context)!.trans('edit'), 
-                                    route: () async {
-                                        final result = await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => const ProfileEdit()),
-                                        );
+                    _buildOptionCard(context, userInfo),
+                ],
+            ),
+        );
+    }
 
-                                        if (result == 'update') {
-                                            setState(() {
-                                                futureUserModel();
-                                            });
-                                        }
-                                    }, 
-                                    value: '/profile_edit', 
-                                    context: context
-                                ),
-                                buildRow(
-                                    icon: Icons.logout, 
-                                    text: Location.of(context)!.trans('logout'), 
-                                    route: () async {
-                                        if(await _authService.logout()){
-                                            if(mounted) {
-                                                Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
-                                            }
-                                        }
-                                    }, 
-                                    value: '/logout', 
-                                    context: context, 
-                                    rightIcon: false
-                                ),
-                            ],
-                        ),
+    Widget _buildOptionCard(BuildContext context, LocalUserInfo userInfo) {
+        return Container(
+            margin: const EdgeInsets.only(bottom: 20),
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(context).colorScheme.onSecondary,
+                boxShadow: [
+                    BoxShadow(
+                        color: Theme.of(context).colorScheme.shadow,
+                        offset: const Offset(0, 1),
+                        blurRadius: 3,
+                    ),
+                ],
+            ),
+            child: Column(
+                children: [
+                    buildRow(
+                        icon: Icons.edit, 
+                        text: Location.of(context)!.trans('edit'), 
+                        route: () async {
+                            final result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const ProfileEdit()),
+                            );
+
+                            if (result == 'update' && mounted) {
+                                setState(() {
+                                    futureUserModel();
+                                });
+                            }
+                        }, 
+                        value: '/profile_edit', 
+                        context: context
+                    ),
+                    buildRow(
+                        icon: Icons.key, 
+                        text: 'Change password', 
+                        route: (){}, 
+                        value: 'change-password', 
+                        context: context
+                    ),
+                    buildRow(
+                        icon: Icons.devices, 
+                        text: 'Devices', 
+                        route: (){}, 
+                        value: 'change-password', 
+                        context: context
+                    ),
+                    buildRow(
+                        icon: Icons.delete, 
+                        text: 'Delete account', 
+                        route: (){}, 
+                        value: 'change-password', 
+                        context: context
+                    ),
+                    buildRow(
+                        icon: Icons.logout, 
+                        text: Location.of(context)!.trans('logout'), 
+                        route: () async {
+                            if(await _authService.logout()){
+                                if(mounted) {
+                                    Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
+                                }
+                            }
+                        }, 
+                        value: '/logout', 
+                        context: context, 
+                        rightIcon: false
                     ),
                 ],
             ),
@@ -192,7 +217,7 @@ class _ProfileMainState extends State<ProfileMain> {
     }
 }
 
-  Widget buildRow({required IconData icon, required String text, required void Function()? route, required String value, required BuildContext context, bool rightIcon = true}) {
+Widget buildRow({required IconData icon, required String text, required void Function()? route, required String value,  required BuildContext context, bool rightIcon = true}) {
     return Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
@@ -207,7 +232,7 @@ class _ProfileMainState extends State<ProfileMain> {
                         child: Padding(padding: const EdgeInsets.only(left: 10), child: Text(text, style: const TextStyle(fontSize: 16))),
                     ),
                     rightIcon ? Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary) : Container(),   
-                ], 
+                ],
             ),
         ),
     );
