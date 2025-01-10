@@ -158,82 +158,65 @@ class _ProfileMainState extends State<ProfileMain> {
             ),
             child: Column(
                 children: [
-                    buildRow(
-                        icon: Icons.edit, 
-                        text: Location.of(context)!.trans('edit'), 
-                        route: () async {
-                            final result = await Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const ProfileEdit()),
-                            );
+
+                    ListTile(
+                        leading: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
+                        title: const Text('Edit', style: TextStyle(fontSize: 16)),
+                        subtitle: const Text('Edit your profile', style: TextStyle(fontSize: 14)),
+                        onTap: () async {
+                            final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileEdit()));
 
                             if (result == 'update' && mounted) {
                                 setState(() {
                                     futureUserModel();
                                 });
                             }
-                        }, 
-                        value: '/profile_edit', 
-                        context: context
+                        },
+                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
                     ),
-                    buildRow(
-                        icon: Icons.key, 
-                        text: 'Change password', 
-                        route: (){}, 
-                        value: 'change-password', 
-                        context: context
+
+                    ListTile(
+                        leading: Icon(Icons.key, color: Theme.of(context).colorScheme.primary),
+                        title: const Text('Change Password', style: TextStyle(fontSize: 16)),
+                        subtitle: const Text('Change your password', style: TextStyle(fontSize: 14)),
+                        onTap: () => Navigator.pushNamed(context, 'change_password'),
+                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
                     ),
-                    buildRow(
-                        icon: Icons.devices, 
-                        text: 'Devices', 
-                        route: (){}, 
-                        value: 'change-password', 
-                        context: context
+
+                    ListTile(
+                        leading: Icon(Icons.devices, color: Theme.of(context).colorScheme.primary),
+                        title: const Text('Devices', style: TextStyle(fontSize: 16)),
+                        subtitle: const Text('Devices connected', style: TextStyle(fontSize: 14)),
+                        onTap: () {
+                            print('Change password');
+                        },
+                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
                     ),
-                    buildRow(
-                        icon: Icons.delete, 
-                        text: 'Delete account', 
-                        route: (){}, 
-                        value: 'change-password', 
-                        context: context
+
+                    ListTile(
+                        leading: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
+                        title: const Text('Delete account', style: TextStyle(fontSize: 16)),
+                        subtitle: const Text('Delete your account', style: TextStyle(fontSize: 14)),
+                        onTap: () {
+                            print('Delete account');
+                        },
+                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
                     ),
-                    buildRow(
-                        icon: Icons.logout, 
-                        text: Location.of(context)!.trans('logout'), 
-                        route: () async {
+
+                    ListTile(
+                        leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.error),
+                        title: const Text('Logout', style: TextStyle(fontSize: 16)),
+                        subtitle: const Text('Logout from the app', style: TextStyle(fontSize: 14)),
+                        onTap: () async {
                             if(await _authService.logout()){
                                 if(mounted) {
                                     Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
                                 }
                             }
-                        }, 
-                        value: '/logout', 
-                        context: context, 
-                        rightIcon: false
-                    ),
+                        }
+                    )
                 ],
             ),
         );
     }
-}
-
-Widget buildRow({required IconData icon, required String text, required void Function()? route, required String value,  required BuildContext context, bool rightIcon = true}) {
-    return Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1)),
-        ),
-        child: InkWell(
-            onTap: route,
-            child: Row(
-                children: [
-                    Icon(icon, color: Theme.of(context).colorScheme.primary),
-                    Expanded(
-                        child: Padding(padding: const EdgeInsets.only(left: 10), child: Text(text, style: const TextStyle(fontSize: 16))),
-                    ),
-                    rightIcon ? Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary) : Container(),   
-                ],
-            ),
-        ),
-    );
 }
