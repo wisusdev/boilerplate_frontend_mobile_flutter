@@ -90,7 +90,7 @@ class _ProfileEditState extends State<ProfileEdit> {
             ),
             body: SingleChildScrollView(
                 child: Container(
-                    padding: const EdgeInsets.all(20),
+                    margin: const EdgeInsets.only(left: 20, right: 20, top: 30),
                     child: Form(
                         key: _formKey,
                         child: Column(
