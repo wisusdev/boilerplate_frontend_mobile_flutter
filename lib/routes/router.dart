@@ -1,4 +1,6 @@
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/account/change_password.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/views/account/connected_devices.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/views/account/delete_account.dart';
 import 'package:flutter/material.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/guards/auth_guard.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/account/profile_edit.dart';
@@ -17,6 +19,8 @@ Map<String, Widget Function(dynamic context)> routes = {
     'profile': (context) => const AuthGuard(child: ProfileMain()),
     'profile_edit': (context) => const AuthGuard(child: ProfileEdit()),
     'change_password': (context) => const AuthGuard(child: ChangePassword()),
+    'delete_account': (context) => const AuthGuard(child: DeleteAccount()),
+    'connected_devices': (context) => const AuthGuard(child: ConnectedDevices()),
     'setting': (context) => const AuthGuard(child: SettingMain()),
     
     // Auth
