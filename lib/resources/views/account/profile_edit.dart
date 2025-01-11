@@ -225,6 +225,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                         ))
                                     ),
                                     onPressed: () {
+                                        resetErrorMessages();
                                         if (_formKey.currentState!.validate()) {
                                             updateProfile(context);
                                         }
@@ -264,6 +265,7 @@ class _ProfileEditState extends State<ProfileEdit> {
 
         if(profileEditResponse.containsKey('errors')){
             var errors = profileEditResponse['errors'];
+            
             if(errors is List){
                 for(var error in errors){
                     String title = error['title'];
