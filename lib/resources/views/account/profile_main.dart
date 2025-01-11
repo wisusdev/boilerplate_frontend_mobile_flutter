@@ -187,7 +187,9 @@ class _ProfileMainState extends State<ProfileMain> {
                         leading: Icon(Icons.devices, color: Theme.of(context).colorScheme.primary),
                         title: const Text('Devices', style: TextStyle(fontSize: 16)),
                         subtitle: const Text('Devices connected', style: TextStyle(fontSize: 14)),
-                        onTap: () => Navigator.pushNamed(context, 'connected_devices'),
+                        onTap: () {
+                            print('Change password');
+                        },
                         trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
                     ),
 
@@ -195,7 +197,9 @@ class _ProfileMainState extends State<ProfileMain> {
                         leading: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
                         title: const Text('Delete account', style: TextStyle(fontSize: 16)),
                         subtitle: const Text('Delete your account', style: TextStyle(fontSize: 14)),
-                        onTap: () => Navigator.pushNamed(context, 'delete_account'),
+                        onTap: () {
+                            print('Delete account');
+                        },
                         trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
                     ),
 
