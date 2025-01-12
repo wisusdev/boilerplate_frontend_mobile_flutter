@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/error_manager.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/http/controllers/account_controller.dart';
