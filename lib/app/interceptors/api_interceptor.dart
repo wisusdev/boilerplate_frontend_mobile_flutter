@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiInterceptor extends http.BaseClient {
+
     final http.Client _inner = http.Client();
 
     @override
     Future<http.StreamedResponse> send(http.BaseRequest request) async {
+
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String? token = prefs.getString('access_token');
 
@@ -43,6 +45,7 @@ class ApiInterceptor extends http.BaseClient {
 
         request.headers['content-type'] = 'application/vnd.api+json';
         request.headers['accept'] = 'application/vnd.api+json';
+        
         if (token != null) {
             request.headers['Authorization'] = 'Bearer $token';
         }
