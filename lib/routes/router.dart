@@ -15,13 +15,14 @@ import 'package:boilerplate_frontend_mobile_flutter/resources/views/settings/the
 
 Map<String, Widget Function(dynamic context)> routes = {
     'home': (context) => const AuthGuard(child: HomeView()),
+    'setting': (context) => const AuthGuard(child: SettingMain()),
+
     // Account
     'profile': (context) => const AuthGuard(child: ProfileMain()),
     'profile_edit': (context) => const AuthGuard(child: ProfileEdit()),
     'change_password': (context) => const AuthGuard(child: ChangePassword()),
-    'delete_account': (context) => const AuthGuard(child: DeleteAccount()),
     'connected_devices': (context) => const AuthGuard(child: ConnectedDevices()),
-    'setting': (context) => const AuthGuard(child: SettingMain()),
+    'delete_account': (context) => const AuthGuard(child: DeleteAccount()),
     
     // Auth
     'login': (context) => const AuthLogin(),
