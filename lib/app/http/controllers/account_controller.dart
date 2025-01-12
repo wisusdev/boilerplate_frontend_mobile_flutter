@@ -16,7 +16,9 @@ class AccountController {
             profileData['avatar'] = base64Image;
         }
 
-        Map<String, dynamic> profileEditResponse = await AccountService().updateProfile(data: profileData);
+        final AccountService accountService = AccountService();
+
+        Map<String, dynamic> profileEditResponse = await accountService.updateProfile(data: profileData);
 
         if (profileEditResponse.containsKey('data')) {
             toastSuccess(context, Location.of(context)!.trans('recordUpdated'));
@@ -44,4 +46,35 @@ class AccountController {
             toastDanger(context, Location.of(context)!.trans('errorAsOccurred'));
         }
     }
+
+    Future<void> changePassword(context, passwordData, Function setErrorMessages) async {
+        final AccountService accountService = AccountService();
+
+        Map<String, dynamic> passwordChangeResponse = await accountService.changePassword(data: passwordData);
+
+        if (passwordChangeResponse.containsKey('data')) {
+            toastSuccess(context, Location.of(context)!.trans('recordUpdated'));
+        }
+
+        if (passwordChangeResponse.containsKey('errors')) {
+            var errors = passwordChangeResponse['errors'];
+            Map<String, dynamic> errorMessages = {
+                'current_password': null,
+                'password': null,
+                'password_confirmation': null,
+            };
+
+            if (errors is List) {
+                for (var error in errors) {
+                    String title = error['title'];
+                    List<String> titleList = title.split('.');
+                    errorMessages[titleList.last] = Location.of(context)!.trans(error['detail']);
+                }
+            }
+
+            setErrorMessages(errorMessages);
+            toastDanger(context, Location.of(context)!.trans('errorAsOccurred'));
+        }
+
+    }    
 }
