@@ -8,6 +8,7 @@ import 'package:boilerplate_frontend_mobile_flutter/app/interfaces/local/local_u
 import 'package:boilerplate_frontend_mobile_flutter/app/services/auth_service.dart';
 import 'package:boilerplate_frontend_mobile_flutter/config/app.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/account/profile_edit.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/modal_confirm.dart';
 
 class ProfileMain extends StatefulWidget {
     const ProfileMain({Key? key}) : super(key: key);
@@ -205,15 +206,29 @@ class _ProfileMainState extends State<ProfileMain> {
 
                     ListTile(
                         leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.error),
-                        title: const Text('Logout', style: TextStyle(fontSize: 16)),
+                        title: Text(Location.of(context)!.trans('logout'), style: const TextStyle(fontSize: 16)),
                         subtitle: const Text('Logout from the app', style: TextStyle(fontSize: 14)),
-                        onTap: () async {
-                            if(await _authService.logout()){
-                                if(mounted) {
-                                    Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
-                                }
-                            }
-                        }
+                        onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                    return ModalConfirm(
+                                        title: 'Cerrar sesión',
+                                        content: '¿Estás seguro de que deseas cerrar sesión?',
+                                        onConfirm: () async {
+                                            if (await _authService.logout()) {
+                                                if (mounted) {
+                                                    Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
+                                                }
+                                            }
+                                        },
+                                        onCancel: () {
+                                            Navigator.of(context).pop();
+                                        },
+                                    );
+                                },
+                            );
+                        },
                     )
                 ],
             ),
