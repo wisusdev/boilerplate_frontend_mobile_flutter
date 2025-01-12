@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-InputDecoration inputDecoration({required String labelText}){
+InputDecoration inputDecorationStyle({required String labelText}){
     return InputDecoration(
         labelText: labelText,
         border: OutlineInputBorder(
