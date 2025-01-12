@@ -1,13 +1,14 @@
-import 'dart:convert';
 import 'dart:io';
-
-import 'package:boilerplate_frontend_mobile_flutter/app/http/controllers/account_controller.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
+
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/text.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/error_manager.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/input_decoration.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/http/controllers/account_controller.dart';
 
 class ProfileEdit extends StatefulWidget {
     const ProfileEdit({super.key});
@@ -29,13 +30,13 @@ class _ProfileEditState extends State<ProfileEdit> {
     String _userKey = '';
     bool _isLoading = false;
 
-    Map<String, dynamic> errorMessage = {
+    final ErrorManager errorManager = ErrorManager(initialErrors: {
         'first_name': null,
         'last_name': null,
         'email': null,
         'avatar': null,
         'language': null,
-    };
+    });
 
     XFile? _imageFile;
 
@@ -106,14 +107,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                                                 Expanded(
                                                     child: TextFormField(
                                                         controller: _firstnameController,
-                                                        decoration: inputDecoration(labelText: Location.of(context)!.trans('firstName')),
+                                                        decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('firstName')),
                                                         validator: (value) {
                                                             if (value!.isEmpty) {
                                                                 return Location.of(context)!.trans('validation.thisFieldIsRequired');
                                                             }
                     
-                                                            if(errorMessage['first_name'] != null){
-                                                                return errorMessage['first_name'];
+                                                            if(errorManager.errors['first_name'] != null){
+                                                                return errorManager.errors['first_name'];
                                                             }
                                                             
                                                             return null;
@@ -124,14 +125,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                                                 Expanded(
                                                     child: TextFormField(
                                                         controller: _lastnameController,
-                                                        decoration: inputDecoration(labelText: Location.of(context)!.trans('lastName')),
+                                                        decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('lastName')),
                                                         validator: (value) {
                                                             if (value!.isEmpty) {
                                                                 return Location.of(context)!.trans('validation.thisFieldIsRequired');
                                                             }
                     
-                                                            if(errorMessage['last_name'] != null){
-                                                                return errorMessage['last_name'];
+                                                            if(errorManager.errors['last_name'] != null){
+                                                                return errorManager.errors['last_name'];
                                                             }
                     
                                                             return null;
@@ -146,14 +147,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                                         TextFormField(
                                             controller: _emailController,
                                             keyboardType: TextInputType.emailAddress,
-                                            decoration: inputDecoration(labelText: Location.of(context)!.trans('email')),
+                                            decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('email')),
                                             validator: (value) {
                                                 if (value!.isEmpty) {
                                                     return Location.of(context)!.trans('validation.thisFieldIsRequired');
                                                 }
                     
-                                                if(errorMessage['email'] != null){
-                                                    return errorMessage['email'];
+                                                if(errorManager.errors['email'] != null){
+                                                    return errorManager.errors['email'];
                                                 }
                     
                                                 return null;
@@ -163,7 +164,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                         const SizedBox(height: 20),
                     
                                         InputDecorator(
-                                            decoration: inputDecoration(labelText: Location.of(context)!.trans('language')),
+                                            decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('language')),
                                             child: DropdownButtonHideUnderline(
                                                 child: DropdownButton<String>(
                                                 value: userLanguageDropdownValue,
@@ -271,19 +272,19 @@ class _ProfileEditState extends State<ProfileEdit> {
 
     void setErrorMessages(Map<String, dynamic> errors) {
         setState(() {
-            errorMessage = errors;
+            errorManager.setErrors(errors);
         });
     }
 
     resetErrorMessages(){
         setState(() {
-            errorMessage = {
+            errorManager.setErrors({
                 'first_name': null,
                 'last_name': null,
                 'email': null,
                 'avatar': null,
                 'language': null,
-            };
+            });
         });
     }
 }
