@@ -67,7 +67,7 @@ class _AuthRegisterState extends State<AuthRegister> {
 
                                         TextFormField(
                                             controller: _usernameController,
-                                            decoration: inputDecoration(labelText: Location.of(context)!.trans('userName')),
+                                            decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('userName')),
                                             validator: (value) {
                                                 if (value!.isEmpty) {
                                                     return Location.of(context)!.trans('validation.thisFieldIsRequired');
@@ -88,7 +88,7 @@ class _AuthRegisterState extends State<AuthRegister> {
                                                 Expanded(
                                                     child: TextFormField(
                                                         controller: _firstnameController,
-                                                        decoration: inputDecoration(labelText: Location.of(context)!.trans('firstName')),
+                                                        decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('firstName')),
                                                         validator: (value) {
                                                             if (value!.isEmpty) {
                                                                 return Location.of(context)!.trans('validation.thisFieldIsRequired');
@@ -107,7 +107,7 @@ class _AuthRegisterState extends State<AuthRegister> {
                                                 Expanded(
                                                     child: TextFormField(
                                                         controller: _lastnameController,
-                                                        decoration: inputDecoration(labelText: Location.of(context)!.trans('lastName')),
+                                                        decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('lastName')),
                                                         validator: (value) {
                                                             if (value!.isEmpty) {
                                                                 return Location.of(context)!.trans('validation.thisFieldIsRequired');
@@ -130,7 +130,7 @@ class _AuthRegisterState extends State<AuthRegister> {
                                         TextFormField(
                                             controller: _emailController,
                                             keyboardType: TextInputType.emailAddress,
-                                            decoration: inputDecoration(labelText: Location.of(context)!.trans('email')),
+                                            decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('email')),
                                             validator: (value) {
                                                 if (value!.isEmpty) {
                                                     return Location.of(context)!.trans('validation.thisFieldIsRequired');
@@ -149,7 +149,7 @@ class _AuthRegisterState extends State<AuthRegister> {
 
                                         TextFormField(
                                             controller: _passwordController,
-                                            decoration: inputDecoration(labelText: Location.of(context)!.trans('password')),
+                                            decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('password')),
                                             obscureText: true,
                                             validator: (value) {
                                                 if (value!.isEmpty) {
@@ -168,7 +168,7 @@ class _AuthRegisterState extends State<AuthRegister> {
 
                                         TextFormField(
                                             controller: _confirmPasswordController,
-                                            decoration: inputDecoration(labelText: Location.of(context)!.trans('confirmPassword')),
+                                            decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('confirmPassword')),
                                             obscureText: true,
                                             validator: (value) {
                                                 if (value!.isEmpty) {
