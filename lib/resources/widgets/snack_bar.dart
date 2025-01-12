@@ -10,6 +10,7 @@ getScafoldMessage(BuildContext context, String message, {Duration duration = con
 			behavior: SnackBarBehavior.floating, // Puedes cambiar el comportamiento según tus necesidades
 			action: SnackBarAction(
 				label: Location.of(context)!.trans('close'),
+                textColor: Colors.white,
 				onPressed: () {
 					// Acción a realizar cuando se presiona el botón de acción
 					//ScaffoldMessenger.of(context).hideCurrentSnackBar();
