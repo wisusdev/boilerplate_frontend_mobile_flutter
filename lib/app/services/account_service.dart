@@ -9,11 +9,13 @@ class AccountService {
 
     final String _apiUri;
     late String _apiUriAccount;
+    late String _apiUriChangePassword;
 
     final ApiInterceptor client = ApiInterceptor();
 
     AccountService(): _apiUri = apiUrlV1 {
         _apiUriAccount = '$_apiUri/account/profile';
+        _apiUriChangePassword = '$_apiUri/account/change-password';
     }
 
     updateProfile({required Map<String, String> data}) async {
@@ -27,6 +29,16 @@ class AccountService {
             SharedPreferences prefs = await SharedPreferences.getInstance();
             prefs.setString('user', json.encode(responseBody['data']['attributes']));
         }
+
+        return responseBody;
+    }
+
+    changePassword({required Map<String, String> data}) async {
+        var uri = Uri.parse(_apiUriChangePassword);
+
+        Response accountResponse = await client.patch(uri, body: json.encode(data));
+
+        final Map<String, dynamic> responseBody = json.decode(accountResponse.body);
 
         return responseBody;
     }
