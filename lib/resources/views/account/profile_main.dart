@@ -187,10 +187,8 @@ class _ProfileMainState extends State<ProfileMain> {
                     ListTile(
                         leading: Icon(Icons.devices, color: Theme.of(context).colorScheme.primary),
                         title: const Text('Devices', style: TextStyle(fontSize: 16)),
-                        subtitle: const Text('Devices connected', style: TextStyle(fontSize: 14)),
-                        onTap: () {
-                            print('Change password');
-                        },
+                        subtitle: const Text('Connected devices', style: TextStyle(fontSize: 14)),
+                        onTap: () => Navigator.pushNamed(context, 'connected_devices'),
                         trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
                     ),
 
