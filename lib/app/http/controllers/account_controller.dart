@@ -76,5 +76,15 @@ class AccountController {
             toastDanger(context, Location.of(context)!.trans('errorAsOccurred'));
         }
 
-    }    
+    } 
+
+    Future<void> getDeviceAuthList(context, Function setDeviceAuthList) async {
+        final AccountService accountService = AccountService();
+
+        Map<String, dynamic> deviceAuthListResponse = await accountService.getDeviceAuthList(data: {});
+
+        if (deviceAuthListResponse.containsKey('data')) {
+            setDeviceAuthList(deviceAuthListResponse['data']);
+        }
+    }
 }
