@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiInterceptor extends http.BaseClient {
 
-    final http.Client _inner = http.Client();
+    final http.Client _httpClient = http.Client();
 
     @override
     Future<http.StreamedResponse> send(http.BaseRequest request) async {
@@ -50,6 +50,6 @@ class ApiInterceptor extends http.BaseClient {
             request.headers['Authorization'] = 'Bearer $token';
         }
 
-        return _inner.send(request);
+        return _httpClient.send(request);
     }
 }
