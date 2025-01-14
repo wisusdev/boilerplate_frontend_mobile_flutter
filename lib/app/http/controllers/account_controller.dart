@@ -78,10 +78,10 @@ class AccountController {
 
     } 
 
-    Future<void> getDeviceAuthList(context, Function setDeviceAuthList) async {
+    Future<void> getDeviceAuthList(Function setDeviceAuthList) async {
         final AccountService accountService = AccountService();
 
-        Map<String, dynamic> deviceAuthListResponse = await accountService.getDeviceAuthList(data: {});
+        Map<String, dynamic> deviceAuthListResponse = await accountService.getDeviceAuthList();
 
         if (deviceAuthListResponse.containsKey('data')) {
             setDeviceAuthList(deviceAuthListResponse['data']);
