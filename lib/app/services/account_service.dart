@@ -17,7 +17,7 @@ class AccountService {
     AccountService(): _apiUri = apiUrlV1 {
         _apiUriAccount = '$_apiUri/account/profile';
         _apiUriChangePassword = '$_apiUri/account/change-password';
-        _apiUriDeviceAuthList = '$_apiUri/account/device-auth-list';
+        _apiUriDeviceAuthList = '$_apiUri/account/devices-auth-list';
     }
 
     updateProfile({required Map<String, String> data}) async {
@@ -45,8 +45,7 @@ class AccountService {
         return responseBody;
     }
 
-    getDeviceAuthList({required Map<String, String> data}) async {
-
+    getDeviceAuthList() async {
         Map<String, dynamic> params = {
             'fields[device_infos]': 'id,login_at,browser,os,ip,country',
             'page[number]': '1',
