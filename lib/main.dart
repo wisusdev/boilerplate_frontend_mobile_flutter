@@ -19,7 +19,6 @@ import 'package:boilerplate_frontend_mobile_flutter/resources/themes/light_theme
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/home.dart';
 import 'package:boilerplate_frontend_mobile_flutter/routes/router.dart';
 
-
 void main() async {
     WidgetsFlutterBinding.ensureInitialized();
     await LocalStorage.init();
