@@ -16,7 +16,7 @@ import 'package:boilerplate_frontend_mobile_flutter/app/providers/theme_provider
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location_delegate.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/themes/dark_theme.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/themes/light_theme.dart';
-import 'package:boilerplate_frontend_mobile_flutter/resources/views/home.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/views/layouts/app.dart';
 import 'package:boilerplate_frontend_mobile_flutter/routes/router.dart';
 
 void main() async {
@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
                         themeMode: Provider.of<ThemeProvider>(context).themeMode,
 
                         // Rutas
-                        home: const AuthGuard(child: HomeView()),
+                        home: const AuthGuard(child: AppLayout()),
                         routes: routes,
                     );
                 },
