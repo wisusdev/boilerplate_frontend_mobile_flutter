@@ -37,13 +37,13 @@ class _HomeViewState extends State<HomeView> {
                 ],
             ),
 
-            floatingActionButton: FloatingActionButton(
+            /*floatingActionButton: FloatingActionButton(
                 onPressed: () {},
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 child: Icon(Icons.qr_code_scanner, color: Theme.of(context).colorScheme.onPrimary),
-            ),
+            ),*/
 
-            drawer: DrawerMenuLeft(scaffoldKey : scaffoldKey),
+            //drawer: DrawerMenuLeft(scaffoldKey : scaffoldKey),
         );
   }
 }
