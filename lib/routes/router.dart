@@ -15,7 +15,6 @@ import 'package:boilerplate_frontend_mobile_flutter/resources/views/settings/the
 
 Map<String, Widget Function(dynamic context)> routes = {
     'home': (context) => const AuthGuard(child: HomeView()),
-    'setting': (context) => const AuthGuard(child: SettingMain()),
 
     // Account
     'profile': (context) => const AuthGuard(child: ProfileMain()),
@@ -30,6 +29,7 @@ Map<String, Widget Function(dynamic context)> routes = {
     'forgot_password': (context) => const AuthForgotPassword(),
     
     // settings
-    'language': (context) => const AuthGuard(child: LanguajeMain()),
-    'theme': (context) => const AuthGuard(child: ThemeMain()),
+    'setting': (context) => const SettingMain(),
+    'language': (context) => const LanguajeMain(),
+    'theme': (context) => const ThemeMain(),
 };
