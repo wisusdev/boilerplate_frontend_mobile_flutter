@@ -39,11 +39,11 @@ class _ProfileMainState extends State<ProfileMain> {
 
     AppBar _buildAppBar(BuildContext context) {
         return AppBar(
-            leading: BackButton(color: Theme.of(context).colorScheme.onPrimary),
             title: Text(
                 capitalizeText(Location.of(context)!.trans('profile')), 
                 style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
             ),
+            iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
             backgroundColor: Theme.of(context).colorScheme.primary,
         );
     }
