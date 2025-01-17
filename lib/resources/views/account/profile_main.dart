@@ -133,7 +133,7 @@ class _ProfileMainState extends State<ProfileMain> {
 
     Widget _buildProfileOptions(BuildContext context, LocalUserInfo userInfo) {
         return Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.only(left: 20, right: 20),
             child: Column(
                 children: [
                     _buildOptionCard(context, userInfo),
