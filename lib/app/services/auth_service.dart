@@ -34,7 +34,7 @@ class AuthService extends ChangeNotifier {
             SharedPreferences prefs = await SharedPreferences.getInstance();
             prefs.setString('user', json.encode(responseBody['data']['attributes']['user']));
             prefs.setString('permissions', json.encode(responseBody['data']['relationships']['permissions']));
-            prefs.setString('user_key', responseBody['data']['id']);
+            prefs.setString('user_id', responseBody['data']['id']);
             prefs.setString('access_token', responseBody['data']['relationships']['access']['token']);
         }
         
@@ -57,10 +57,7 @@ class AuthService extends ChangeNotifier {
         await client.post(uri).then((response) async {
             if (response.statusCode == 200) {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.remove('user');
-                prefs.remove('permissions');
-                prefs.remove('user_key');
-                prefs.remove('access_token');
+                prefs.clear();
                 success = true;
             }
         });
