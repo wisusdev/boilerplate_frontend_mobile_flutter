@@ -20,7 +20,14 @@ class AuthGuard extends StatelessWidget {
 				} else if (snapshot.hasData && snapshot.data == true) {
 					return child;
 				} else {
-					return const AuthLogin();
+					WidgetsBinding.instance.addPostFrameCallback((_) {
+							Navigator.of(context).pushAndRemoveUntil(
+								MaterialPageRoute(builder: (context) => const AuthLogin()),
+								(Route<dynamic> route) => false,
+							);
+					});
+                    
+					return Container(); // Return an empty container while the navigation happens
 				}
 	  		},
 		);
