@@ -46,7 +46,7 @@ class _ProfileEditState extends State<ProfileEdit> {
 
         SharedPreferences.getInstance().then((prefs) {
             var userJson = prefs.getString('user');
-            var userKey = prefs.getString('user_key');
+            var userKey = prefs.getString('user_id');
 
             if (userJson != null) {
                 var user = json.decode(userJson);
