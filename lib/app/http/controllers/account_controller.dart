@@ -4,10 +4,11 @@ import 'dart:io';
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/services/account_service.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
+import 'package:flutter/material.dart';
 
 class AccountController {
     
-    Future<void> updateProfile(context, profileData, imageFile, Function setErrorMessages) async {
+    Future<void> updateProfile(BuildContext context, profileData, imageFile, Function setErrorMessages) async {
 
         if (imageFile != null) {
             final File file = File(imageFile.path);
@@ -47,7 +48,7 @@ class AccountController {
         }
     }
 
-    Future<void> changePassword(context, passwordData, Function setErrorMessages) async {
+    Future<void> changePassword(BuildContext context, passwordData, Function setErrorMessages) async {
         final AccountService accountService = AccountService();
 
         Map<String, dynamic> passwordChangeResponse = await accountService.changePassword(data: passwordData);
@@ -78,13 +79,30 @@ class AccountController {
 
     } 
 
-    Future<void> getDeviceAuthList(Function setDeviceAuthList) async {
+    Future<void> getDeviceAuthList(BuildContext context, Function setDeviceAuthList) async {
         final AccountService accountService = AccountService();
 
         Map<String, dynamic> deviceAuthListResponse = await accountService.getDeviceAuthList();
 
-        if (deviceAuthListResponse.containsKey('data')) {
-            setDeviceAuthList(deviceAuthListResponse['data']);
+        if (deviceAuthListResponse.containsKey('response') && deviceAuthListResponse['response'].containsKey('data')) {
+            setDeviceAuthList(deviceAuthListResponse);
+        }
+    }
+
+    Future<void> disconnectDevice(BuildContext context, String deviceId, Function setDeviceAuthList) async {
+        final AccountService accountService = AccountService();
+
+        Map<String, String> data = {
+            "type": "logout-device",
+            "id": deviceId,
+            "device_id": deviceId,
+        };
+
+        Map<String, dynamic> disconnectDeviceResponse = await accountService.disconnectDevice(data: data);
+
+        if (disconnectDeviceResponse.containsKey('response') && disconnectDeviceResponse['response'].containsKey('data')) {
+            disconnectDeviceResponse['id'] = deviceId;
+            setDeviceAuthList(disconnectDeviceResponse);
         }
     }
 }
