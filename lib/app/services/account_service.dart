@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/interceptors/api_interceptor.dart';
@@ -11,6 +11,7 @@ class AccountService {
     late String _apiUriAccount;
     late String _apiUriChangePassword;
     late String _apiUriDeviceAuthList;
+    late String _apiUriDeviceAuthDisconnect;
 
     final ApiInterceptor client = ApiInterceptor();
 
@@ -18,6 +19,7 @@ class AccountService {
         _apiUriAccount = '$_apiUri/account/profile';
         _apiUriChangePassword = '$_apiUri/account/change-password';
         _apiUriDeviceAuthList = '$_apiUri/account/devices-auth-list';
+        _apiUriDeviceAuthDisconnect = '$_apiUri/account/logout-device';
     }
 
     updateProfile({required Map<String, String> data}) async {
@@ -57,6 +59,26 @@ class AccountService {
 
         final Map<String, dynamic> responseBody = json.decode(accountResponse.body);
 
-        return responseBody;
+        Map<String, dynamic> response = {
+            'response': responseBody,
+            'statusCode': accountResponse.statusCode,
+        };
+
+        return response;
+    }
+
+    disconnectDevice({required Map<String, String> data}) async {
+        var uri = Uri.parse(_apiUriDeviceAuthDisconnect);
+
+        Response accountResponse = await client.post(uri, body: json.encode(data));
+
+        final Map<String, dynamic> responseBody = json.decode(accountResponse.body);
+
+        Map<String, dynamic> response = {
+            'response': responseBody,
+            'statusCode': accountResponse.statusCode,
+        };
+
+        return response;
     }
 }
