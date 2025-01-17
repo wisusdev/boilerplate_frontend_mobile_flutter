@@ -34,7 +34,7 @@ class _ChangePasswordState extends State<ChangePassword> {
 
         SharedPreferences.getInstance().then((prefs) {
             var userJson = prefs.getString('user');
-            var userId = prefs.getString('user_key');
+            var userId = prefs.getString('user_id');
 
             if (userJson != null) {
                 setState(() {
