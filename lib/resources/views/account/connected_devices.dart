@@ -57,12 +57,6 @@ class _ConnectedDevicesState extends State<ConnectedDevices> {
                 leading: BackButton(color: Theme.of(context).colorScheme.onPrimary),
                 title: Text('Connected devices', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
                 backgroundColor: Theme.of(context).colorScheme.primary,
-                actions: [
-                    IconButton(
-                        icon: Icon(Icons.refresh, color: Theme.of(context).colorScheme.onPrimary),
-                        onPressed: _fetchDevices,
-                    ),
-                ],
             ),
 
             body: _isLoading
