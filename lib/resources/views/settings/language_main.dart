@@ -22,7 +22,7 @@ class _LanguajeMainState extends State<LanguajeMain> {
 		return Scaffold(
             appBar: AppBar(
                 title: Text(
-                    capitalizeText(Location.of(context)!.trans('theme')),
+                    capitalizeText(Location.of(context)!.trans('language')),
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimary
                     )
@@ -36,10 +36,6 @@ class _LanguajeMainState extends State<LanguajeMain> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                        Text('Provider: ${ Provider.of<LanguageProvider>(context).language }'),
-                        Text('ThemePreferences: ${ LanguagePreferences.getLanguageMode() }'),
-                        const Divider(),
-
                         for(var language in languages)
                             Card(
                                 shape: RoundedRectangleBorder(
