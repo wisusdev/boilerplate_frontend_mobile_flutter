@@ -167,8 +167,7 @@ class _ProfileMainState extends State<ProfileMain> {
                 children: [
                     ListTile(
                         leading: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
-                        title: const Text('Edit', style: TextStyle(fontSize: 16)),
-                        subtitle: const Text('Edit your profile', style: TextStyle(fontSize: 14)),
+                        title: Text(Location.of(context)!.trans('profile'), style: const TextStyle(fontSize: 16)),
                         onTap: () async {
                             final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileEdit()));
 
@@ -183,16 +182,14 @@ class _ProfileMainState extends State<ProfileMain> {
 
                     ListTile(
                         leading: Icon(Icons.key, color: Theme.of(context).colorScheme.primary),
-                        title: const Text('Change Password', style: TextStyle(fontSize: 16)),
-                        subtitle: const Text('Change your password', style: TextStyle(fontSize: 14)),
+                        title: Text(Location.of(context)!.trans('changePassword'), style: const TextStyle(fontSize: 16)),
                         onTap: () => Navigator.pushNamed(context, 'change_password'),
                         trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
                     ),
 
                     ListTile(
                         leading: Icon(Icons.devices, color: Theme.of(context).colorScheme.primary),
-                        title: const Text('Devices', style: TextStyle(fontSize: 16)),
-                        subtitle: const Text('Connected devices', style: TextStyle(fontSize: 14)),
+                        title: Text(Location.of(context)!.trans('devicesConnected'), style: const TextStyle(fontSize: 16)),
                         onTap: () => Navigator.pushNamed(context, 'connected_devices'),
                         trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
                     ),
@@ -200,7 +197,6 @@ class _ProfileMainState extends State<ProfileMain> {
                     ListTile(
                         leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.error),
                         title: Text(Location.of(context)!.trans('logout'), style: const TextStyle(fontSize: 16)),
-                        subtitle: const Text('Logout from the app', style: TextStyle(fontSize: 14)),
                         onTap: () {
                             showDialog(
                                 context: context,
