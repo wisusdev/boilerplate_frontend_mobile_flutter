@@ -165,7 +165,6 @@ class _ProfileMainState extends State<ProfileMain> {
             ),
             child: Column(
                 children: [
-
                     ListTile(
                         leading: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
                         title: const Text('Edit', style: TextStyle(fontSize: 16)),
@@ -195,16 +194,6 @@ class _ProfileMainState extends State<ProfileMain> {
                         title: const Text('Devices', style: TextStyle(fontSize: 16)),
                         subtitle: const Text('Connected devices', style: TextStyle(fontSize: 14)),
                         onTap: () => Navigator.pushNamed(context, 'connected_devices'),
-                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
-                    ),
-
-                    ListTile(
-                        leading: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
-                        title: const Text('Delete account', style: TextStyle(fontSize: 16)),
-                        subtitle: const Text('Delete your account', style: TextStyle(fontSize: 14)),
-                        onTap: () {
-                            print('Delete account');
-                        },
                         trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
                     ),
 
