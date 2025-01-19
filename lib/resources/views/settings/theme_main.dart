@@ -36,10 +36,6 @@ class _ThemeMainState extends State<ThemeMain> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                        
-                        Text('Provider: ${ Provider.of<ThemeProvider>(context).themeMode }'),
-                        Text('ThemePreferences: ${ ThemePreferences.getThemeMode() }'),
-                        const Divider(),
 
                         Card(
                             shape: RoundedRectangleBorder(
