@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/text.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/home.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/guards/auth_guard.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/account/profile_main.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/settings/setting_main.dart';
 
@@ -19,13 +21,13 @@ class _AppLayoutState extends State<AppLayout> {
     callPage(int currentIndex) {
         switch (currentIndex) {
             case 0:
-                return const HomeView();
+                return const AuthGuard(child: HomeView());
             case 1:
-                return const ProfileMain();
+                return const AuthGuard(child: ProfileMain());
             case 2:
-                return const SettingMain();
+                return const AuthGuard(child: SettingMain());
             default:
-                return const HomeView();
+                return const AuthGuard(child: HomeView());
         }
     }
 
