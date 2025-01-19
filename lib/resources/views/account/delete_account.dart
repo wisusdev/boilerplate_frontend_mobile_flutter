@@ -17,10 +17,23 @@ class _DeleteAccountState extends State<DeleteAccount> {
                 backgroundColor: Theme.of(context).colorScheme.primary,
             ),
 
-            body: SingleChildScrollView(
+            body: Center(
                 child: Column(
-                    children: [
-                        Text('Delete Account'),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                        const Text('Are you sure you want to delete your account?'),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                padding: const EdgeInsets.all(24),
+                                backgroundColor: Colors.red
+                            ),
+                            child: const Icon(Icons.delete_forever, size: 50, color: Colors.white),
+                            onPressed: () {
+                                // Delete account
+                            },
+                        )
                     ],
                 ),
             ),
