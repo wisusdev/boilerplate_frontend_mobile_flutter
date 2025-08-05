@@ -6,9 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/guards/auth_guard.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/preferences/language_preferences.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/preferences/theme_preferences.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/providers/auth_provider.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/providers/language_provider.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/services/auth_service.dart';
 import 'package:boilerplate_frontend_mobile_flutter/config/app.dart';
 import 'package:boilerplate_frontend_mobile_flutter/config/languages.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/local_storage.dart';
@@ -29,8 +27,7 @@ void main() async {
         MultiProvider(
             providers: [
                 ChangeNotifierProvider(create: (context) => ThemeProvider(themeMode: ThemePreferences.getThemeMode())),
-                ChangeNotifierProvider(create: (context) => AuthService()),
-                ChangeNotifierProvider(create: (context) => AuthProvider()),
+                ChangeNotifierProvider(create: (context) => LanguageProvider(languageLocale: Locale(LanguagePreferences.getLanguageMode()))),
             ], 
             child: const MyApp()
         ),
@@ -38,43 +35,36 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-	const MyApp({super.key});
+    const MyApp({super.key});
 
   	@override
   	Widget build(BuildContext context) {
-        return ChangeNotifierProvider(
-            create: (context) => LanguageProvider(languageLocale: Locale(LanguagePreferences.getLanguageMode())),
-            child: Consumer<LanguageProvider>(
-                builder: (context, languageProvider, child) {
-                    return MaterialApp(
-                        // Titulo de la app
-						title: appName,
+        return MaterialApp(
+            // Titulo de la app
+            title: appName,
 
-                        // Desactivar el banner de debug
-                        debugShowCheckedModeBanner: false,
+            // Desactivar el banner de debug
+            debugShowCheckedModeBanner: false,
 
-                        // Soporte para idiomas
-                        supportedLocales: supportedLocales,
-                        locale: languageProvider.language,
-                    
-                        localizationsDelegates: const [
-                            LocationDelegate(),
-                            GlobalMaterialLocalizations.delegate,
-                            GlobalWidgetsLocalizations.delegate,
-                            GlobalCupertinoLocalizations.delegate,
-                        ],
+            // Soporte para idiomas
+            supportedLocales: supportedLocales,
+            locale: Provider.of<LanguageProvider>(context).language,
+        
+            localizationsDelegates: const [
+                LocationDelegate(),
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+            ],
 
-                        // Soporte para temas
-                        theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
-                        darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-                        themeMode: Provider.of<ThemeProvider>(context).themeMode,
+            // Soporte para temas
+            theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+            darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+            themeMode: Provider.of<ThemeProvider>(context).themeMode,
 
-                        // Rutas
-                        home: const AuthGuard(child: AppLayout()),
-                        routes: routes,
-                    );
-                },
-            )
+            // Rutas
+            home: const AuthGuard(child: AppLayout()),
+            routes: routes,
         );
-  	}
+    }
 }
