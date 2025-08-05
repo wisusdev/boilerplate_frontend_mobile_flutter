@@ -15,6 +15,25 @@ cp .env.example .env
 flutter emulators
 flutter emulators --launch <emulator_id>
 flutter run
+r # Enable hot reload
+R # Enable hot restart
+```
+
+### Misellaneous
+
+```bash
+flutter clean # Clean the build directory
+flutter pub get # Get dependencies
+flutter pub upgrade # Upgrade dependencies
+flutter pub outdated # Check for outdated dependencies
+flutter pub deps # Show dependency tree
+flutter pub run build_runner build --delete-conflicting-outputs # Generate code using build_runner
+flutter pub run build_runner watch --delete-conflicting-outputs # Watch for changes and regenerate code
+flutter analyze # Analyze the code for issues
+flutter test # Run tests
+flutter test --coverage # Run tests with coverage
+flutter format . # Format the code
+flutter format --set-exit-if-changed . # Format the code and exit with an error if changes were made
 ```
 
 ### Versions
