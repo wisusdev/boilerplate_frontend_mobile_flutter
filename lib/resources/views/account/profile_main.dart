@@ -206,7 +206,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                         content: '¿Estás seguro de que deseas cerrar sesión?',
                                         onConfirm: () async {
                                             if (await _authService.logout()) {
-                                                if (mounted) {
+                                                if (context.mounted) {
                                                     Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
                                                 }
                                             }
