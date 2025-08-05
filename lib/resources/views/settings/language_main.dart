@@ -6,20 +6,19 @@ import 'package:boilerplate_frontend_mobile_flutter/app/preferences/language_pre
 import 'package:boilerplate_frontend_mobile_flutter/app/providers/language_provider.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/utils/languages.dart';
 
-class LanguajeMain extends StatefulWidget {
-  	const LanguajeMain({super.key});
+class LanguageMain extends StatefulWidget {
+    const LanguageMain({super.key});
 
-  	@override
-  	State<LanguajeMain> createState() => _LanguajeMainState();
+    @override
+    State<LanguageMain> createState() => LanguageMainState();
 }
 
-class _LanguajeMainState extends State<LanguajeMain> {
-  	@override
-  	Widget build(BuildContext context) {
-        
+class LanguageMainState extends State<LanguageMain> {
+    @override
+    Widget build(BuildContext context) {
         final languageMode = Provider.of<LanguageProvider>(context).language;
 
-		return Scaffold(
+        return Scaffold(
             appBar: AppBar(
                 title: Text(
                     capitalizeText(Location.of(context)!.trans('language')),
@@ -61,5 +60,5 @@ class _LanguajeMainState extends State<LanguajeMain> {
                 ),
             )
         );
-  	}
+    }
 }

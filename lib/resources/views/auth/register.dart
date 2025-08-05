@@ -7,21 +7,21 @@ import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/input_deco
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
 
 class AuthRegister extends StatefulWidget {
-  	const AuthRegister({super.key});
+    const AuthRegister({super.key});
 
-  	@override
-  	State<AuthRegister> createState() => _AuthRegisterState();
+    @override
+    State<AuthRegister> createState() => _AuthRegisterState();
 }
 
 class _AuthRegisterState extends State<AuthRegister> {
-	final _formKey = GlobalKey<FormState>();
+    final _formKey = GlobalKey<FormState>();
 
     final TextEditingController _usernameController = TextEditingController();
-	final TextEditingController _firstnameController = TextEditingController();
-	final TextEditingController _lastnameController = TextEditingController();
-	final TextEditingController _emailController = TextEditingController();
-	final TextEditingController _passwordController = TextEditingController();
-	final TextEditingController _confirmPasswordController = TextEditingController();
+    final TextEditingController _firstnameController = TextEditingController();
+    final TextEditingController _lastnameController = TextEditingController();
+    final TextEditingController _emailController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
+    final TextEditingController _confirmPasswordController = TextEditingController();
 
     Map<String, dynamic> errorMessage = {
         'username': null,
@@ -32,11 +32,11 @@ class _AuthRegisterState extends State<AuthRegister> {
         'password_confirmation': null,
     };
 
-  	@override
-  	Widget build(BuildContext context) {
-		final size = MediaQuery.of(context).size;
+      @override
+      Widget build(BuildContext context) {
+        final size = MediaQuery.of(context).size;
 
-		return GestureDetector(
+        return GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             child: Scaffold(
                 body: SingleChildScrollView(
@@ -241,7 +241,7 @@ class _AuthRegisterState extends State<AuthRegister> {
                 ),
             ),
         );
-  	}
+    }
 
     void register(context) async {
         Map<String, String> data = {

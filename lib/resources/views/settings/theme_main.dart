@@ -7,19 +7,18 @@ import 'package:boilerplate_frontend_mobile_flutter/app/preferences/theme_prefer
 
 
 class ThemeMain extends StatefulWidget {
-  	const ThemeMain({super.key});
+    const ThemeMain({super.key});
 
-  	@override
-  	State<ThemeMain> createState() => _ThemeMainState();
+    @override
+    State<ThemeMain> createState() => _ThemeMainState();
 }
 
 class _ThemeMainState extends State<ThemeMain> {
-  	@override
-  	Widget build(BuildContext context) {
-
+    @override
+    Widget build(BuildContext context) {
         final themeMode = Provider.of<ThemeProvider>(context).themeMode;
 
-		return Scaffold(
+        return Scaffold(
             appBar: AppBar(
                 title: Text(
                     capitalizeText(Location.of(context)!.trans('theme')),
@@ -100,5 +99,5 @@ class _ThemeMainState extends State<ThemeMain> {
                 ),
             ),
         );
-  	}
+    }
 }

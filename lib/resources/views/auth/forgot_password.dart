@@ -6,26 +6,26 @@ import 'package:boilerplate_frontend_mobile_flutter/resources/views/auth/login.d
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
 
 class AuthForgotPassword extends StatefulWidget {
-  	const AuthForgotPassword({super.key});
+    const AuthForgotPassword({super.key});
 
-  	@override
-  	State<AuthForgotPassword> createState() => _AuthForgotPasswordState();
+    @override
+    State<AuthForgotPassword> createState() => _AuthForgotPasswordState();
 }
 
 class _AuthForgotPasswordState extends State<AuthForgotPassword> {
-	final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     final TextEditingController _emailController = TextEditingController();
 
     Map<String, dynamic> errorMessage = {
         'email': null,
     };
-  	
-  	@override
-  	Widget build(BuildContext context) {
-		final size = MediaQuery.of(context).size;
+      
+    @override
+    Widget build(BuildContext context) {
+        final size = MediaQuery.of(context).size;
 
-    	return GestureDetector(
+        return GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             child: Scaffold(
                 body: SingleChildScrollView(
@@ -133,7 +133,7 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
                 ),
             ),
         );
-  	}
+    }
 
     void forgotPassword(context) async {
 

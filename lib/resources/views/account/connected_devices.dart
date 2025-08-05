@@ -59,53 +59,51 @@ class _ConnectedDevicesState extends State<ConnectedDevices> {
                 backgroundColor: Theme.of(context).colorScheme.primary,
             ),
 
-            body: _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : SingleChildScrollView(
-                    child: Column(
-                        children: [
-                            ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: _devices.length,
-                                itemBuilder: (context, index) {
-                                    final device = _devices[index];
-                                    final attributes = device.attributes;
-                                    return Column(
-                                        children: [
-                                            ListTile(
-                                                title: Text('Browser: ${attributes.browser}'),
-                                                subtitle: Text('OS: ${attributes.os}\nIP: ${attributes.ip}\nCountry: ${attributes.country}\nLogin at: ${attributes.loginAt}'),
-                                                trailing: IconButton(
-                                                    icon: const Icon(Icons.logout, color: Colors.red),
-                                                    onPressed: () {
-                                                        showDialog(
-                                                            context: context,
-                                                            builder: (BuildContext context) {
-                                                                return ModalConfirm(
-                                                                    title: 'Cerrar sesión',
-                                                                    content: '¿Estás seguro de que deseas cerrar sesión en este dispositivo?',
-                                                                    onConfirm: ()  {
-                                                                        Navigator.of(context).pop();
-                                                                        _disconnectDevice(context, device.id);
-                                                                    },
-                                                                    onCancel: () {
-                                                                        Navigator.of(context).pop();
-                                                                    },
-                                                                );
-                                                            },
-                                                        );
-                                                    },
-                                                ),
+            body: _isLoading ? const Center(child: CircularProgressIndicator()) : SingleChildScrollView(
+                child: Column(
+                    children: [
+                        ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: _devices.length,
+                            itemBuilder: (context, index) {
+                                final device = _devices[index];
+                                final attributes = device.attributes;
+                                return Column(
+                                    children: [
+                                        ListTile(
+                                            title: Text('Browser: ${attributes.browser}'),
+                                            subtitle: Text('OS: ${attributes.os}\nIP: ${attributes.ip}\nCountry: ${attributes.country}\nLogin at: ${attributes.loginAt}'),
+                                            trailing: IconButton(
+                                                icon: const Icon(Icons.logout, color: Colors.red),
+                                                onPressed: () {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext context) {
+                                                            return ModalConfirm(
+                                                                title: 'Cerrar sesión',
+                                                                content: '¿Estás seguro de que deseas cerrar sesión en este dispositivo?',
+                                                                onConfirm: ()  {
+                                                                    Navigator.of(context).pop();
+                                                                    _disconnectDevice(context, device.id);
+                                                                },
+                                                                onCancel: () {
+                                                                    Navigator.of(context).pop();
+                                                                },
+                                                            );
+                                                        },
+                                                    );
+                                                },
                                             ),
+                                        ),
 
-                                            const Divider(), // Añadir un separador
-                                        ],
-                                    );
-                                },
-                            ),
-                        ],
-                    ),
+                                        const Divider(), // Añadir un separador
+                                    ],
+                                );
+                            },
+                        ),
+                    ],
                 ),
+            ),
         );
     }
 }

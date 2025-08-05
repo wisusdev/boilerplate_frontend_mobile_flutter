@@ -6,46 +6,44 @@ import 'package:boilerplate_frontend_mobile_flutter/app/utils/menu.dart';
 class DrawerMenuLeft extends StatefulWidget {
     final GlobalKey<ScaffoldState> scaffoldKey;
 
-	const DrawerMenuLeft({super.key, required this.scaffoldKey});
+    const DrawerMenuLeft({super.key, required this.scaffoldKey});
 
-  	@override
-  	State<DrawerMenuLeft> createState() => _DrawerMenuLeftState();
+    @override
+    State<DrawerMenuLeft> createState() => _DrawerMenuLeftState();
 }
 
 class _DrawerMenuLeftState extends State<DrawerMenuLeft> {
+    int _selectedIndex = 0;
 
-	int _selectedIndex = 0;
+    @override
+    Widget build(BuildContext context) {
+        final hasNotch = MediaQuery.of(context).viewPadding.top > 35;
 
-  	@override
-  	Widget build(BuildContext context) {
+        return NavigationDrawer(
+            selectedIndex: _selectedIndex,
+            
+            onDestinationSelected: (index) { 
+                setState(() {
+                    _selectedIndex = index;
+                });
 
-		final hasNotch = MediaQuery.of(context).viewPadding.top > 35;
-
-		return NavigationDrawer(
-			selectedIndex: _selectedIndex,
-			
-			onDestinationSelected: (index) { 
-				setState(() {
-					_selectedIndex = index;
-				});
-
-				final menuItem = appMenuItems[index];
-				Navigator.of(context).pushNamed(menuItem.link);
+                final menuItem = appMenuItems[index];
+                Navigator.of(context).pushNamed(menuItem.link);
                 Scaffold.of(context).closeDrawer();
                 //widget.scaffoldKey.currentState?.closeDrawer();
-			},
+            },
 
-			children: [
-				Padding(
-					padding: EdgeInsets.fromLTRB(28, hasNotch ? 0 : 20, 16, 10),
-					child: Text(capitalizeText(Location.of(context)!.trans('home'))),
-				),
+            children: [
+                Padding(
+                    padding: EdgeInsets.fromLTRB(28, hasNotch ? 0 : 20, 16, 10),
+                    child: Text(capitalizeText(Location.of(context)!.trans('home'))),
+                ),
 
-				...appMenuItems.map((item) => NavigationDrawerDestination(
-					icon: Icon(item.icon), 
-					label: Text(capitalizeText(Location.of(context)!.trans(item.title))),
-				))
-			],
-		);
-  	}
+                ...appMenuItems.map((item) => NavigationDrawerDestination(
+                    icon: Icon(item.icon), 
+                    label: Text(capitalizeText(Location.of(context)!.trans(item.title))),
+                ))
+            ],
+        );
+    }
 }

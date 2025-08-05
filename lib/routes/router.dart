@@ -30,6 +30,6 @@ Map<String, Widget Function(dynamic context)> routes = {
     
     // settings
     'setting': (context) => const SettingMain(),
-    'language': (context) => const LanguajeMain(),
+    'language': (context) => const LanguageMain(),
     'theme': (context) => const ThemeMain(),
 };

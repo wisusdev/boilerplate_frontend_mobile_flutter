@@ -1,10 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:convert';
+import 'package:flutter/material.dart';
 
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/services/account_service.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
-import 'package:flutter/material.dart';
 
 class AccountController {
     
@@ -21,7 +21,7 @@ class AccountController {
 
         Map<String, dynamic> profileEditResponse = await accountService.updateProfile(data: profileData);
 
-        if (profileEditResponse.containsKey('data')) {
+        if (profileEditResponse.containsKey('data') && context.mounted) {
             toastSuccess(context, Location.of(context)!.trans('recordUpdated'));
         }
 
@@ -39,12 +39,16 @@ class AccountController {
                 for (var error in errors) {
                     String title = error['title'];
                     List<String> titleList = title.split('.');
-                    errorMessages[titleList.last] = Location.of(context)!.trans(error['detail']);
+                    if(context.mounted) {
+                        errorMessages[titleList.last] = Location.of(context)!.trans(error['detail']);
+                    }
                 }
             }
 
             setErrorMessages(errorMessages);
-            toastDanger(context, Location.of(context)!.trans('errorAsOccurred'));
+            if (context.mounted) {
+                toastDanger(context, Location.of(context)!.trans('errorAsOccurred'));
+            }
         }
     }
 
@@ -53,7 +57,7 @@ class AccountController {
 
         Map<String, dynamic> passwordChangeResponse = await accountService.changePassword(data: passwordData);
 
-        if (passwordChangeResponse.containsKey('data')) {
+        if (passwordChangeResponse.containsKey('data') && context.mounted) {
             toastSuccess(context, Location.of(context)!.trans('recordUpdated'));
         }
 
@@ -69,12 +73,17 @@ class AccountController {
                 for (var error in errors) {
                     String title = error['title'];
                     List<String> titleList = title.split('.');
-                    errorMessages[titleList.last] = Location.of(context)!.trans(error['detail']);
+                    
+                    if(context.mounted) {
+                        errorMessages[titleList.last] = Location.of(context)!.trans(error['detail']);
+                    }
                 }
             }
 
             setErrorMessages(errorMessages);
-            toastDanger(context, Location.of(context)!.trans('errorAsOccurred'));
+            if (context.mounted) {
+                toastDanger(context, Location.of(context)!.trans('errorAsOccurred'));
+            }
         }
 
     } 

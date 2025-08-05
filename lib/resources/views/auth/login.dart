@@ -6,18 +6,18 @@ import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/input_deco
 import 'package:boilerplate_frontend_mobile_flutter/app/http/controllers/auth_controller.dart';
 
 class AuthLogin extends StatefulWidget {
-	const AuthLogin({super.key});
-	
-	@override
-  	State<AuthLogin> createState() => _AuthLoginState();
+    const AuthLogin({super.key});
+    
+    @override
+    State<AuthLogin> createState() => _AuthLoginState();
 }
 
 class _AuthLoginState extends State<AuthLogin> {
-  	final _formKey = GlobalKey<FormState>();
+    final _formKey = GlobalKey<FormState>();
 
     final AuthController authController = AuthController();
     final TextEditingController _emailController = TextEditingController();
-	final TextEditingController _passwordController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
     bool _isLoading = false;
 
     final ErrorManager errorManager = ErrorManager(initialErrors: {
@@ -25,11 +25,11 @@ class _AuthLoginState extends State<AuthLogin> {
         'password': null,
     });
 
-  	@override
-  	Widget build(BuildContext context) {
+    @override
+    Widget build(BuildContext context) {
         final size = MediaQuery.of(context).size;
 
-		return GestureDetector(
+        return GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             child: Scaffold(
                 body: Stack(

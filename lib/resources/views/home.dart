@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/text.dart';
-import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/drawer_menu_left.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/preferences/theme_preferences.dart';
 
 class HomeView extends StatefulWidget {

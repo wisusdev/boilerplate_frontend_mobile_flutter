@@ -1,30 +1,29 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:boilerplate_frontend_mobile_flutter/config/api.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/interceptors/api_interceptor.dart';
 
-class AuthService extends ChangeNotifier {
+class AuthService {
 
-  	final String _apiUri;
-  	late String _apiUriLogin;
-  	late String _apiUriRegister;
-  	late String _apiUriForgotPassword;
-  	late String _apiUriLogout;
+    final String _apiUri;
+    late String _apiUriLogin;
+    late String _apiUriRegister;
+    late String _apiUriForgotPassword;
+    late String _apiUriLogout;
 
-  	final ApiInterceptor client = ApiInterceptor();
+    final ApiInterceptor client = ApiInterceptor();
 
-  	AuthService() : _apiUri = apiUrlV1 {
-    	_apiUriLogin = '$_apiUri/auth/login';
-    	_apiUriLogout = '$_apiUri/auth/logout';
-    	_apiUriRegister = '$_apiUri/auth/register';
-    	_apiUriForgotPassword = '$_apiUri/auth/forgot-password';
-  	}
+    AuthService() : _apiUri = apiUrlV1 {
+        _apiUriLogin = '$_apiUri/auth/login';
+        _apiUriLogout = '$_apiUri/auth/logout';
+        _apiUriRegister = '$_apiUri/auth/register';
+        _apiUriForgotPassword = '$_apiUri/auth/forgot-password';
+    }
 
     login({required Map<String, String> data}) async {
-    	var uri = Uri.parse(_apiUriLogin);
+        var uri = Uri.parse(_apiUriLogin);
 
         Response loginResponse = await client.post(uri, body: json.encode(data));
 
@@ -39,7 +38,7 @@ class AuthService extends ChangeNotifier {
         }
         
         return responseBody;
-  	}
+      }
 
     register({required Map<String, String> data}) async {
         var uri = Uri.parse(_apiUriRegister);

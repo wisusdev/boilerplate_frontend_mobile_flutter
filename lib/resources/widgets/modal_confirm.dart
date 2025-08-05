@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ModalConfirm extends StatelessWidget {
-
     final String title;
     final String content;
     final VoidCallback onConfirm;
