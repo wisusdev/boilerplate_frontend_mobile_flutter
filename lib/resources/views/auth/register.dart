@@ -7,290 +7,317 @@ import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/input_deco
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
 
 class AuthRegister extends StatefulWidget {
-    const AuthRegister({super.key});
+  const AuthRegister({super.key});
 
-    @override
-    State<AuthRegister> createState() => _AuthRegisterState();
+  @override
+  State<AuthRegister> createState() => _AuthRegisterState();
 }
 
 class _AuthRegisterState extends State<AuthRegister> {
-    final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _firstnameController = TextEditingController();
+  final TextEditingController _lastnameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
-    final TextEditingController _usernameController = TextEditingController();
-    final TextEditingController _firstnameController = TextEditingController();
-    final TextEditingController _lastnameController = TextEditingController();
-    final TextEditingController _emailController = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
-    final TextEditingController _confirmPasswordController = TextEditingController();
+  Map<String, dynamic> errorMessage = {
+    'username': null,
+    'first_name': null,
+    'last_name': null,
+    'email': null,
+    'password': null,
+    'password_confirmation': null,
+  };
 
-    Map<String, dynamic> errorMessage = {
+  bool _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: [
+              // Botón de configuración en la parte superior derecha
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () => Navigator.pushNamed(context, 'setting'),
+                  tooltip: 'Configuración',
+                ),
+              ),
+              SingleChildScrollView(
+                reverse: true,
+                padding: EdgeInsets.only(left: 20, right: 20, top: size.height * 0.08, bottom: size.height * 0.06),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _buildLogo(),
+                      const SizedBox(height: 40),
+                      _buildTitle(context),
+                      const SizedBox(height: 10),
+                      _buildUsernameField(context),
+                      const SizedBox(height: 10),
+                      _buildNameFields(context),
+                      const SizedBox(height: 10),
+                      _buildEmailField(context),
+                      const SizedBox(height: 10),
+                      _buildPasswordField(context),
+                      const SizedBox(height: 10),
+                      _buildConfirmPasswordField(context),
+                      const SizedBox(height: 40),
+                      _buildRegisterButton(context),
+                      const SizedBox(height: 40),
+                      _buildLoginButton(context),
+                    ],
+                  ),
+                ),
+              ),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: _isLoading ? Container(color: Colors.black.withOpacity(0.5), child: const Center(child: CircularProgressIndicator()),) : const SizedBox.shrink(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image(image: AssetImage(logoApp), width: 80, height: 80),
+      ],
+    );
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    return Text(
+      Location.of(context)!.trans('register'),
+      style: const TextStyle(fontSize: 31, fontWeight: FontWeight.w100),
+    );
+  }
+
+  Widget _buildUsernameField(BuildContext context) {
+    return TextFormField(
+      controller: _usernameController,
+      decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('userName')),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return Location.of(context)!.trans('validation.thisFieldIsRequired');
+        }
+        if (errorMessage['username'] != null) {
+          return errorMessage['username'];
+        }
+        return null;
+      },
+    );
+  }
+
+  Widget _buildNameFields(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextFormField(
+            controller: _firstnameController,
+            decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('firstName')),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return Location.of(context)!.trans('validation.thisFieldIsRequired');
+              }
+              if (errorMessage['first_name'] != null) {
+                return errorMessage['first_name'];
+              }
+              return null;
+            },
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: TextFormField(
+            controller: _lastnameController,
+            decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('lastName')),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return Location.of(context)!.trans('validation.thisFieldIsRequired');
+              }
+              if (errorMessage['last_name'] != null) {
+                return errorMessage['last_name'];
+              }
+              return null;
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEmailField(BuildContext context) {
+    return TextFormField(
+      controller: _emailController,
+      keyboardType: TextInputType.emailAddress,
+      decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('email')),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return Location.of(context)!.trans('validation.thisFieldIsRequired');
+        }
+        if (errorMessage['email'] != null) {
+          return errorMessage['email'];
+        }
+        // Puedes agregar validación de formato de email aquí si lo deseas
+        return null;
+      },
+    );
+  }
+
+  Widget _buildPasswordField(BuildContext context) {
+    return TextFormField(
+      controller: _passwordController,
+      decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('password')),
+      obscureText: true,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return Location.of(context)!.trans('validation.thisFieldIsRequired');
+        }
+        if (errorMessage['password'] != null) {
+          return errorMessage['password'];
+        }
+        return null;
+      },
+    );
+  }
+
+  Widget _buildConfirmPasswordField(BuildContext context) {
+    return TextFormField(
+      controller: _confirmPasswordController,
+      decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('confirmPassword')),
+      obscureText: true,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return Location.of(context)!.trans('validation.thisFieldIsRequired');
+        }
+        if (_passwordController.text != _confirmPasswordController.text) {
+          return Location.of(context)!.trans('validation.passwordConfirmed');
+        }
+        if (errorMessage['password_confirmation'] != null) {
+          return errorMessage['password_confirmation'];
+        }
+        return null;
+      },
+    );
+  }
+
+  Widget _buildRegisterButton(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          padding: const EdgeInsets.symmetric(vertical: 13),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        ),
+        child: Text(
+          Location.of(context)!.trans('register'),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontFamily: "Sofia",
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontSize: 18.0,
+          ),
+        ),
+        onPressed: _handleRegister,
+      ),
+    );
+  }
+
+  Widget _buildLoginButton(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextButton(
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const AuthLogin()),
+              (route) => false,
+            );
+          },
+          child: Text(
+            Location.of(context)!.trans('login'),
+            style: const TextStyle(fontFamily: 'Sofia'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _handleRegister() async {
+    resetErrorMessages();
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      Map<String, String> data = {
+        'type': 'users',
+        'username': _usernameController.text,
+        'first_name': _firstnameController.text,
+        'last_name': _lastnameController.text,
+        'email': _emailController.text,
+        'password': _passwordController.text,
+        'password_confirmation': _confirmPasswordController.text,
+      };
+
+      Map<String, dynamic> registerResponse = await AuthService().register(data: data);
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (registerResponse.containsKey('data')) {
+        toastSuccess(context, Location.of(context)!.trans('recordCreated'));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const AuthLogin()),
+          (route) => false,
+        );
+      }
+
+      if (registerResponse.containsKey('errors')) {
+        var errors = registerResponse['errors'];
+        if (errors is List) {
+          for (var error in errors) {
+            String title = error['title'];
+            List<String> titleList = title.split('.');
+            errorMessage[titleList.last] = Location.of(context)!.trans(error['detail']);
+          }
+        }
+        toastDanger(context, Location.of(context)!.trans('errorAsOccurred'));
+        _formKey.currentState!.validate();
+      }
+    }
+  }
+
+  void resetErrorMessages() {
+    setState(() {
+      errorMessage = {
         'username': null,
         'first_name': null,
         'last_name': null,
         'email': null,
         'password': null,
         'password_confirmation': null,
-    };
-
-      @override
-      Widget build(BuildContext context) {
-        final size = MediaQuery.of(context).size;
-
-        return GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Scaffold(
-                body: SingleChildScrollView(
-                    reverse: true,
-                    padding: EdgeInsets.only(left: 20, right: 20, top: size.height * 0.08, bottom: size.height * 0.06),
-                    child: Form(
-                        key: _formKey,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                                Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                        const Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                                Image(image: AssetImage(logoApp), width: 80, height: 80,),
-                                            ],
-                                        ),
-                                        
-                                        const SizedBox(height: 40),
-
-                                        Text(Location.of(context)!.trans('register'), style: const TextStyle(fontSize: 31, fontWeight: FontWeight.w100)),
-
-                                        const SizedBox(height: 10),
-
-                                        TextFormField(
-                                            controller: _usernameController,
-                                            decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('userName')),
-                                            validator: (value) {
-                                                if (value!.isEmpty) {
-                                                    return Location.of(context)!.trans('validation.thisFieldIsRequired');
-                                                }
-
-                                                if(errorMessage['username'] != null){
-                                                    return errorMessage['username'];
-                                                }
-
-                                                return null;
-                                            },
-                                        ),
-
-                                        const SizedBox(height: 10),
-
-                                        Row(
-                                            children: [
-                                                Expanded(
-                                                    child: TextFormField(
-                                                        controller: _firstnameController,
-                                                        decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('firstName')),
-                                                        validator: (value) {
-                                                            if (value!.isEmpty) {
-                                                                return Location.of(context)!.trans('validation.thisFieldIsRequired');
-                                                            }
-
-                                                            if(errorMessage['first_name'] != null){
-                                                                return errorMessage['first_name'];
-                                                            }
-
-                                                            // Aquí puedes agregar más validaciones para el nombre
-                                                            return null;
-                                                        },
-                                                    ),
-                                                ),
-                                                const SizedBox(width: 10),
-                                                Expanded(
-                                                    child: TextFormField(
-                                                        controller: _lastnameController,
-                                                        decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('lastName')),
-                                                        validator: (value) {
-                                                            if (value!.isEmpty) {
-                                                                return Location.of(context)!.trans('validation.thisFieldIsRequired');
-                                                            }
-
-                                                            if(errorMessage['last_name'] != null){
-                                                                return errorMessage['last_name'];
-                                                            }
-
-                                                            // Aquí puedes agregar más validaciones para el nombre
-                                                            return null;
-                                                        },
-                                                    ),
-                                                )
-                                            ],
-                                        ),
-
-                                        const SizedBox(height: 10),
-
-                                        TextFormField(
-                                            controller: _emailController,
-                                            keyboardType: TextInputType.emailAddress,
-                                            decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('email')),
-                                            validator: (value) {
-                                                if (value!.isEmpty) {
-                                                    return Location.of(context)!.trans('validation.thisFieldIsRequired');
-                                                }
-
-                                                if(errorMessage['email'] != null){
-                                                    return errorMessage['email'];
-                                                }
-
-                                                // Aquí puedes agregar más validaciones para el correo electrónico
-                                                return null;
-                                            },
-                                        ),
-
-                                        const SizedBox(height: 10),
-
-                                        TextFormField(
-                                            controller: _passwordController,
-                                            decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('password')),
-                                            obscureText: true,
-                                            validator: (value) {
-                                                if (value!.isEmpty) {
-                                                    return Location.of(context)!.trans('validation.thisFieldIsRequired');
-                                                }
-
-                                                if(errorMessage['password'] != null){
-                                                    return errorMessage['password'];
-                                                }
-
-                                                // Aquí puedes agregar más validaciones para la contraseña
-                                                return null;
-                                            },
-                                        ),
-                                        const SizedBox(height: 10),
-
-                                        TextFormField(
-                                            controller: _confirmPasswordController,
-                                            decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('confirmPassword')),
-                                            obscureText: true,
-                                            validator: (value) {
-                                                if (value!.isEmpty) {
-                                                    return Location.of(context)!.trans('validation.thisFieldIsRequired');
-                                                }
-
-                                                if(_passwordController.text != _confirmPasswordController.text){
-                                                    return Location.of(context)!.trans('validation.passwordConfirmed');
-                                                }
-
-                                                if(errorMessage['password_confirmation'] != null){
-                                                    return errorMessage['password_confirmation'];
-                                                }
-
-                                                // Aquí puedes agregar más validaciones para la contraseña
-                                                return null;
-                                            },
-                                        ),
-
-                                        const SizedBox(height: 40),
-
-                                        ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                                backgroundColor: Theme.of(context).colorScheme.primary,
-                                                padding: const EdgeInsets.all(13),
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                            ),
-                                            child: Center(
-                                                child: Text(Location.of(context)!.trans('register'), style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily: "Sofia",
-                                                    color: Theme.of(context).colorScheme.onPrimary,
-                                                    fontSize: 18.0
-                                                ))
-                                            ),
-                                            onPressed: () {
-                                                resetErrorMessages();
-                                                if (_formKey.currentState!.validate()) {
-                                                    _formKey.currentState!.save();
-
-                                                    register(context);
-                                                }
-                                            },
-                                        ),
-                                    ],
-                                ),
-                                const SizedBox(height: 40),
-                                Column(
-                                    children: [
-                                        Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                                InkWell(
-                                                    onTap: () {
-                                                        Navigator.pushAndRemoveUntil(
-                                                            context, 
-                                                            MaterialPageRoute(builder: (context) => const AuthLogin()), 
-                                                            (route) => false
-                                                        );
-                                                    },
-                                                    child: Text(Location.of(context)!.trans('login'), style: const TextStyle(fontFamily: 'Sofia'))
-                                                )
-                                            ],
-                                        )
-                                    ],
-                                )
-                            ],
-                        )       
-                    ),
-                ),
-            ),
-        );
-    }
-
-    void register(context) async {
-        Map<String, String> data = {
-            'type': 'users',
-            'username': _usernameController.text,
-            'first_name': _firstnameController.text,
-            'last_name': _lastnameController.text,
-            'email': _emailController.text,
-            'password': _passwordController.text,
-            'password_confirmation': _confirmPasswordController.text,
-        };
-
-        Map<String, dynamic> registerResponse = await AuthService().register(data: data);
-
-        if (registerResponse.containsKey('data')) {
-            toastSuccess(context, Location.of(context)!.trans('recordCreated'));
-            Navigator.pushAndRemoveUntil(
-                context, 
-                MaterialPageRoute(builder: (context) => const AuthLogin()), 
-                (route) => false
-            );
-        }
-
-        if(registerResponse.containsKey('errors')){
-            var errors = registerResponse['errors'];
-            if(errors is List){
-                for(var error in errors){
-                    String title = error['title'];
-                    List<String> titleList = title.split('.');
-                    errorMessage[titleList.last] = Location.of(context)!.trans(error['detail']);
-                }
-            }
-
-            toastDanger(context, Location.of(context)!.trans('errorAsOccurred'));
-
-            _formKey.currentState!.validate();
-        }
-    }
-
-    resetErrorMessages() {
-        setState(() {
-            errorMessage = {
-                'username': null,
-                'first_name': null,
-                'last_name': null,
-                'email': null,
-                'password': null,
-                'password_confirmation': null,
-            };
-        });
-    }
+      };
+    });
+  }
 }
