@@ -22,8 +22,8 @@ class _ProfileEditState extends State<ProfileEdit> {
 
     final AccountController _accountController = AccountController();
     final TextEditingController _firstnameController = TextEditingController();
-	final TextEditingController _lastnameController = TextEditingController();
-	final TextEditingController _emailController = TextEditingController();
+    final TextEditingController _lastnameController = TextEditingController();
+    final TextEditingController _emailController = TextEditingController();
     final TextEditingController _avatarController = TextEditingController();
     final TextEditingController _languageController = TextEditingController();
     final ImagePicker _picker = ImagePicker();
@@ -45,8 +45,8 @@ class _ProfileEditState extends State<ProfileEdit> {
         super.initState();
 
         SharedPreferences.getInstance().then((prefs) {
-            var userJson = prefs.getString('user');
-            var userKey = prefs.getString('user_id');
+            String? userJson = prefs.getString('user');
+            String? userKey = prefs.getString('user_id');
 
             if (userJson != null) {
                 var user = json.decode(userJson);
