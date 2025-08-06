@@ -19,6 +19,17 @@ r # Enable hot reload
 R # Enable hot restart
 ```
 
+### Enable support
+
+```bash
+flutter create --platforms=macos .
+flutter create --platforms=windows .
+flutter create --platforms=linux .
+flutter create --platforms=web .
+flutter create --platforms=ios .
+flutter create --platforms=android .
+```
+
 ### Misellaneous
 
 ```bash
