@@ -5,6 +5,7 @@ import 'package:boilerplate_frontend_mobile_flutter/config/app.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/auth/login.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/input_decoration.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/responsive_layout.dart';
 
 class AuthRegister extends StatefulWidget {
   const AuthRegister({super.key});
@@ -43,47 +44,59 @@ class _AuthRegisterState extends State<AuthRegister> {
         body: SafeArea(
           child: Stack(
             children: [
-              // Botón de configuración en la parte superior derecha
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
                   icon: const Icon(Icons.settings),
                   onPressed: () => Navigator.pushNamed(context, 'setting'),
-                  tooltip: 'Configuración',
+                  tooltip: Location.of(context)!.trans('settings'),
                 ),
               ),
-              SingleChildScrollView(
-                reverse: true,
-                padding: EdgeInsets.only(left: 20, right: 20, top: size.height * 0.08, bottom: size.height * 0.06),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _buildLogo(),
-                      const SizedBox(height: 40),
-                      _buildTitle(context),
-                      const SizedBox(height: 10),
-                      _buildUsernameField(context),
-                      const SizedBox(height: 10),
-                      _buildNameFields(context),
-                      const SizedBox(height: 10),
-                      _buildEmailField(context),
-                      const SizedBox(height: 10),
-                      _buildPasswordField(context),
-                      const SizedBox(height: 10),
-                      _buildConfirmPasswordField(context),
-                      const SizedBox(height: 40),
-                      _buildRegisterButton(context),
-                      const SizedBox(height: 40),
-                      _buildLoginButton(context),
-                    ],
+              Center(
+                child: Container(
+                  width: ResponsiveLayout.containerMaxWidthSize(context, mobile: 0.9, tablet: 0.5, desktop: 0.3, largeDesktop: 0.5),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: size.height * 0.04),
+                  child: Center(
+                    child: SingleChildScrollView(
+                      reverse: true,
+                      padding: EdgeInsets.only(left: 20, right: 20, top: size.height * 0.08, bottom: size.height * 0.06),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _buildLogo(),
+                            const SizedBox(height: 40),
+                            _buildTitle(context),
+                            const SizedBox(height: 10),
+                            _buildUsernameField(context),
+                            const SizedBox(height: 10),
+                            _buildNameFields(context),
+                            const SizedBox(height: 10),
+                            _buildEmailField(context),
+                            const SizedBox(height: 10),
+                            _buildPasswordField(context),
+                            const SizedBox(height: 10),
+                            _buildConfirmPasswordField(context),
+                            const SizedBox(height: 40),
+                            _buildRegisterButton(context),
+                            const SizedBox(height: 40),
+                            _buildLoginButton(context),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
-                child: _isLoading ? Container(color: Colors.black.withOpacity(0.5), child: const Center(child: CircularProgressIndicator()),) : const SizedBox.shrink(),
+                child: _isLoading
+                    ? Container(
+                        color: Colors.black.withOpacity(0.5),
+                        child: const Center(child: CircularProgressIndicator()),
+                      )
+                    : const SizedBox.shrink(),
               ),
             ],
           ),
@@ -174,7 +187,9 @@ class _AuthRegisterState extends State<AuthRegister> {
         if (errorMessage['email'] != null) {
           return errorMessage['email'];
         }
-        // Puedes agregar validación de formato de email aquí si lo deseas
+        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+          return Location.of(context)!.trans('validation.invalidEmail');
+        }
         return null;
       },
     );
@@ -226,8 +241,9 @@ class _AuthRegisterState extends State<AuthRegister> {
           padding: const EdgeInsets.symmetric(vertical: 13),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         ),
+        onPressed: () => _handleRegister(context),
         child: Text(
-          Location.of(context)!.trans('register'),
+          Location.of(context)!.trans('registerMe'),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontFamily: "Sofia",
@@ -235,7 +251,6 @@ class _AuthRegisterState extends State<AuthRegister> {
             fontSize: 18.0,
           ),
         ),
-        onPressed: _handleRegister,
       ),
     );
   }
@@ -261,7 +276,7 @@ class _AuthRegisterState extends State<AuthRegister> {
     );
   }
 
-  void _handleRegister() async {
+  void _handleRegister(BuildContext context) async {
     resetErrorMessages();
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -284,7 +299,7 @@ class _AuthRegisterState extends State<AuthRegister> {
         _isLoading = false;
       });
 
-      if (registerResponse.containsKey('data')) {
+      if (registerResponse.containsKey('data') && context.mounted) {
         toastSuccess(context, Location.of(context)!.trans('recordCreated'));
         Navigator.pushAndRemoveUntil(
           context,
@@ -293,7 +308,7 @@ class _AuthRegisterState extends State<AuthRegister> {
         );
       }
 
-      if (registerResponse.containsKey('errors')) {
+      if (registerResponse.containsKey('errors') && context.mounted) {
         var errors = registerResponse['errors'];
         if (errors is List) {
           for (var error in errors) {

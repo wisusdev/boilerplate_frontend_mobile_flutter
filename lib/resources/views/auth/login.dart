@@ -1,7 +1,10 @@
+import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/navigator_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:boilerplate_frontend_mobile_flutter/config/app.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/error_manager.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/views/auth/register.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/responsive_layout.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/input_decoration.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/http/controllers/auth_controller.dart';
 
@@ -17,6 +20,7 @@ class _AuthLoginState extends State<AuthLogin> {
   final AuthController authController = AuthController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final minPasswordLength = 4;
   bool _isLoading = false;
 
   final ErrorManager errorManager = ErrorManager(initialErrors: {
@@ -34,38 +38,40 @@ class _AuthLoginState extends State<AuthLogin> {
         body: SafeArea(
           child: Stack(
             children: [
-              // Botón de configuración en la parte superior derecha
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
                   icon: const Icon(Icons.settings),
                   onPressed: () => Navigator.pushNamed(context, 'setting'),
-                  tooltip: 'Configuración',
+                  tooltip: Location.of(context)!.trans('settings'),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: size.height * 0.04),
-                child: Center(
-                  child: SingleChildScrollView(
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          _buildLogo(),
-                          const SizedBox(height: 32),
-                          _buildWelcomeText(context),
-                          const SizedBox(height: 16),
-                          _buildEmailField(context),
-                          const SizedBox(height: 12),
-                          _buildPasswordField(context),
-                          const SizedBox(height: 8),
-                          _buildForgotPassword(context),
-                          const SizedBox(height: 32),
-                          _buildLoginButton(context),
-                          const SizedBox(height: 32),
-                          _buildRegister(context),
-                        ],
+              Center(
+                child: Container(
+                  width: ResponsiveLayout.containerMaxWidthSize(context, mobile: 0.9, tablet: 0.5, desktop: 0.3, largeDesktop: 0.5),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: size.height * 0.04),
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _buildLogo(),
+                            const SizedBox(height: 32),
+                            _buildWelcomeText(context),
+                            const SizedBox(height: 16),
+                            _buildEmailField(context),
+                            const SizedBox(height: 12),
+                            _buildPasswordField(context),
+                            const SizedBox(height: 8),
+                            _buildForgotPassword(context),
+                            const SizedBox(height: 32),
+                            _buildLoginButton(context),
+                            const SizedBox(height: 32),
+                            _buildRegister(context),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -89,7 +95,7 @@ class _AuthLoginState extends State<AuthLogin> {
   Widget _buildWelcomeText(BuildContext context) {
     return Text(
       Location.of(context)!.trans('welcomeBack'),
-      style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w300),
+      style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w100),
       textAlign: TextAlign.center,
     );
   }
@@ -122,10 +128,10 @@ class _AuthLoginState extends State<AuthLogin> {
       decoration: inputDecorationStyle(labelText: Location.of(context)!.trans('password')),
       validator: (value) {
         if (value!.isEmpty) {
-          return 'Por favor ingresa tu contraseña';
+          return Location.of(context)!.trans('validation.passwordRequired');
         }
-        if (value.length < 8) {
-          return 'La contraseña debe tener al menos 8 caracteres';
+        if (value.length < minPasswordLength) {
+          return Location.of(context)!.trans("validation.passwordMin");
         }
         if (errorManager.errors['password'] != null) {
           return errorManager.errors['password'];
@@ -177,7 +183,8 @@ class _AuthLoginState extends State<AuthLogin> {
       children: [
         Text(Location.of(context)!.trans('dontHaveAccount'), style: const TextStyle(fontFamily: 'Sofia')),
         TextButton(
-          onPressed: () => Navigator.pushNamed(context, 'register'),
+          //onPressed: () => Navigator.pushNamed(context, 'register'),
+          onPressed: () => Navigator.of(context).push(navigatorFadeTransition(const AuthRegister())),
           child: Text(Location.of(context)!.trans('registerHere'), style: const TextStyle(fontFamily: 'Sofia')),
         ),
       ],

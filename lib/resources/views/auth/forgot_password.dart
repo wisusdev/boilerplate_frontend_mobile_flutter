@@ -4,6 +4,7 @@ import 'package:boilerplate_frontend_mobile_flutter/app/services/auth_service.da
 import 'package:boilerplate_frontend_mobile_flutter/config/app.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/auth/login.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/responsive_layout.dart';
 
 class AuthForgotPassword extends StatefulWidget {
   const AuthForgotPassword({super.key});
@@ -28,18 +29,18 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
         body: SafeArea(
           child: Stack(
             children: [
-              // Botón de configuración en la parte superior derecha
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
                   icon: const Icon(Icons.settings),
                   onPressed: () => Navigator.pushNamed(context, 'setting'),
-                  tooltip: 'Configuración',
+                  tooltip: Location.of(context)!.trans('settings'),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 20, right: 20, top: size.height * 0.08, bottom: size.height * 0.06),
-                child: Center(
+              Center(
+                child: Container(
+                  width: ResponsiveLayout.containerMaxWidthSize(context, mobile: 0.9, tablet: 0.5, desktop: 0.3, largeDesktop: 0.5),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: size.height * 0.04),
                   child: SingleChildScrollView(
                     reverse: true,
                     child: Form(
@@ -122,7 +123,7 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
           padding: const EdgeInsets.symmetric(vertical: 13),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         ),
-        onPressed: _handleForgotPassword,
+        onPressed: () => _handleForgotPassword(context),
         child: Text(
           Location.of(context)!.trans('sendPasswordResetLink'),
           style: TextStyle(
@@ -157,28 +158,31 @@ class _AuthForgotPasswordState extends State<AuthForgotPassword> {
     );
   }
 
-  void _handleForgotPassword() async {
+  void _handleForgotPassword(BuildContext context) async {
     resetErrorMessages();
     if (_formKey.currentState!.validate()) {
+
       setState(() {
         _isLoading = true;
       });
+
       Map<String, String> data = {
         'type': 'users',
         'email': _emailController.text,
       };
+
       Map<String, dynamic> responseForgotPassword = await AuthService().forgotPassword(data: data);
 
       setState(() {
         _isLoading = false;
       });
 
-      if (responseForgotPassword.containsKey('data')) {
+      if (responseForgotPassword.containsKey('data') && context.mounted) {
         toastSuccess(context, Location.of(context)!.trans('message.emailVerificationSent'));
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AuthLogin()));
       }
 
-      if (responseForgotPassword.containsKey('errors')) {
+      if (responseForgotPassword.containsKey('errors') && context.mounted) {
         var errors = responseForgotPassword['errors'];
         if (errors is List) {
           for (var error in errors) {
