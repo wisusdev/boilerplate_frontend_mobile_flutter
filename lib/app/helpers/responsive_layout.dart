@@ -1,36 +1,45 @@
 import 'package:flutter/material.dart';
 
-class Responsive {
-    static const int mobileBreakpoint = 576;
-    static const int tabletBreakpoint = 768;
-    static const int desktopBreakpoint = 992;
-    static const int largeDesktopBreakpoint = 1200;
+class ResponsiveLayout {
 
-    static containerMaxWidthSize(BuildContext context, BoxConstraints constraints, {double mobile = 1, double tablet = 1, double desktop = 1, double largeDesktop = 1}) {
+    static double _getSize(BuildContext context, double mobile, double tablet, double desktop, double largeDesktop, isWidth) {
+        final MediaQueryData mediaQuery = MediaQuery.of(context);
+        final double size = isWidth ? mediaQuery.size.width : mediaQuery.size.height;
+
         if (isMobile(context)) {
-            return constraints.maxWidth * mobile;
+            return size * mobile;
         } else if (isTablet(context)) {
-            return constraints.maxWidth * tablet;
+            return size * tablet;
         } else if (isDesktop(context)) {
-            return constraints.maxWidth * desktop;
+            return size * desktop;
         } else if (isLargeDesktop(context)) {
-            return constraints.maxWidth * largeDesktop;
+            return size * largeDesktop;
         }
+
+        return size;
+    }
+
+    static containerMaxWidthSize(BuildContext context, {double mobile = 1, double tablet = 1, double desktop = 1, double largeDesktop = 1}) {
+        return _getSize(context, mobile, tablet, desktop, largeDesktop, true);
+    }
+
+    static containerMaxHeightSize(BuildContext context, {double mobile = 1, double tablet = 1, double desktop = 1, double largeDesktop = 1}) {
+        return _getSize(context, mobile, tablet, desktop, largeDesktop, false);
     }
 
     static bool isMobile(BuildContext context) {
-        return MediaQuery.of(context).size.width < mobileBreakpoint;
+        return MediaQuery.sizeOf(context).width < 600;
     }
 
     static bool isTablet(BuildContext context) {
-        return MediaQuery.of(context).size.width >= mobileBreakpoint && MediaQuery.of(context).size.width < tabletBreakpoint;
+        return MediaQuery.sizeOf(context).width >= 600 && MediaQuery.sizeOf(context).width < 1200;
     }
 
     static bool isDesktop(BuildContext context) {
-        return MediaQuery.of(context).size.width >= tabletBreakpoint && MediaQuery.of(context).size.width < desktopBreakpoint;
+        return MediaQuery.sizeOf(context).width >= 1200;
     }
 
     static bool isLargeDesktop(BuildContext context) {
-        return MediaQuery.of(context).size.width >= desktopBreakpoint;
+        return MediaQuery.sizeOf(context).width >= 1800;
     }
 }
