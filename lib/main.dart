@@ -15,7 +15,7 @@ import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location_delegat
 import 'package:boilerplate_frontend_mobile_flutter/resources/themes/dark_theme.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/themes/light_theme.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/layouts/app.dart';
-import 'package:boilerplate_frontend_mobile_flutter/routes/router.dart';
+import 'package:boilerplate_frontend_mobile_flutter/routes/api_routes.dart';
 
 void main() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
 
             // Rutas
             home: const AuthGuard(child: AppLayout()),
-            routes: routes,
+            routes: api,
         );
     }
 }
