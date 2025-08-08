@@ -210,7 +210,7 @@ class _AuthLoginState extends State<AuthLogin> {
     }
   }
 
-  void setErrorMessages(Map<String, dynamic> errors) {
+  void setErrorMessages(Map<String, String> errors) {
     setState(() {
       errorManager.setErrors(errors);
     });
