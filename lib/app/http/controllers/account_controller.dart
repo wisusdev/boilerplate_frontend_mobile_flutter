@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/response_validator.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/services/account_service.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
 
@@ -21,13 +22,13 @@ class AccountController {
 
         Map<String, dynamic> profileEditResponse = await accountService.updateProfile(data: profileData);
 
-        if (profileEditResponse.containsKey('data') && context.mounted) {
+        final result = ResponseValidator.validateResponse(profileEditResponse);
+        
+        if (result.isSuccess && context.mounted) {
             toastSuccess(context, Location.of(context)!.trans('recordUpdated'));
-        }
-
-        if (profileEditResponse.containsKey('errors')) {
-            var errors = profileEditResponse['errors'];
-            Map<String, dynamic> errorMessages = {
+        } else if (!result.isSuccess) {
+            
+            Map<String, String?> errorMessages = {
                 'first_name': null,
                 'last_name': null,
                 'email': null,
@@ -35,14 +36,8 @@ class AccountController {
                 'language': null,
             };
 
-            if (errors is List) {
-                for (var error in errors) {
-                    String title = error['title'];
-                    List<String> titleList = title.split('.');
-                    if(context.mounted) {
-                        errorMessages[titleList.last] = Location.of(context)!.trans(error['detail']);
-                    }
-                }
+            if (result.errors != null && context.mounted) {
+                errorMessages = ResponseValidator.processFieldErrors(result.errors, errorMessages, context);
             }
 
             setErrorMessages(errorMessages);
@@ -57,27 +52,19 @@ class AccountController {
 
         Map<String, dynamic> passwordChangeResponse = await accountService.changePassword(data: passwordData);
 
-        if (passwordChangeResponse.containsKey('data') && context.mounted) {
+        final result = ResponseValidator.validateResponse(passwordChangeResponse);
+        
+        if (result.isSuccess && context.mounted) {
             toastSuccess(context, Location.of(context)!.trans('recordUpdated'));
-        }
-
-        if (passwordChangeResponse.containsKey('errors')) {
-            var errors = passwordChangeResponse['errors'];
-            Map<String, dynamic> errorMessages = {
+        } else if (!result.isSuccess) {
+            Map<String, String?> errorMessages = {
                 'current_password': null,
                 'password': null,
                 'password_confirmation': null,
             };
 
-            if (errors is List) {
-                for (var error in errors) {
-                    String title = error['title'];
-                    List<String> titleList = title.split('.');
-                    
-                    if(context.mounted) {
-                        errorMessages[titleList.last] = Location.of(context)!.trans(error['detail']);
-                    }
-                }
+            if (result.errors != null && context.mounted) {
+                errorMessages = ResponseValidator.processFieldErrors(result.errors, errorMessages, context);
             }
 
             setErrorMessages(errorMessages);
@@ -85,7 +72,6 @@ class AccountController {
                 toastDanger(context, Location.of(context)!.trans('errorAsOccurred'));
             }
         }
-
     } 
 
     Future<void> getDeviceAuthList(BuildContext context, Function setDeviceAuthList) async {
@@ -93,9 +79,7 @@ class AccountController {
 
         Map<String, dynamic> deviceAuthListResponse = await accountService.getDeviceAuthList();
 
-        if (deviceAuthListResponse.containsKey('response') && deviceAuthListResponse['response'].containsKey('data')) {
-            setDeviceAuthList(deviceAuthListResponse);
-        }
+        setDeviceAuthList(deviceAuthListResponse);
     }
 
     Future<void> disconnectDevice(BuildContext context, String deviceId, Function setDeviceAuthList) async {
