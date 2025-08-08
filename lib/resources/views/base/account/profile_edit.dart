@@ -270,7 +270,7 @@ class _ProfileEditState extends State<ProfileEdit> {
         );
     }
 
-    void setErrorMessages(Map<String, dynamic> errors) {
+    void setErrorMessages(Map<String, String> errors) {
         setState(() {
             errorManager.setErrors(errors);
         });
