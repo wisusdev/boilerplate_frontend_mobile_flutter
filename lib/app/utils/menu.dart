@@ -3,23 +3,23 @@ import 'package:boilerplate_frontend_mobile_flutter/app/interfaces/local/menu_mo
 
 const appMenuItems = <MenuItem>[
     MenuItem(
-        title: 'home', 
-        subTitle: 'Home view', 
-        link: 'home', 
-        icon: Icons.home
+        title: 'permissions', 
+        subTitle: 'Permissions view', 
+        link: 'permissions_index', 
+        icon: Icons.lock
     ),
 
     MenuItem(
-        title: 'profile', 
-        subTitle: 'Profile view', 
-        link: 'profile', 
-        icon: Icons.person
+        title: 'roles', 
+        subTitle: 'Roles view', 
+        link: 'roles_index', 
+        icon: Icons.assignment_ind
     ),
 
     MenuItem(
-        title: 'settings', 
-        subTitle: 'Settings app', 
-        link: 'setting', 
-        icon: Icons.settings
+        title: 'users', 
+        subTitle: 'Users view', 
+        link: 'users_index', 
+        icon: Icons.supervised_user_circle
     )
 ];
