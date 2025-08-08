@@ -58,8 +58,6 @@ class _AuthRegisterState extends State<AuthRegister> {
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: size.height * 0.04),
                   child: Center(
                     child: SingleChildScrollView(
-                      reverse: true,
-                      padding: EdgeInsets.only(left: 20, right: 20, top: size.height * 0.08, bottom: size.height * 0.06),
                       child: Form(
                         key: _formKey,
                         child: Column(
