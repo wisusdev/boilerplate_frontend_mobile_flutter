@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/drawer_menu_left.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/text.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
-import 'package:boilerplate_frontend_mobile_flutter/resources/views/home.dart';
-import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/account/profile_main.dart';
-import 'package:boilerplate_frontend_mobile_flutter/resources/views/settings/setting_main.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/utils/menu.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/helpers/navigation_helper.dart';
 
 class AppLayout extends StatefulWidget {
-  final Widget child;
-  final String title;
-
-  const AppLayout({super.key, required this.child, required this.title});
+  const AppLayout({super.key});
 
   @override
   State<AppLayout> createState() => _AppLayoutState();
@@ -18,21 +14,38 @@ class AppLayout extends StatefulWidget {
 
 class _AppLayoutState extends State<AppLayout> {
   int _selectedIndex = 0;
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final List<Widget> _pages = [
-    const HomeView(),
-    const ProfileMain(),
-    const SettingMain(),
-  ];
+  void _onDrawerItemSelected(int drawerIndex) {
+    setState(() {
+      _selectedIndex = AppNavigationHelper.drawerToGlobalIndex(drawerIndex);
+    });
+    _scaffoldKey.currentState?.closeDrawer();
+  }
+
+  void _onBottomNavItemSelected(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Inicializar en home
+    _selectedIndex = AppNavigationHelper.getGlobalIndex('home');
+    if (_selectedIndex == -1) _selectedIndex = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final currentMenuItem = AppNavigationHelper.getMenuItemByGlobalIndex(_selectedIndex);
+
     return Scaffold(
       key: _scaffoldKey,
-
       appBar: AppBar(
-        title: Text(capitalizeText(Location.of(context)!.trans(widget.title)), style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+        title: Text(capitalizeText(Location.of(context)!.trans(currentMenuItem?.title ?? 'home')), style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
         iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
         backgroundColor: Theme.of(context).colorScheme.primary,
         leading: IconButton(
@@ -42,19 +55,24 @@ class _AppLayoutState extends State<AppLayout> {
           },
         ),
       ),
+      body: currentMenuItem?.page ?? Container(),
 
-      body: widget.child,
-
-      drawer: DrawerMenuLeft(scaffoldKey: _scaffoldKey),
-
+      drawer: DrawerMenuLeft(
+        scaffoldKey: _scaffoldKey,
+        onItemSelected: _onDrawerItemSelected,
+        selectedIndex: AppNavigationHelper.isDrawerIndex(_selectedIndex) ? AppNavigationHelper.globalToDrawerIndex(_selectedIndex) : -1,
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: (index) => setState(() => _selectedIndex = index),
-        items: [
-          BottomNavigationBarItem(icon: const Icon(Icons.home), label: capitalizeText(Location.of(context)!.trans('home')),),
-          BottomNavigationBarItem(icon: const Icon(Icons.person), label: capitalizeText(Location.of(context)!.trans('profile')),),
-          BottomNavigationBarItem(icon: const Icon(Icons.settings), label: capitalizeText(Location.of(context)!.trans('settings')),),
-        ],
+        currentIndex: AppNavigationHelper.isBottomNavigationIndex(_selectedIndex) ? _selectedIndex : 0,
+        onTap: _onBottomNavItemSelected,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: AppNavigationHelper.isBottomNavigationIndex(_selectedIndex) ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+        items: getBottomNavigationItems()
+            .map((menuItem) => BottomNavigationBarItem(
+                  icon: Icon(menuItem.icon),
+                  label: capitalizeText(Location.of(context)!.trans(menuItem.title)),
+                ))
+            .toList(),
       ),
     );
   }
