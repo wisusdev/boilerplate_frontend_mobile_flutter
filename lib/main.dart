@@ -1,5 +1,3 @@
-import 'package:boilerplate_frontend_mobile_flutter/app/guards/auth_guard.dart';
-import 'package:boilerplate_frontend_mobile_flutter/resources/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -8,7 +6,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:boilerplate_frontend_mobile_flutter/config/app.dart';
 import 'package:boilerplate_frontend_mobile_flutter/config/languages.dart';
 import 'package:boilerplate_frontend_mobile_flutter/routes/api_routes.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/guards/auth_guard.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/local_storage.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/views/layouts/app_layout.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/preferences/language_preferences.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/preferences/theme_preferences.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/providers/language_provider.dart';
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       themeMode: Provider.of<ThemeProvider>(context).themeMode,
 
-      home: const AuthGuard(child: HomeView()),
+      home: const AuthGuard(child: AppLayout()),
       routes: api,
     );
   }
