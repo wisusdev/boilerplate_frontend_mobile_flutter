@@ -1,58 +1,40 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:boilerplate_frontend_mobile_flutter/config/app.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/text.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/services/auth_service.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/modal_confirm.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/interfaces/local/local_user_info.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/account/profile_edit.dart';
-import 'package:boilerplate_frontend_mobile_flutter/resources/views/layouts/app_layout.dart';
 
-class ProfileMain extends StatefulWidget {
-  const ProfileMain({Key? key}) : super(key: key);
+class ProfileIndex extends StatefulWidget {
+  const ProfileIndex({Key? key}) : super(key: key);
 
   @override
-  State<ProfileMain> createState() => _ProfileMainState();
+  State<ProfileIndex> createState() => _ProfileIndexState();
 }
 
-class _ProfileMainState extends State<ProfileMain> {
+class _ProfileIndexState extends State<ProfileIndex> {
   final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
-    return AppLayout(
-      title: "profile",
-      child: FutureBuilder(
-        future: futureUserModel(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError || !snapshot.hasData) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              toastDanger(context, 'Error al cargar el perfil');
-            });
-            return const SizedBox.shrink();
-          } else {
-            return profile(snapshot.data as LocalUserInfo);
-          }
-        },
-      ),
-    );
-  }
-
-  AppBar _buildAppBar(BuildContext context) {
-    return AppBar(
-      title: Text(
-        capitalizeText(Location.of(context)!.trans('profile')),
-        style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-      ),
-      iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
-      backgroundColor: Theme.of(context).colorScheme.primary,
+    return FutureBuilder(
+      future: futureUserModel(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError || !snapshot.hasData) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            toastDanger(context, 'Error al cargar el perfil');
+          });
+          return const SizedBox.shrink();
+        } else {
+          return profile(snapshot.data as LocalUserInfo);
+        }
+      },
     );
   }
 
@@ -185,12 +167,6 @@ class _ProfileMainState extends State<ProfileMain> {
             leading: Icon(Icons.key, color: Theme.of(context).colorScheme.primary),
             title: Text(Location.of(context)!.trans('changePassword'), style: const TextStyle(fontSize: 16)),
             onTap: () => Navigator.pushNamed(context, 'change_password'),
-            trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
-          ),
-          ListTile(
-            leading: Icon(Icons.devices, color: Theme.of(context).colorScheme.primary),
-            title: Text(Location.of(context)!.trans('devicesConnected'), style: const TextStyle(fontSize: 16)),
-            onTap: () => Navigator.pushNamed(context, 'connected_devices'),
             trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
           ),
           ListTile(
