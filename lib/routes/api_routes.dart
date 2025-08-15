@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/account/profile_index.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/views/home_index.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/views/settings/setting_index.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/users/user_create.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/users/user_edit.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/users/user_index.dart';
@@ -15,15 +18,12 @@ import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/account
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/auth/forgot_password.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/auth/login.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/auth/register.dart';
-import 'package:boilerplate_frontend_mobile_flutter/resources/views/home.dart';
-import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/account/profile_main.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/settings/language_main.dart';
-import 'package:boilerplate_frontend_mobile_flutter/resources/views/settings/setting_main.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/settings/theme_main.dart';
 
 
 Map<String, Widget Function(dynamic context)> api = {
-    'home': (context) => const AuthGuard(child: HomeView()),
+    'home': (context) => const AuthGuard(child: HomeIndex()),
 
     // Auth
     'login': (context) => const AuthLogin(),
@@ -31,12 +31,12 @@ Map<String, Widget Function(dynamic context)> api = {
     'forgot_password': (context) => const AuthForgotPassword(),
     
     // settings
-    'setting': (context) => const SettingMain(),
+    'setting': (context) => const SettingIndex(),
     'language': (context) => const LanguageMain(),
     'theme': (context) => const ThemeMain(),
 
     // Account
-    'profile': (context) => const AuthGuard(child: ProfileMain()),
+    'profile': (context) => const AuthGuard(child: ProfileIndex()),
     'profile_edit': (context) => const AuthGuard(child: ProfileEdit()),
     'change_password': (context) => const AuthGuard(child: ChangePassword()),
     'delete_account': (context) => const AuthGuard(child: DeleteAccount()),
