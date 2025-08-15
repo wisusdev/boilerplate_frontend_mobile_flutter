@@ -13,7 +13,7 @@ class DrawerMenuLeft extends StatefulWidget {
 }
 
 class _DrawerMenuLeftState extends State<DrawerMenuLeft> {
-  int _selectedIndex = 0;
+  int _selectedIndex = -1; // -1 indica que ningún elemento del drawer está seleccionado por defecto
 
   @override
   Widget build(BuildContext context) {
