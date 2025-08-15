@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,11 +9,11 @@ import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/services/auth_service.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/modal_confirm.dart';
-import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/account/profile_edit.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/interfaces/local/local_user_info.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/account/profile_edit.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/views/layouts/app_layout.dart';
 
 class ProfileMain extends StatefulWidget {
-  static const String title = 'profile';
   const ProfileMain({Key? key}) : super(key: key);
 
   @override
@@ -21,30 +22,13 @@ class ProfileMain extends StatefulWidget {
 
 class _ProfileMainState extends State<ProfileMain> {
   final AuthService _authService = AuthService();
-  late Future<LocalUserInfo> _futureUser;
-
-  @override
-  void initState() {
-    super.initState();
-    _futureUser = _loadUser();
-  }
-
-  Future<LocalUserInfo> _loadUser() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String user = prefs.getString('user') ?? '{}';
-    return LocalUserInfo.fromJson(jsonDecode(user));
-  }
-
-  void _refreshUser() {
-    setState(() {
-      _futureUser = _loadUser();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<LocalUserInfo>(
-        future: _futureUser,
+    return AppLayout(
+      title: "profile",
+      child: FutureBuilder(
+        future: futureUserModel(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -54,10 +38,11 @@ class _ProfileMainState extends State<ProfileMain> {
             });
             return const SizedBox.shrink();
           } else {
-            return _buildProfile(context, snapshot.data!);
+            return profile(snapshot.data as LocalUserInfo);
           }
         },
-      );
+      ),
+    );
   }
 
   AppBar _buildAppBar(BuildContext context) {
@@ -71,7 +56,13 @@ class _ProfileMainState extends State<ProfileMain> {
     );
   }
 
-  Widget _buildProfile(BuildContext context, LocalUserInfo userInfo) {
+  Future<LocalUserInfo> futureUserModel() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String user = prefs.getString('user') ?? '';
+    return LocalUserInfo.fromJson(jsonDecode(user));
+  }
+
+  Widget profile(LocalUserInfo userInfo) {
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -86,15 +77,19 @@ class _ProfileMainState extends State<ProfileMain> {
   Widget _buildProfileHeader(BuildContext context, LocalUserInfo userInfo) {
     return Container(
       color: Theme.of(context).colorScheme.onSecondary,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            _buildAvatar(context, userInfo),
-            const SizedBox(width: 20),
-            _buildUserInfo(context, userInfo),
-          ],
-        ),
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                _buildAvatar(context, userInfo),
+                _buildUserInfo(context, userInfo),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -105,8 +100,7 @@ class _ProfileMainState extends State<ProfileMain> {
       width: 100,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        border:
-            Border.all(color: Theme.of(context).colorScheme.primary, width: 3),
+        border: Border.all(color: Theme.of(context).colorScheme.primary, width: 3),
         borderRadius: BorderRadius.circular(100),
       ),
       child: ClipRRect(
@@ -114,12 +108,9 @@ class _ProfileMainState extends State<ProfileMain> {
         child: FadeInImage(
           height: 100,
           width: 100,
-          image: userInfo.avatar != null && userInfo.avatar.isNotEmpty
-              ? NetworkImage(userInfo.avatar) as ImageProvider<Object>
-              : const AssetImage(profileImageDefault),
+          image: userInfo.avatar != null ? NetworkImage(userInfo.avatar) as ImageProvider<Object> : const AssetImage(profileImageDefault),
           placeholder: const AssetImage(profileImageDefault),
-          imageErrorBuilder: (context, error, stackTrace) => const Image(
-              image: AssetImage(profileImageDefault), fit: BoxFit.fitWidth),
+          imageErrorBuilder: (context, error, stackTrace) => const Image(image: AssetImage(profileImageDefault), fit: BoxFit.fitWidth),
           fit: BoxFit.fitWidth,
         ),
       ),
@@ -128,28 +119,34 @@ class _ProfileMainState extends State<ProfileMain> {
 
   Widget _buildUserInfo(BuildContext context, LocalUserInfo userInfo) {
     return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '${userInfo.firstName} ${userInfo.lastName}',
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 21.0),
-          ),
-          Text(
-            userInfo.username,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 18.0),
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text('${userInfo.firstName} ${userInfo.lastName}', overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 21.0)),
+              ],
+            ),
+            Row(
+              children: [
+                Text(userInfo.username, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 18.0)),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildProfileOptions(BuildContext context, LocalUserInfo userInfo) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: _buildOptionCard(context, userInfo),
+    return Container(
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      child: Column(
+        children: [
+          _buildOptionCard(context, userInfo),
+        ],
+      ),
     );
   }
 
@@ -170,45 +167,46 @@ class _ProfileMainState extends State<ProfileMain> {
       ),
       child: Column(
         children: [
-          _buildListTile(
-            context,
-            icon: Icons.edit,
-            color: Theme.of(context).colorScheme.primary,
-            title: Location.of(context)!.trans('profile'),
+          ListTile(
+            leading: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
+            title: Text(Location.of(context)!.trans('profile'), style: const TextStyle(fontSize: 16)),
             onTap: () async {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ProfileEdit()),
-              );
+              final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileEdit()));
+
               if (result == 'update' && mounted) {
-                _refreshUser();
+                setState(() {
+                  futureUserModel();
+                });
               }
             },
+            trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
           ),
-          _buildListTile(
-            context,
-            icon: Icons.key,
-            color: Theme.of(context).colorScheme.primary,
-            title: Location.of(context)!.trans('changePassword'),
+          ListTile(
+            leading: Icon(Icons.key, color: Theme.of(context).colorScheme.primary),
+            title: Text(Location.of(context)!.trans('changePassword'), style: const TextStyle(fontSize: 16)),
             onTap: () => Navigator.pushNamed(context, 'change_password'),
+            trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
           ),
-          _buildListTile(
-            context,
-            icon: Icons.logout,
-            color: Theme.of(context).colorScheme.error,
-            title: Location.of(context)!.trans('logout'),
+          ListTile(
+            leading: Icon(Icons.devices, color: Theme.of(context).colorScheme.primary),
+            title: Text(Location.of(context)!.trans('devicesConnected'), style: const TextStyle(fontSize: 16)),
+            onTap: () => Navigator.pushNamed(context, 'connected_devices'),
+            trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.primary),
+          ),
+          ListTile(
+            leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.error),
+            title: Text(Location.of(context)!.trans('logout'), style: const TextStyle(fontSize: 16)),
             onTap: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return ModalConfirm(
-                    title: Location.of(context)!.trans('logout'),
-                    content: Location.of(context)!.trans('logoutConfirm'),
+                    title: 'Cerrar sesión',
+                    content: '¿Estás seguro de que deseas cerrar sesión?',
                     onConfirm: () async {
                       if (await _authService.logout()) {
                         if (context.mounted) {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              'login', (Route<dynamic> route) => false);
+                          Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
                         }
                       }
                     },
@@ -219,22 +217,9 @@ class _ProfileMainState extends State<ProfileMain> {
                 },
               );
             },
-          ),
+          )
         ],
       ),
-    );
-  }
-
-  Widget _buildListTile(BuildContext context,
-      {required IconData icon,
-      required Color color,
-      required String title,
-      required VoidCallback onTap}) {
-    return ListTile(
-      leading: Icon(icon, color: color),
-      title: Text(title, style: const TextStyle(fontSize: 16)),
-      onTap: onTap,
-      trailing: Icon(Icons.chevron_right, color: color),
     );
   }
 }
