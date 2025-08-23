@@ -13,6 +13,9 @@ class BaseService {
     late String _apiUriDeviceAuthDisconnect;
     late String _apiUriPermissions;
     late String _apiUriRoleIndex;
+    late String _apiUriRoleCreate;
+    late String _apiUriRoleUpdate;
+    late String _apiUriRoleDelete;
 
     final ApiInterceptor makeRequest = ApiInterceptor();
 
@@ -23,6 +26,9 @@ class BaseService {
         _apiUriDeviceAuthDisconnect = '$_apiUri/account/logout-device';
         _apiUriPermissions = '$_apiUri/permissions';
         _apiUriRoleIndex = '$_apiUri/roles';
+        _apiUriRoleCreate = '$_apiUri/roles';
+        _apiUriRoleUpdate = '$_apiUri/roles';
+        _apiUriRoleDelete = '$_apiUri/roles';
     }
 
     updateProfile({required Map<String, String> data}) async {
@@ -113,5 +119,43 @@ class BaseService {
         };
 
         return response;
+    }
+
+    createRole({required Map<String, dynamic> data}) async {
+        var uri = Uri.parse(_apiUriRoleCreate);
+
+        Response roleResponse = await makeRequest.post(uri, body: json.encode(data));
+
+        final Map<String, dynamic> responseBody = json.decode(roleResponse.body);
+
+        Map<String, dynamic> response = {
+            'response': responseBody,
+            'statusCode': roleResponse.statusCode,
+        };
+
+        return response;
+    }
+
+    updateRole({required String roleId, required Map<String, dynamic> data}) async {
+        var uri = Uri.parse('$_apiUriRoleUpdate/$roleId');
+
+        Response roleResponse = await makeRequest.patch(uri, body: json.encode(data));
+
+        final Map<String, dynamic> responseBody = json.decode(roleResponse.body);
+
+        Map<String, dynamic> response = {
+            'response': responseBody,
+            'statusCode': roleResponse.statusCode,
+        };
+
+        return response;
+    }
+
+    deleteRole({required String roleId}) async {
+        var uri = Uri.parse('$_apiUriRoleDelete/$roleId');
+
+        Response roleResponse = await makeRequest.delete(uri);
+
+        return roleResponse.statusCode;
     }
 }

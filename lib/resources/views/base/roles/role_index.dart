@@ -52,24 +52,45 @@ class _RoleIndexState extends State<RoleIndex> {
         _showRoleDetails(role);
         break;
       case 'edit':
-        // Navegar a pantalla de edición (ruta de ejemplo)
-        Navigator.pushNamed(context, 'roles_edit', arguments: role);
+        // Navegar a pantalla de edición y esperar resultado
+        final result = await Navigator.pushNamed(context, 'roles_edit', arguments: role);
+        if (result == true) {
+          _getRoles(); // Refresh the list if editing was successful
+        }
         break;
       case 'delete':
         final confirmed = await _confirmDelete(role);
         if (confirmed) {
-          // Aquí deberías llamar a tu servicio para eliminar en backend.
-          // Por ahora eliminamos localmente para demo.
-          setState(() {
-            _roles.removeWhere((roleItem) => roleItem.id == role.id);
-          });
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Rol "${role.name}" eliminado')),
-            );
-          }
+          await _deleteRole(role);
         }
         break;
+    }
+  }
+
+  Future<void> _deleteRole(RoleData role) async {
+    try {
+      await _roleController.deleteRole(context, roleId: role.id);
+
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _roles.removeWhere((roleItem) => roleItem.id == role.id);
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Rol "${role.name}" eliminado exitosamente')),
+      );
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error al eliminar rol: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -150,10 +171,12 @@ class _RoleIndexState extends State<RoleIndex> {
                             Wrap(
                               spacing: 6,
                               runSpacing: 6,
-                              children: role.permissions.map((p) => Chip(
-                                label: Text(p.name),
-                                backgroundColor: Colors.blue.shade50,
-                              )).toList(),
+                              children: role.permissions
+                                  .map((p) => Chip(
+                                        label: Text(p.name),
+                                        backgroundColor: Colors.blue.shade50,
+                                      ))
+                                  .toList(),
                             ),
                           ],
                         ),
@@ -233,6 +256,17 @@ class _RoleIndexState extends State<RoleIndex> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: _buildBody(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _navigateToCreateRole,
+        child: const Icon(Icons.add),
+        tooltip: Location.of(context)!.trans('create_role'),
+      ),
+    );
+  }
+
+  Widget _buildBody() {
     if (_isLoading) {
       return const Center(child: CircularProgressIndicator());
     } else if (_errorMessage != null) {
@@ -251,6 +285,13 @@ class _RoleIndexState extends State<RoleIndex> {
           },
         ),
       );
+    }
+  }
+
+  Future<void> _navigateToCreateRole() async {
+    final result = await Navigator.pushNamed(context, 'roles_create');
+    if (result == true) {
+      _getRoles(); // Refresh the list if creation was successful
     }
   }
 }
