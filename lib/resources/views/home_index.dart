@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/preferences/theme_preferences.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/preferences/theme_preferences.dart';
 
 class HomeIndex extends StatefulWidget {
   const HomeIndex({Key? key}) : super(key: key);

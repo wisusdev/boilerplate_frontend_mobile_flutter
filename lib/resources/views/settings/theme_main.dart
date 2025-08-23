@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/text.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/text.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/providers/theme_provider.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/preferences/theme_preferences.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/preferences/theme_preferences.dart';
 
 
 class ThemeMain extends StatefulWidget {
