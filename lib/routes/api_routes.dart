@@ -1,3 +1,4 @@
+import 'package:boilerplate_frontend_mobile_flutter/app/data/models/role_model.dart';
 import 'package:flutter/material.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/account/profile_index.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/home_index.dart';
@@ -13,7 +14,7 @@ import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/roles/r
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/account/change_password.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/account/delete_account.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/permissions/permission_index.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/guards/auth_guard.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/http/guards/auth_guard.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/account/profile_edit.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/auth/forgot_password.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/auth/login.dart';
@@ -47,8 +48,12 @@ Map<String, Widget Function(dynamic context)> api = {
     // Roles
     'roles_index': (context) => const AuthGuard(child: RoleIndex()),
     'roles_show': (context) => const AuthGuard(child: RoleShow()),
+    'roles_edit': (context) {
+      final role = ModalRoute.of(context)?.settings.arguments as RoleData;
+      print('Navigating to roles_edit with role: ${role.name}');
+      return AuthGuard(child: RoleEdit(role: role));
+    },
     'roles_create': (context) => const AuthGuard(child: RoleCreate()),
-    'roles_edit': (context) => const AuthGuard(child: RoleEdit()),
 
     // Users
     'users_index': (context) => const AuthGuard(child: UserIndex()),
