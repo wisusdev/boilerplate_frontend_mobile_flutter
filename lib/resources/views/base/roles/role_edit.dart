@@ -1,13 +1,22 @@
+import 'package:boilerplate_frontend_mobile_flutter/app/data/models/role_model.dart';
 import 'package:flutter/material.dart';
 
 class RoleEdit extends StatefulWidget {
-  const RoleEdit({super.key});
+
+  final RoleData role;
+  const RoleEdit({super.key, required this.role});
 
   @override
   State<RoleEdit> createState() => _RoleEditState();
 }
 
 class _RoleEditState extends State<RoleEdit> {
+  @override
+  void initState() {
+    super.initState();
+    //print('Editing role: ${widget.role.name}');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
