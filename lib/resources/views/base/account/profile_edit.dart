@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/text.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/error_manager.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/text.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/error_manager.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/input_decoration.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/http/controllers/account_controller.dart';
 

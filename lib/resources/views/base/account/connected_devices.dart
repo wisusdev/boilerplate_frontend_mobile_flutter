@@ -1,5 +1,5 @@
 import 'package:boilerplate_frontend_mobile_flutter/app/http/controllers/account_controller.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/response_validator.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/response_validator.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/modal_confirm.dart';
 import 'package:flutter/material.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/interfaces/response/connected_devices_model.dart';

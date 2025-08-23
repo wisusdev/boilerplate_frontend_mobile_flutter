@@ -1,5 +1,5 @@
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/error_manager.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/error_manager.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/http/controllers/account_controller.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/input_decoration.dart';
 import 'package:flutter/material.dart';
