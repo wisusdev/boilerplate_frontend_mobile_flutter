@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
 
 class ResponseValidator {
   /// Resultado de la validación de respuesta

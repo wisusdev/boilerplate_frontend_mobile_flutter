@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/response_validator.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/response_validator.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
 
 class ErrorManager {
     Map<String, String?> _errors = {};

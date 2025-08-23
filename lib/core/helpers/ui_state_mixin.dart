@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/response_validator.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/error_manager.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/response_validator.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/error_manager.dart';
 
 /// Mixin para manejo centralizado de estados de UI (loading, error, success)
 mixin UIStateMixin<T extends StatefulWidget> on State<T> {
