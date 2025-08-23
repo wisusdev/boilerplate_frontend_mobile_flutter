@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/drawer_menu_left.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/text.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/text.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/utils/menu.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/navigation_helper.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/navigation_helper.dart';
 
 class AppLayout extends StatefulWidget {
   const AppLayout({super.key});
@@ -44,6 +44,7 @@ class _AppLayoutState extends State<AppLayout> {
 
     return Scaffold(
       key: _scaffoldKey,
+
       appBar: AppBar(
         title: Text(capitalizeText(Location.of(context)!.trans(currentMenuItem?.title ?? 'home')), style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
         iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
@@ -55,6 +56,7 @@ class _AppLayoutState extends State<AppLayout> {
           },
         ),
       ),
+
       body: currentMenuItem?.page ?? Container(),
 
       drawer: DrawerMenuLeft(
