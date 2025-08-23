@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:boilerplate_frontend_mobile_flutter/config/api.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/interceptors/api_interceptor.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/http/interceptors/api_interceptor.dart';
 
 class AuthService {
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/local_storage.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/local_storage.dart';
 import 'package:boilerplate_frontend_mobile_flutter/config/app.dart';
 
 class LanguagePreferences {

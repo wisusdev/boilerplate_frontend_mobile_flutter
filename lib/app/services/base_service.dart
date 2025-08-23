@@ -1,30 +1,34 @@
 import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/interceptors/api_interceptor.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/http/interceptors/api_interceptor.dart';
 import 'package:boilerplate_frontend_mobile_flutter/config/api.dart';
 
-class AccountService {
+class BaseService {
 
     final String _apiUri;
     late String _apiUriAccount;
     late String _apiUriChangePassword;
     late String _apiUriDeviceAuthList;
     late String _apiUriDeviceAuthDisconnect;
+    late String _apiUriPermissions;
+    late String _apiUriRoleIndex;
 
-    final ApiInterceptor client = ApiInterceptor();
+    final ApiInterceptor makeRequest = ApiInterceptor();
 
-    AccountService(): _apiUri = apiUrlV1 {
+    BaseService(): _apiUri = apiUrlV1 {
         _apiUriAccount = '$_apiUri/account/profile';
         _apiUriChangePassword = '$_apiUri/account/change-password';
         _apiUriDeviceAuthList = '$_apiUri/account/devices-auth-list';
         _apiUriDeviceAuthDisconnect = '$_apiUri/account/logout-device';
+        _apiUriPermissions = '$_apiUri/permissions';
+        _apiUriRoleIndex = '$_apiUri/roles';
     }
 
     updateProfile({required Map<String, String> data}) async {
         var uri = Uri.parse(_apiUriAccount);
 
-        Response accountResponse = await client.patch(uri, body: json.encode(data));
+        Response accountResponse = await makeRequest.patch(uri, body: json.encode(data));
 
         final Map<String, dynamic> responseBody = json.decode(accountResponse.body);
 
@@ -39,7 +43,7 @@ class AccountService {
     changePassword({required Map<String, String> data}) async {
         var uri = Uri.parse(_apiUriChangePassword);
 
-        Response accountResponse = await client.patch(uri, body: json.encode(data));
+        Response accountResponse = await makeRequest.patch(uri, body: json.encode(data));
 
         final Map<String, dynamic> responseBody = json.decode(accountResponse.body);
 
@@ -54,7 +58,7 @@ class AccountService {
 
         var uri = Uri.parse('$_apiUriDeviceAuthList?${Uri(queryParameters: params).query}');
 
-        Response accountResponse = await client.get(uri);
+        Response accountResponse = await makeRequest.get(uri);
 
         final Map<String, dynamic> responseBody = json.decode(accountResponse.body);
 
@@ -69,7 +73,37 @@ class AccountService {
     disconnectDevice({required Map<String, String> data}) async {
         var uri = Uri.parse(_apiUriDeviceAuthDisconnect);
 
-        Response accountResponse = await client.post(uri, body: json.encode(data));
+        Response accountResponse = await makeRequest.post(uri, body: json.encode(data));
+
+        final Map<String, dynamic> responseBody = json.decode(accountResponse.body);
+
+        Map<String, dynamic> response = {
+            'response': responseBody,
+            'statusCode': accountResponse.statusCode,
+        };
+
+        return response;
+    }
+
+    getPermissions() async {
+        var uri = Uri.parse(_apiUriPermissions);
+
+        Response accountResponse = await makeRequest.get(uri);
+
+        final Map<String, dynamic> responseBody = json.decode(accountResponse.body);
+        
+        Map<String, dynamic> response = {
+            'response': responseBody,
+            'statusCode': accountResponse.statusCode,
+        };
+
+        return response;
+    }
+
+    getRoleIndex() async {
+        var uri = Uri.parse(_apiUriRoleIndex);
+
+        Response accountResponse = await makeRequest.get(uri);
 
         final Map<String, dynamic> responseBody = json.decode(accountResponse.body);
 
