@@ -1,10 +1,10 @@
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/navigator_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:boilerplate_frontend_mobile_flutter/config/app.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/error_manager.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/error_manager.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/auth/register.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/responsive_layout.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/responsive_layout.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/input_decoration.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/http/controllers/auth_controller.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/services/auth_service.dart';
 import 'package:boilerplate_frontend_mobile_flutter/config/app.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/auth/login.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/input_decoration.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/responsive_layout.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/responsive_layout.dart';
 
 class AuthRegister extends StatefulWidget {
   const AuthRegister({super.key});
