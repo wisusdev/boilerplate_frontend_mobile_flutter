@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/text.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/text.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/utils/menu.dart';
 
 class DrawerMenuLeft extends StatefulWidget {
