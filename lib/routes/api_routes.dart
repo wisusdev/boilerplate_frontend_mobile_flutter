@@ -1,5 +1,5 @@
-import 'package:boilerplate_frontend_mobile_flutter/app/data/models/role_model.dart';
 import 'package:flutter/material.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/data/models/role_model.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/account/profile_index.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/home_index.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/settings/setting_index.dart';
@@ -50,7 +50,6 @@ Map<String, Widget Function(dynamic context)> api = {
     'roles_show': (context) => const AuthGuard(child: RoleShow()),
     'roles_edit': (context) {
       final role = ModalRoute.of(context)?.settings.arguments as RoleData;
-      print('Navigating to roles_edit with role: ${role.name}');
       return AuthGuard(child: RoleEdit(role: role));
     },
     'roles_create': (context) => const AuthGuard(child: RoleCreate()),
