@@ -2,9 +2,9 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/location.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/helpers/response_validator.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/services/account_service.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/response_validator.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/services/base_service.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
 
 class AccountController {
@@ -18,7 +18,7 @@ class AccountController {
             profileData['avatar'] = base64Image;
         }
 
-        final AccountService accountService = AccountService();
+        final BaseService accountService = BaseService();
 
         Map<String, dynamic> profileEditResponse = await accountService.updateProfile(data: profileData);
 
@@ -48,7 +48,7 @@ class AccountController {
     }
 
     Future<void> changePassword(BuildContext context, passwordData, Function setErrorMessages) async {
-        final AccountService accountService = AccountService();
+        final BaseService accountService = BaseService();
 
         Map<String, dynamic> passwordChangeResponse = await accountService.changePassword(data: passwordData);
 
@@ -75,7 +75,7 @@ class AccountController {
     } 
 
     Future<void> getDeviceAuthList(BuildContext context, Function setDeviceAuthList) async {
-        final AccountService accountService = AccountService();
+        final BaseService accountService = BaseService();
 
         Map<String, dynamic> deviceAuthListResponse = await accountService.getDeviceAuthList();
 
@@ -83,7 +83,7 @@ class AccountController {
     }
 
     Future<void> disconnectDevice(BuildContext context, String deviceId, Function setDeviceAuthList) async {
-        final AccountService accountService = AccountService();
+        final BaseService accountService = BaseService();
 
         Map<String, String> data = {
             "type": "logout-device",
