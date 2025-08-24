@@ -28,7 +28,7 @@ static const int tvHeightBreakpoint = 1080;   // >= 1080px altura
 
 ## 🏗️ Arquitectura del Sistema
 
-```
+```text
 lib/
 ├── app/utils/
 │   └── responsive_layout.dart           # Core del sistema responsive
@@ -64,6 +64,7 @@ DeviceType device = Responsive.getDeviceType(context);
 ### 2. Widgets Responsive Básicos
 
 #### ResponsiveBuilder
+
 ```dart
 ResponsiveBuilder(
   builder: (context, deviceType) {
@@ -84,6 +85,7 @@ ResponsiveBuilder(
 ```
 
 #### ResponsiveGrid
+
 ```dart
 ResponsiveGrid(
   mobileColumns: 1,
@@ -100,6 +102,7 @@ ResponsiveGrid(
 ```
 
 #### ResponsiveText
+
 ```dart
 ResponsiveText(
   'Mi texto adaptativo',
@@ -176,6 +179,7 @@ TVOptimizedListView(
 ## 📐 Sistema de Espaciado y Tamaños
 
 ### Spacing Adaptativo
+
 ```dart
 // Obtener spacing según dispositivo
 double spacing = Responsive.getSpacing(context);
@@ -187,6 +191,7 @@ EdgeInsets padding = Responsive.getPadding(context);
 ```
 
 ### Escalado de Texto
+
 ```dart
 // Factor de escala automático
 double scale = Responsive.getTextScaleFactor(context);
@@ -200,6 +205,7 @@ double iconScale = Responsive.getIconScale(context);
 ## 🎮 Funcionalidades TV Específicas
 
 ### 1. Focus Management
+
 ```dart
 // Política de navegación para TV
 FocusTraversalGroup(
@@ -209,12 +215,14 @@ FocusTraversalGroup(
 ```
 
 ### 2. Navegación con Control Remoto
+
 - **Enter/Select**: Activar elemento
 - **Flechas direccionales**: Navegar entre elementos
 - **Back**: Retroceder
 - **Menu**: Opciones contextuales
 
 ### 3. Elementos TV-Optimizados
+
 ```dart
 // AppBar para TV
 ResponsiveAppBar(
@@ -255,6 +263,7 @@ Widget layout = Responsive.when<Widget>(
 ## 📋 Ejemplos Prácticos
 
 ### Dashboard Responsive
+
 ```dart
 class ResponsiveDashboard extends StatelessWidget {
   @override
@@ -287,6 +296,7 @@ class ResponsiveDashboard extends StatelessWidget {
 ```
 
 ### Lista de Usuarios Adaptativa
+
 ```dart
 class UserListView extends StatelessWidget {
   @override
@@ -322,6 +332,7 @@ class UserListView extends StatelessWidget {
 ## 🔧 Configuración Inicial
 
 ### 1. Actualizar MaterialApp
+
 ```dart
 MaterialApp(
   theme: ThemeData(
@@ -342,6 +353,7 @@ MaterialApp(
 ```
 
 ### 2. Usar Layout Responsive
+
 ```dart
 // Reemplazar AppLayout con ResponsiveAppLayout
 class MyApp extends StatelessWidget {
@@ -357,6 +369,7 @@ class MyApp extends StatelessWidget {
 ## 📊 Debugging y Información
 
 ### Ver información del dispositivo actual
+
 ```dart
 Map<String, dynamic> deviceInfo = Responsive.getDeviceInfo(context);
 print('Dispositivo: ${deviceInfo['deviceType']}');
@@ -365,6 +378,7 @@ print('Soporta teclado/mouse: ${deviceInfo['supportsKeyboardMouse']}');
 ```
 
 ### Widget de debug
+
 ```dart
 // Mostrar información de responsive en debug
 if (kDebugMode) 
@@ -382,6 +396,7 @@ if (kDebugMode)
 ## 🎯 Mejores Prácticas
 
 ### 1. Diseño Mobile-First
+
 ```dart
 // Definir siempre el caso móvil primero
 Widget buildContent() {
@@ -396,6 +411,7 @@ Widget buildContent() {
 ```
 
 ### 2. Performance en TV
+
 ```dart
 // Limitar animaciones complejas en TV
 bool useAnimations = !Responsive.isTV(context);
@@ -409,6 +425,7 @@ AnimatedContainer(
 ```
 
 ### 3. Accesibilidad
+
 ```dart
 // Siempre agregar labels semánticos en TV
 TVFocusableWidget(
@@ -421,6 +438,7 @@ TVFocusableWidget(
 ```
 
 ### 4. Testing Responsive
+
 ```dart
 testWidgets('Dashboard adapts to different screen sizes', (tester) async {
   // Test móvil
@@ -443,6 +461,7 @@ testWidgets('Dashboard adapts to different screen sizes', (tester) async {
 ## 🚀 Migración desde Layout Existente
 
 ### Paso 1: Reemplazar AppLayout
+
 ```dart
 // Antes
 class MyApp extends StatelessWidget {
@@ -456,6 +475,7 @@ class MyApp extends StatelessWidget {
 ```
 
 ### Paso 2: Actualizar Widgets
+
 ```dart
 // Antes
 GridView.count(crossAxisCount: 2, children: items)
@@ -470,6 +490,7 @@ ResponsiveGrid(
 ```
 
 ### Paso 3: Migrar Formularios
+
 ```dart
 // Antes
 Column(children: [TextField(), TextField(), ElevatedButton()])
