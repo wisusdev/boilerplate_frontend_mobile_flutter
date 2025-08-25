@@ -64,6 +64,7 @@ class _AppLayoutState extends State<AppLayout> {
         onItemSelected: _onDrawerItemSelected,
         selectedIndex: AppNavigationHelper.isDrawerIndex(_selectedIndex) ? AppNavigationHelper.globalToDrawerIndex(_selectedIndex) : -1,
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: AppNavigationHelper.isBottomNavigationIndex(_selectedIndex) ? _selectedIndex : 0,
         onTap: _onBottomNavItemSelected,
