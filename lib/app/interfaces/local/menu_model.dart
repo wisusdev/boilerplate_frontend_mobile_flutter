@@ -13,6 +13,7 @@ class MenuItem {
     final MenuLocation location;
     final Widget? page; // Para navegación interna
     final int order; // Para ordenar elementos
+    final List<String> requiredPermissions; // Permisos requeridos para ver este elemento
 
     const MenuItem({
         required this.title,
@@ -22,5 +23,6 @@ class MenuItem {
         required this.location,
         this.page,
         this.order = 0,
+        this.requiredPermissions = const [],
     });
 }
