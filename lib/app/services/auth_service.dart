@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:boilerplate_frontend_mobile_flutter/config/api.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/http/interceptors/api_interceptor.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/services/permission_service.dart';
 
 class AuthService {
 
@@ -35,6 +36,9 @@ class AuthService {
             prefs.setString('permissions', json.encode(responseBody['data']['relationships']['permissions']));
             prefs.setString('user_id', responseBody['data']['id']);
             prefs.setString('access_token', responseBody['data']['relationships']['access']['token']);
+            
+            // Inicializar permisos del usuario
+            await PermissionService.instance.initializePermissions();
         }
         
         return responseBody;
@@ -57,6 +61,8 @@ class AuthService {
             if (response.statusCode == 200) {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.clear();
+                // Limpiar permisos del servicio
+                PermissionService.instance.clearPermissions();
                 success = true;
             }
         });
