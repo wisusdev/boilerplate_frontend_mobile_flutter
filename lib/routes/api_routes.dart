@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/data/models/role_model.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/http/guards/permission_guard.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/base/account/profile_index.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/home_index.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/views/settings/setting_index.dart';
@@ -43,20 +44,74 @@ Map<String, Widget Function(dynamic context)> api = {
     'delete_account': (context) => const AuthGuard(child: DeleteAccount()),
 
     // Permissions
-    'permissions_index': (context) => const AuthGuard(child: PermissionIndex()),
+    'permissions_index': (context) => const AuthGuard(
+      child: ModulePermissionGuard(
+        module: 'permissions',
+        action: 'index',
+        child: PermissionIndex(),
+      ),
+    ),
 
     // Roles
-    'roles_index': (context) => const AuthGuard(child: RoleIndex()),
-    'roles_show': (context) => const AuthGuard(child: RoleShow()),
+    'roles_index': (context) => const AuthGuard(
+      child: ModulePermissionGuard(
+        module: 'roles',
+        action: 'index',
+        child: RoleIndex(),
+      ),
+    ),
+    'roles_show': (context) => const AuthGuard(
+      child: ModulePermissionGuard(
+        module: 'roles',
+        action: 'show',
+        child: RoleShow(),
+      ),
+    ),
     'roles_edit': (context) {
       final role = ModalRoute.of(context)?.settings.arguments as RoleData;
-      return AuthGuard(child: RoleEdit(role: role));
+      return AuthGuard(
+        child: ModulePermissionGuard(
+          module: 'roles',
+          action: 'edit',
+          child: RoleEdit(role: role),
+        ),
+      );
     },
-    'roles_create': (context) => const AuthGuard(child: RoleCreate()),
+    'roles_create': (context) => const AuthGuard(
+      child: ModulePermissionGuard(
+        module: 'roles',
+        action: 'create',
+        child: RoleCreate(),
+      ),
+    ),
 
     // Users
-    'users_index': (context) => const AuthGuard(child: UserIndex()),
-    'users_show': (context) => const AuthGuard(child: UserShow()),
-    'users_create': (context) => const AuthGuard(child: UserCreate()),
-    'users_edit': (context) => const AuthGuard(child: UserEdit()),
+    'users_index': (context) => const AuthGuard(
+      child: ModulePermissionGuard(
+        module: 'users',
+        action: 'index',
+        child: UserIndex(),
+      ),
+    ),
+    'users_show': (context) => const AuthGuard(
+      child: ModulePermissionGuard(
+        module: 'users',
+        action: 'show',
+        child: UserShow(),
+      ),
+    ),
+    'users_create': (context) => const AuthGuard(
+      child: ModulePermissionGuard(
+        module: 'users',
+        action: 'create',
+        child: UserCreate(),
+      ),
+    ),
+    'users_edit': (context) => const AuthGuard(
+      child: ModulePermissionGuard(
+        module: 'users',
+        action: 'edit',
+        child: UserEdit(),
+      ),
+    ),
 };
