@@ -2,6 +2,7 @@ import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
 import 'package:flutter/material.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/data/models/user_model.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/http/controllers/user_controller.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/permission_widget.dart';
 
 class UserIndex extends StatefulWidget {
   const UserIndex({super.key});
@@ -10,7 +11,7 @@ class UserIndex extends StatefulWidget {
   State<UserIndex> createState() => _UserIndexState();
 }
 
-class _UserIndexState extends State<UserIndex> {
+class _UserIndexState extends State<UserIndex> with PermissionMixin {
   final UserController _userController = UserController();
   List<UserData> _users = [];
   bool _isLoading = false;
@@ -165,9 +166,12 @@ class _UserIndexState extends State<UserIndex> {
                       icon: const Icon(Icons.more_vert),
                       onSelected: (value) => _onMenuSelected(value, user),
                       itemBuilder: (ctx) => [
-                        const PopupMenuItem(value: 'view', child: Text('Ver')),
-                        const PopupMenuItem(value: 'edit', child: Text('Editar')),
-                        const PopupMenuItem(value: 'delete', child: Text('Eliminar')),
+                        if (canShow('users'))
+                          const PopupMenuItem(value: 'view', child: Text('Ver')),
+                        if (canEdit('users'))
+                          const PopupMenuItem(value: 'edit', child: Text('Editar')),
+                        if (canDelete('users'))
+                          const PopupMenuItem(value: 'delete', child: Text('Eliminar')),
                       ],
                     ),
                   ],
@@ -207,11 +211,13 @@ class _UserIndexState extends State<UserIndex> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildBody(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToCreateUser,
-        child: const Icon(Icons.add),
-        tooltip: Location.of(context)!.trans('create_user'),
-      ),
+      floatingActionButton: canCreate('users')
+          ? FloatingActionButton(
+              onPressed: _navigateToCreateUser,
+              child: const Icon(Icons.add),
+              tooltip: Location.of(context)!.trans('create_user'),
+            )
+          : null,
     );
   }
 

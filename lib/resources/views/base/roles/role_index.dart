@@ -3,6 +3,7 @@ import 'package:boilerplate_frontend_mobile_flutter/core/helpers/text.dart';
 import 'package:flutter/material.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/data/models/role_model.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/http/controllers/role_controller.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/permission_widget.dart';
 
 class RoleIndex extends StatefulWidget {
   const RoleIndex({super.key});
@@ -11,7 +12,7 @@ class RoleIndex extends StatefulWidget {
   State<RoleIndex> createState() => _RoleIndexState();
 }
 
-class _RoleIndexState extends State<RoleIndex> {
+class _RoleIndexState extends State<RoleIndex> with PermissionMixin {
   final RoleController _roleController = RoleController();
   List<RoleData> _roles = [];
   bool _isLoading = false;
@@ -241,9 +242,12 @@ class _RoleIndexState extends State<RoleIndex> {
                   icon: const Icon(Icons.more_vert),
                   onSelected: (value) => _onMenuSelected(value, role),
                   itemBuilder: (ctx) => [
-                    const PopupMenuItem(value: 'view', child: Text('Ver')),
-                    const PopupMenuItem(value: 'edit', child: Text('Editar')),
-                    const PopupMenuItem(value: 'delete', child: Text('Eliminar')),
+                    if (canShow('roles'))
+                      const PopupMenuItem(value: 'view', child: Text('Ver')),
+                    if (canEdit('roles'))
+                      const PopupMenuItem(value: 'edit', child: Text('Editar')),
+                    if (canDelete('roles'))
+                      const PopupMenuItem(value: 'delete', child: Text('Eliminar')),
                   ],
                 ),
               ],
@@ -258,11 +262,13 @@ class _RoleIndexState extends State<RoleIndex> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildBody(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToCreateRole,
-        child: const Icon(Icons.add),
-        tooltip: Location.of(context)!.trans('create_role'),
-      ),
+      floatingActionButton: canCreate('roles')
+          ? FloatingActionButton(
+              onPressed: _navigateToCreateRole,
+              child: const Icon(Icons.add),
+              tooltip: Location.of(context)!.trans('create_role'),
+            )
+          : null,
     );
   }
 
