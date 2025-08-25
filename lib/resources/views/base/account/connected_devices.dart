@@ -32,7 +32,6 @@ class _ConnectedDevicesState extends State<ConnectedDevices> {
     await _accountController.getDeviceAuthList(context, (data) {
       setState(() {
         final result = ResponseValidator.validateResponse(data);
-        print('Response: $data');
         if (result.isSuccess) {
           _devices = result.data.map<Datum>((device) => Datum.fromJson(device)).toList();
           _errorMessage = null;
