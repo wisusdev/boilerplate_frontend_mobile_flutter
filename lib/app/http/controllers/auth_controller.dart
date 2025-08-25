@@ -1,15 +1,23 @@
 import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/services/auth_service.dart';
-import 'package:boilerplate_frontend_mobile_flutter/resources/views/layouts/app_layout.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/services/permission_service.dart';
+import 'package:boilerplate_frontend_mobile_flutter/resources/views/layouts/responsive_app_layout.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
 
 class AuthController {
   Future<void> login(context, loginData, Function setErrorMessages) async {
-    Map<String, dynamic> loginResponse = await AuthService().login(data: loginData);
+    final AuthService authService = AuthService();
+    Map<String, dynamic> loginResponse = await authService.login(data: loginData);
 
     if (loginResponse.containsKey('data')) {
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const AppLayout()), (route) => false);
+      // Los permisos ya se inicializan en AuthService, pero podemos verificar aquí también
+      await PermissionService.instance.initializePermissions();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const ResponsiveAppLayout()),
+        (route) => false,
+      );
     }
 
     if (loginResponse.containsKey('errors')) {
