@@ -100,7 +100,7 @@ class Responsive {
     EdgeInsets mobile = const EdgeInsets.all(8.0),
     EdgeInsets tablet = const EdgeInsets.all(16.0),
     EdgeInsets desktop = const EdgeInsets.all(24.0),
-    EdgeInsets largeDesktop = const EdgeInsets.all(32.0),
+    EdgeInsets largeDesktop = const EdgeInsets.all(0.0), // Sin padding por defecto en pantallas muy grandes
     EdgeInsets tv = const EdgeInsets.all(40.0),
   }) {
     switch (getDeviceType(context)) {
