@@ -183,8 +183,8 @@ class _AuthLoginState extends State<AuthLogin> {
       children: [
         Text(Location.of(context)!.trans('dontHaveAccount'), style: const TextStyle(fontFamily: 'Sofia')),
         TextButton(
-          //onPressed: () => Navigator.pushNamed(context, 'register'),
-          onPressed: () => Navigator.of(context).push(navigatorFadeTransition(const AuthRegister())),
+          onPressed: () => Navigator.pushNamed(context, 'register'),
+          //onPressed: () => Navigator.of(context).push(navigatorFadeTransition(const AuthRegister())),
           child: Text(Location.of(context)!.trans('registerHere'), style: const TextStyle(fontFamily: 'Sofia')),
         ),
       ],
