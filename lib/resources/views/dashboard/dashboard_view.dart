@@ -21,27 +21,6 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Dashboard',
-          style: TextStyle(
-            fontSize: _getAppBarTextSize(context),
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        actions: [
-          // Botón de configuraciones solo para administradores
-          if (hasPermission('settings:access'))
-            IconButton(
-              icon: Icon(
-                Icons.settings,
-                size: _getIconSize(context),
-              ),
-              onPressed: () => Navigator.pushNamed(context, 'settings'),
-            ),
-        ],
-        toolbarHeight: _getAppBarHeight(context),
-      ),
       body: _buildResponsiveBody(context),
       floatingActionButton: _buildResponsiveFAB(context),
     );
