@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -20,6 +21,8 @@ import 'package:boilerplate_frontend_mobile_flutter/resources/views/layouts/resp
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  debugPaintSizeEnabled = false;
+
   await LocalStorage.init();
 
   await dotenv.load(fileName: ".env");
@@ -40,7 +43,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: appName,
 
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
 
       supportedLocales: supportedLocales,
       locale: Provider.of<LanguageProvider>(context).language,
