@@ -21,20 +21,24 @@ class _ProfileIndexState extends State<ProfileIndex> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: futureUserModel(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError || !snapshot.hasData) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            toastDanger(context, 'Error al cargar el perfil');
-          });
-          return const SizedBox.shrink();
-        } else {
-          return profile(snapshot.data as LocalUserInfo);
-        }
-      },
+    return Column(
+      children: [
+        FutureBuilder(
+          future: futureUserModel(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError || !snapshot.hasData) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                toastDanger(context, 'Error al cargar el perfil');
+              });
+              return const SizedBox.shrink();
+            } else {
+              return profile(snapshot.data as LocalUserInfo);
+            }
+          },
+        ),
+      ],
     );
   }
 
