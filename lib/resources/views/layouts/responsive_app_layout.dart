@@ -1,12 +1,12 @@
 import 'package:boilerplate_frontend_mobile_flutter/app/services/permission_service.dart';
-import 'package:flutter/material.dart';
+import 'package:boilerplate_frontend_mobile_flutter/app/utils/menu.dart';
 import 'package:boilerplate_frontend_mobile_flutter/app/utils/responsive_layout.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/navigation_helper.dart';
+import 'package:boilerplate_frontend_mobile_flutter/core/helpers/text.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/responsive/responsive_navigation.dart';
 import 'package:boilerplate_frontend_mobile_flutter/resources/widgets/responsive/responsive_widgets.dart';
-import 'package:boilerplate_frontend_mobile_flutter/core/helpers/text.dart';
-import 'package:boilerplate_frontend_mobile_flutter/core/helpers/location.dart';
-import 'package:boilerplate_frontend_mobile_flutter/app/utils/menu.dart';
-import 'package:boilerplate_frontend_mobile_flutter/core/helpers/navigation_helper.dart';
+import 'package:flutter/material.dart';
 
 class ResponsiveAppLayout extends StatefulWidget {
   const ResponsiveAppLayout({super.key});
@@ -122,6 +122,9 @@ class _ResponsiveAppLayoutState extends State<ResponsiveAppLayout> {
           // Contenido principal
           Expanded(
             child: ResponsiveContainer(
+              maxHeight: double.infinity,
+              maxWidth: double.infinity,
+              centerChild: false,
               child: _buildBody(currentMenuItem),
             ),
           ),
@@ -187,8 +190,8 @@ class _ResponsiveAppLayoutState extends State<ResponsiveAppLayout> {
         context,
         mobile: 56,
         tablet: 64,
-        desktop: 72,
-        largeDesktop: 80,
+        desktop: 50,
+        largeDesktop: 50,
         tv: 88,
       ),
       actions: _buildAppBarActions(),
@@ -231,7 +234,7 @@ class _ResponsiveAppLayoutState extends State<ResponsiveAppLayout> {
 
   Widget _buildDrawer() {
     return ResponsiveDrawer(
-      header: _buildDrawerHeader(),
+      //header: _buildDrawerHeader(),
       items: _getDrawerItems(),
       onItemSelected: (item) {
         if (item.data != null) {
