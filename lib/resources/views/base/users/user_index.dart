@@ -209,15 +209,23 @@ class _UserIndexState extends State<UserIndex> with PermissionMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildBody(),
-      floatingActionButton: canCreate('users')
-          ? FloatingActionButton(
-              onPressed: _navigateToCreateUser,
-              child: const Icon(Icons.add),
-              tooltip: Location.of(context)!.trans('create_user'),
-            )
-          : null,
+    return Stack(
+      children: [
+        Center(
+            child:
+                _buildBody()), // Reemplaza esto por tu nuevo widget principal (ej. Container, Column, etc.)
+        Positioned(
+          bottom: 16.0, // Ajusta la posición según necesites
+          right: 16.0,
+          child: canCreate('users')
+              ? FloatingActionButton(
+                  onPressed: _navigateToCreateUser,
+                  child: const Icon(Icons.add),
+                  tooltip: Location.of(context)!.trans('create_user'),
+                )
+              : const SizedBox.shrink(),
+        ),
+      ],
     );
   }
 
