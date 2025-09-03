@@ -12,7 +12,6 @@ class _HomeIndexState extends State<HomeIndex> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text('isDarkmode: ${ThemePreferences.getThemeMode()}'),
         const Divider(),
