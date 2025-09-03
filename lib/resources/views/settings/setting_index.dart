@@ -12,6 +12,42 @@ class SettingIndex extends StatefulWidget {
 class _SettingIndexState extends State<SettingIndex> {
   @override
   Widget build(BuildContext context) {
+    // Detectar si estamos dentro del ResponsiveAppLayout
+    final bool isInsideResponsiveLayout = _isInsideResponsiveLayout(context);
+    
+    if (isInsideResponsiveLayout) {
+      // Si estamos dentro del layout, solo devolver el contenido
+      return Column(
+        children: [
+          _buildSettingsContent(),
+        ],
+      );
+    } else {
+      // Si no estamos dentro del layout, devolver el Scaffold completo
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(capitalizeText(Location.of(context)!.trans('settings'))),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        ),
+        body: _buildSettingsContent(),
+      );
+    }
+  }
+
+  // Método para detectar si estamos dentro de ResponsiveAppLayout
+  bool _isInsideResponsiveLayout(BuildContext context) {
+    try {
+      // Buscar si hay un Scaffold padre (del ResponsiveAppLayout)
+      final scaffold = Scaffold.maybeOf(context);
+      return scaffold != null && scaffold.hasAppBar;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Contenido de configuraciones (sin Scaffold)
+  Widget _buildSettingsContent() {
     return SingleChildScrollView(
       child: Column(children: [
         Container(
