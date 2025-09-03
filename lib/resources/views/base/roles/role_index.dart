@@ -260,15 +260,23 @@ class _RoleIndexState extends State<RoleIndex> with PermissionMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildBody(),
-      floatingActionButton: canCreate('roles')
-          ? FloatingActionButton(
-              onPressed: _navigateToCreateRole,
-              child: const Icon(Icons.add),
-              tooltip: Location.of(context)!.trans('create_role'),
-            )
-          : null,
+    return Stack(
+      children: [
+        Center(
+          child: _buildBody(),
+        ),
+        Positioned(
+          bottom: 16.0,
+          right: 16.0,
+          child: canCreate('roles')
+              ? FloatingActionButton(
+                  onPressed: _navigateToCreateRole,
+                  child: const Icon(Icons.add),
+                  tooltip: Location.of(context)!.trans('create_role'),
+                )
+              : const SizedBox.shrink(),
+        ),
+      ],
     );
   }
 
